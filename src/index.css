@@ -1,0 +1,45 @@
+:root {
+  /* 
+  ===== COLOURS ====== 
+  */
+
+  --white: hsl(0, 0%, 100%);
+  --light-grey: hsl(215, 10%, 60%);
+  --dark-grey: hsl(215, 10%, 40%);
+  --sky-blue: hsl(184, 100%, 30%);
+  --light-green: hsl(160, 94%, 43%);
+  --dark-navy-blue: rgba(1, 8, 20, 0.75);
+  --transparent-navy-blue: hsla(216, 66%, 10%, 0.75);
+  --blue-grey: hsl(216, 66%, 10%);
+  --transparent-purple: rgba(177, 35, 243, 0.25);
+  --green-blue-gradient: linear-gradient(
+    -45deg,
+    var(--light-green),
+    var(--sky-blue)
+  );
+  --sky-blue-black-gradient: linear-gradient(
+    -200deg,
+    var(--dark-sky-blue),
+    var(--transparent-navy-blue)
+  );
+
+  --purple-blue-gradient: linear-gradient(
+    rgba(177, 35, 243, 0.75),
+    rgba(6, 2, 54, 0.75)
+  );
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--transparent-purple),
+    url("./components/assets/dow-bg-desktop.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
