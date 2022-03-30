@@ -1,12 +1,14 @@
 import React from "react";
 
-const Main = () => {
+import "./Main.css";
+
+const Main = ({ handleStart, handleHowToPlay, handleOptions, handleAbout }) => {
   return (
     <main>
-      <button>Start Game</button>
-      <button>How to Play</button>
-      <button>Options</button>
-      <button>About</button>
+      <button onClick={handleStart}>Start Game</button>
+      <button onClick={handleHowToPlay}>How to Play</button>
+      <button onClick={handleOptions}>Options</button>
+      <button onClick={handleAbout}>About</button>
     </main>
   );
 };
