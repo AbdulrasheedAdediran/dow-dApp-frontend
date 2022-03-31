@@ -7,8 +7,9 @@ import { Options } from "./components/container/Options/Options";
 import { About } from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
+import Layout from "./components/Layout";
 
-const App = () => {
+const App = ({ Component, pageProps }) => {
   const [connectWallet, setConnectWallet] = useState(false);
   const [startGame, setStartGame] = useState(false);
   const [howToPlay, setHowToPlay] = useState(false);
@@ -37,13 +38,14 @@ const App = () => {
   };
   return (
     <div>
-      <Navbar />
+      {/* <Navbar handleConnectWallet={handleConnectWallet} />
       <Main
         handleStart={handleStart}
         handleHowToPlay={handleHowToPlay}
         handleOptions={handleOptions}
         handleAbout={handleAbout}
-      />
+      /> */}
+      <Main />
     </div>
   );
 };
