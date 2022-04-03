@@ -18,23 +18,23 @@ const App = ({ Component, pageProps }) => {
 
   const handleConnectWallet = () => {
     setConnectWallet(!connectWallet);
-    console.log(connectWallet);
+    // console.log(connectWallet);
   };
   const handleStart = () => {
     setStartGame(!startGame);
-    console.log(startGame);
+    // console.log(startGame);
   };
   const handleHowToPlay = () => {
     setHowToPlay(!howToPlay);
-    console.log(howToPlay);
+    // console.log(howToPlay);
   };
   const handleOptions = () => {
     setOptions(!options);
-    console.log(options);
+    // console.log(options);
   };
   const handleAbout = () => {
     setAbout(!about);
-    console.log(about);
+    // console.log(about);
   };
   return (
     <div>

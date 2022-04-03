@@ -4,7 +4,7 @@ import "./HowToPlay.css";
 const HowToPlay = () => {
   return (
     <div>
-      <h1>HowToPlay</h1>
+      <h1>How To Play</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint sed ipsa
         magni veniam rem nobis?
