@@ -8,6 +8,7 @@ import { About } from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import Layout from "./components/Layout";
+import { BrowserRouter } from "react-router-dom";
 
 const App = ({ Component, pageProps }) => {
   const [connectWallet, setConnectWallet] = useState(false);
@@ -37,7 +38,7 @@ const App = ({ Component, pageProps }) => {
     // console.log(about);
   };
   return (
-    <div>
+    <BrowserRouter>
       {/* <Navbar handleConnectWallet={handleConnectWallet} />
       <Main
         handleStart={handleStart}
@@ -46,7 +47,7 @@ const App = ({ Component, pageProps }) => {
         handleAbout={handleAbout}
       /> */}
       <Main />
-    </div>
+    </BrowserRouter>
   );
 };
 

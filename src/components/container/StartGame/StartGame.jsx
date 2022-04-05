@@ -1,16 +1,18 @@
-import React from "react";
+import {React, useState} from "react";
+
 
 import "./StartGame.css";
 
 const StartGame = () => {
+  const [guess, setGuess] = useState()
   return (
     <section>
-      <ul className="entries">
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-      </ul>
+      <div className="entries">
+        <input type="number" className="playerGuess" value={guess} onChange={e => setGuess(e.target.value)}></input>
+        <input type="number" className="playerGuess" value={guess} onChange={e => setGuess(e.target.value)}></input>
+        <input type="number" className="playerGuess" value={guess} onChange={e => setGuess(e.target.value)}></input>
+        <input type="number" className="playerGuess" value={guess} onChange={e => setGuess(e.target.value)}></input>
+      </div>
 
       <button>Play</button>
 
