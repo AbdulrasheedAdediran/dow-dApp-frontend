@@ -4,8 +4,7 @@ import "./Navbar.css";
 const Navbar = ({ handleConnectWallet }) => {
   return (
     <nav>
-      <div>Logo</div>
-      <div>Play Dead or Wounded</div>
+      <div>Dead or Wounded Logo</div>
       <button onClick={handleConnectWallet}>Explore</button>
     </nav>
   );
