@@ -1,5 +1,9 @@
 import React from "react";
 import "./About.css";
+import {Link} from "react-router-dom"
+
+
+
 
 const About = () => {
   return (
@@ -19,7 +23,7 @@ const About = () => {
         repellendus rem veritatis vitae odit ipsam corporis? Tempore quos soluta
         quam?
       </p>
-      <button>Back</button>
+     <Link to ="/"><button>Back</button></Link>
     </div>
   );
 };

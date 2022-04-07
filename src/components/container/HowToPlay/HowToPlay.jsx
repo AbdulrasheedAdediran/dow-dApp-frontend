@@ -1,5 +1,6 @@
 import React from "react";
 import "./HowToPlay.css";
+import {Link} from "react-router-dom"
 
 const HowToPlay = () => {
   return (
@@ -19,7 +20,7 @@ const HowToPlay = () => {
         quasi adipisci deleniti pariatur nostrum. Quis excepturi consequatur a
         architecto?
       </p>
-      <button>Got It</button>
+      <Link to ="/"><button>Got It</button></Link>
     </div>
   );
 };
