@@ -34,8 +34,13 @@
   );
   --deep-red-orange-gradient: linear-gradient(
     to bottom,
-    rgba(250, 160, 5, 0.5),
+    rgba(140, 250, 5, 0.782),
     rgba(230, 45, 5, 0.6)
+  );
+  --blue-black-gradient: linear-gradient(
+    to bottom,
+    rgba(1, 105, 112, 0.75),
+    rgba(4, 157, 106, 0.75)
   );
   /*
   ======= FONTS ======= FONTS
@@ -56,15 +61,12 @@ body {
   height: 100vh;
   width: 100%;
   overflow: hidden;
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
   font-family: var(--font-rubik-wet-paint);
   color: var(--sky-blue-black-gradient);
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1 {
   font-size: 4.5rem;
   background: -webkit-linear-gradient(
     hsla(111, 97%, 49%, 0.75),
@@ -79,6 +81,10 @@ button {
   background: transparent;
   border: none;
   transition: 0.3s ease-out;
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+  word-spacing: 0.3rem;
+  cursor: pointer;
 }
 button:hover {
   color: var(--light-green);
@@ -91,13 +97,13 @@ button:hover {
 }
 @media (max-width: 768px) {
   body {
-    background: var(--sky-blue-black-gradient),
+    background: var(--deep-green-red-gradient),
       url("./components/assets/dow-tab-bg-768x1024.jpeg");
   }
 }
 @media (max-width: 650px) {
   body {
-    background: var(--transparent-navy-blue),
+    background: var(--deep-green-red-gradient),
       url("./components/assets/dow-mobile-bg-375x750.jpeg");
   }
 }

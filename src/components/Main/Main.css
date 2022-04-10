@@ -11,10 +11,8 @@ main {
   padding-bottom: 0.5rem;
 }
 .dead-text {
-  background: -webkit-linear-gradient(
-    rgba(240, 82, 3, 0.893),
-    rgba(230, 45, 5, 0.8)
-  );
+  /* background: var(--deep-red-orange-gradient); */
+  background: linear-gradient(hsla(40, 95%, 10%, 0.85), hsla(0, 95%, 49%, 0.8));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
