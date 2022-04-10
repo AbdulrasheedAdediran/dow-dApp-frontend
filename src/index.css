@@ -1,13 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap");
+
 :root {
   /* 
   ===== COLOURS ====== 
   */
 
   --white: hsl(0, 0%, 100%);
+  --antique-white: hsl(35, 80%, 90%);
   --light-grey: hsl(215, 10%, 60%);
   --dark-grey: hsl(215, 10%, 40%);
   --sky-blue: hsl(184, 100%, 30%);
-  --light-green: hsl(160, 94%, 43%);
+  --light-green: hsla(111, 97%, 49%, 0.75);
+  --deep-light-green: hsla(111, 97%, 49%, 0.85);
   --dark-navy-blue: rgba(1, 8, 20, 0.75);
   --transparent-navy-blue: hsla(216, 66%, 10%, 0.75);
   --blue-grey: hsl(216, 66%, 10%);
@@ -19,14 +23,24 @@
   );
   --sky-blue-black-gradient: linear-gradient(
     -200deg,
-    var(--dark-sky-blue),
-    var(--transparent-navy-blue)
+    hsl(184, 100%, 30%, 0.75),
+    hsl(160, 94%, 43%, 0.75)
   );
 
-  --purple-blue-gradient: linear-gradient(
-    rgba(177, 35, 243, 0.75),
-    rgba(6, 2, 54, 0.75)
+  --deep-green-red-gradient: linear-gradient(
+    to bottom right,
+    rgba(1, 75, 15, 0.5),
+    rgba(230, 45, 5, 0.6)
   );
+  --deep-red-orange-gradient: linear-gradient(
+    to bottom,
+    rgba(250, 160, 5, 0.5),
+    rgba(230, 45, 5, 0.6)
+  );
+  /*
+  ======= FONTS ======= FONTS
+  */
+  --font-rubik-wet-paint: "Rubik Wet Paint", cursive;
 }
 
 * {
@@ -36,10 +50,54 @@
 }
 
 body {
-  background: var(--transparent-purple),
-    url("./components/assets/dow-bg-desktop.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: var(--font-rubik-wet-paint);
+  color: var(--sky-blue-black-gradient);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 4.5rem;
+  background: -webkit-linear-gradient(
+    hsla(111, 97%, 49%, 0.75),
+    hsla(0, 98%, 49%, 0.933)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+button {
+  font-family: var(--font-rubik-wet-paint);
+  color: var(--antique-white);
+  background: transparent;
+  border: none;
+  transition: 0.3s ease-out;
+}
+button:hover {
+  color: var(--light-green);
+}
+@media (min-width: 768px) {
+  body {
+    background: var(--deep-green-red-gradient),
+      url("./components/assets/dow-desktop-bg-1440x900.jpeg");
+  }
+}
+@media (max-width: 768px) {
+  body {
+    background: var(--sky-blue-black-gradient),
+      url("./components/assets/dow-tab-bg-768x1024.jpeg");
+  }
+}
+@media (max-width: 650px) {
+  body {
+    background: var(--transparent-navy-blue),
+      url("./components/assets/dow-mobile-bg-375x750.jpeg");
+  }
 }

@@ -4,8 +4,10 @@ import "./Navbar.css";
 const Navbar = ({ handleConnectWallet }) => {
   return (
     <nav>
-      <div>Dead or Wounded Logo</div>
-      <button onClick={handleConnectWallet}>Explore</button>
+      <div>DOW Logo</div>
+      <button className="btn btn-explore" onClick={handleConnectWallet}>
+        Explore
+      </button>
     </nav>
   );
 };

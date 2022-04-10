@@ -8,19 +8,34 @@ const Main = ({ handleStart, handleHowToPlay, handleOptions, handleAbout }) => {
   return (
     <Layout>
       <main>
+        <div className="dow-text">
+          <div className="dow-text-border" />
+          <h1 className="dead-text">Dead</h1>
+          <p className="dow-text-or">or</p>
+          <h1>Wounded</h1>
+          <div className="dow-text-border" />
+        </div>
         <Link to="/startGame">
           {" "}
-          <button onClick={handleStart}>Start Game</button>{" "}
+          <button className="menu-button" onClick={handleStart}>
+            Start Game
+          </button>{" "}
         </Link>
         <Link to="/howToPlay">
           {" "}
-          <button onClick={handleHowToPlay}>How to Play</button>
+          <button className="menu-button" onClick={handleHowToPlay}>
+            How to Play
+          </button>
         </Link>
         <Link to="/options">
-          <button onClick={handleOptions}>Options</button>
+          <button className="menu-button" onClick={handleOptions}>
+            Options
+          </button>
         </Link>
         <Link to="/about">
-          <button onClick={handleAbout}>About</button>
+          <button className="menu-button" onClick={handleAbout}>
+            About
+          </button>
         </Link>
       </main>
     </Layout>

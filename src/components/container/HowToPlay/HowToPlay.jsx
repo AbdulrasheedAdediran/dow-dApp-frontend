@@ -1,26 +1,28 @@
 import React from "react";
 import "./HowToPlay.css";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const HowToPlay = () => {
   return (
     <div>
       <h1>How To Play</h1>
+      <p>There are four random unique numbers for each game.</p>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint sed ipsa
-        magni veniam rem nobis?
+        Enter four unique numbers and click Play or hit Enter on your keyboard
+        to submit
       </p>
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla
-        voluptatem consequuntur numquam! Natus, nemo aliquam repudiandae
-        quibusdam asperiores harum ducimus?
+        If you guess a number that is in the sequence and is in the correct
+        position, that number is dead and will be marked red.
       </p>
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet corrupti,
-        quasi adipisci deleniti pariatur nostrum. Quis excepturi consequatur a
-        architecto?
+        If you guess a number that is in the sequence but is not in the correct
+        position, that number is wounded and will be marked orange.
       </p>
-      <Link to ="/"><button>Got It</button></Link>
+      <p>Guess the correct sequence of numbers in 7 tries or less to win.</p>
+      <Link to="/">
+        <button>Got It</button>
+      </Link>
     </div>
   );
 };
