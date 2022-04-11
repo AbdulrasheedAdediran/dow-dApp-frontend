@@ -7,6 +7,7 @@ section {
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  padding-inline: 2.5rem;
 }
 .input {
   display: flex;
@@ -53,4 +54,10 @@ section {
 }
 .clear {
   background: var(--btn-deep-green-red-gradient);
+}
+.attempts-and-dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
 }

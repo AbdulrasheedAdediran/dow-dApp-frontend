@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
 import { useState } from "react";
-import  StartGame  from "./components/container/StartGame/StartGame";
-import  HowToPlay  from "./components/container/HowToPlay/HowToPlay";
-import  Options  from "./components/container/Options/Options";
-import  About  from "./components/container/About/About";
+import StartGame from "./components/container/StartGame/StartGame";
+import HowToPlay from "./components/container/HowToPlay/HowToPlay";
+import Options from "./components/container/Options/Options";
+import About from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import Layout from "./components/Layout";
@@ -42,25 +42,24 @@ const App = ({ Component, pageProps }) => {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" exact element={<Main/>} /> 
-      <Route path="/startGame" exact element={<StartGame/>}/>
-      <Route path="/howToPlay" exact element={<HowToPlay/>}/>
-      <Route path="/options" exact element={<Options/>}/>
-      <Route path="/about" exact element={<About/>}/>
-      </Routes>    
-    
+        <Route path="/" exact element={<Main />} />
+        <Route path="/startGame" exact element={<StartGame />} />
+        <Route path="/howToPlay" exact element={<HowToPlay />} />
+        <Route path="/options" exact element={<Options />} />
+        <Route path="/about" exact element={<About />} />
+      </Routes>
     </BrowserRouter>
 
     // <Main/>
     // <BrowserRouter>
-      /* <Navbar handleConnectWallet={handleConnectWallet} />
+    /* <Navbar handleConnectWallet={handleConnectWallet} />
       <Main
         handleStart={handleStart}
         handleHowToPlay={handleHowToPlay}
         handleOptions={handleOptions}
         handleAbout={handleAbout}
       /> */
-      // <Route  element={<Main/>}
+    // <Route  element={<Main/>}
   );
 };
 

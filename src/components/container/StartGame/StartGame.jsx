@@ -1,5 +1,7 @@
 import { React, useState } from "react";
 import "./StartGame.css";
+import Attempts from "./Attempts";
+import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
 
 const StartGame = () => {
@@ -90,15 +92,9 @@ const StartGame = () => {
         </button>
       </form>
 
-      <div className="attempts-and-trials">
-        <div className="attempts">
-          <p>Attempts:</p>
-          <span>{}</span>
-        </div>
-        <div className="trials">
-          <p>Trials Left:</p>
-          <span>{}</span>
-        </div>
+      <div className="attempts-and-dashboard">
+        <Attempts />
+        <Dashboard />
       </div>
       <Link to="/">
         <button>Back</button>
