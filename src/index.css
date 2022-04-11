@@ -72,14 +72,20 @@ body {
   font-family: var(--font-rubik-wet-paint);
   color: var(--antique-white);
 }
-h1 {
-  font-size: 4.5rem;
+h1,
+h2 {
   background: -webkit-linear-gradient(
     hsla(111, 97%, 49%, 0.75),
     hsla(0, 98%, 49%, 0.933)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+h1 {
+  font-size: 4.5rem;
+}
+h2 {
+  font-size: 2.5rem;
 }
 button {
   font-family: var(--font-rubik-wet-paint);

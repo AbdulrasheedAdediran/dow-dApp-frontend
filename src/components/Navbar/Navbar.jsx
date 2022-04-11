@@ -5,8 +5,8 @@ const Navbar = ({ handleConnectWallet }) => {
   return (
     <nav>
       <div>DOW Logo</div>
-      <button className="btn-explore" onClick={handleConnectWallet}>
-        Explore
+      <button className="btn-connect-wallet" onClick={handleConnectWallet}>
+        Connect Wallet
       </button>
     </nav>
   );

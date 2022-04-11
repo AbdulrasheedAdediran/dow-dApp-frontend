@@ -40,13 +40,17 @@ section {
   background: var(--blue-black-gradient);
   color: var(--antique-white);
 }
+.clear-play-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
 .game-btn {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
   border-radius: 0.5rem;
-  width: 7.5rem;
+  width: 7rem;
   padding: 0.75rem 1.5rem;
-  margin-inline-end: 1rem;
 }
 .game-btn:hover {
   background: var(--blue-black-gradient);
@@ -59,5 +63,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 2.5rem;
   width: 100%;
+  margin-block: 2.5rem;
 }

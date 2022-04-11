@@ -1,0 +1,6 @@
+.attempts {
+  width: 100%;
+  background: var(--deep-green);
+  color: var(--antique-white);
+  height: 100%;
+}
