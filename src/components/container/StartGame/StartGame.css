@@ -1,3 +1,56 @@
 input:invalid {
-    border: 3px solid red;
+  border: 3px solid red;
+}
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-inline: 7.5rem;
+}
+.input input {
+  background: var(--deep-green);
+  aspect-ratio: 1;
+  width: 4rem;
+  margin: 2.5rem 0.5rem;
+  color: var(--antique-white);
+  text-align: center;
+  font-family: var(--font-rubik-wet-paint);
+  font-size: 1.2rem;
+}
+.number-btns {
+  margin-bottom: 2.5rem;
+}
+.input-btn {
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  aspect-ratio: 1;
+  width: 3rem;
+  border-radius: 0.5rem;
+  margin-inline: 0.5rem;
+}
+.input-btn:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
+}
+.game-btn {
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  border-radius: 0.5rem;
+  width: 7.5rem;
+  padding: 0.75rem 1.5rem;
+  margin-inline-end: 1rem;
+}
+.game-btn:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
+}
+.clear {
+  background: var(--btn-deep-green-red-gradient);
 }

@@ -14,7 +14,7 @@
   --deep-light-green: hsla(111, 97%, 49%, 0.85);
   --dark-navy-blue: rgba(1, 8, 20, 0.75);
   --transparent-navy-blue: hsla(216, 66%, 10%, 0.75);
-  --blue-grey: hsl(216, 66%, 10%);
+  --deep-green: hsl(167, 90%, 10%, 0.8);
   --transparent-purple: rgba(177, 35, 243, 0.25);
   --green-blue-gradient: linear-gradient(
     -45deg,
@@ -31,6 +31,11 @@
     to bottom right,
     rgba(1, 75, 15, 0.5),
     rgba(230, 45, 5, 0.6)
+  );
+  --btn-deep-green-red-gradient: linear-gradient(
+    to bottom right,
+    rgba(1, 75, 15, 0.85),
+    rgba(230, 45, 5, 0.85)
   );
   --deep-red-orange-gradient: linear-gradient(
     to bottom,
@@ -64,7 +69,7 @@ body {
   font-size: 1.2rem;
   letter-spacing: 0.2rem;
   font-family: var(--font-rubik-wet-paint);
-  color: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
 }
 h1 {
   font-size: 4.5rem;

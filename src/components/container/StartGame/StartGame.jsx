@@ -10,6 +10,7 @@ const StartGame = () => {
     playerInput4: "",
   });
   const handlePlayerInput = (e) => {
+    e.preventDefault();
     const regX = /^[0-9]+$/; // /^[0-9]*$
     const value = e.target.value;
     if (e.target.value === "" || regX.test(e.target.value)) {
@@ -29,47 +30,64 @@ const StartGame = () => {
           {" "}
           Enter four unique numbers from 0 - 9{" "}
         </label>
-        <input
-          type="text"
-          maxLength={1}
-          minLength={1}
-          name="playerInput1"
-          id="player-inputs"
-          className="first-player-input player-input"
-          value={playerInput.playerInput1}
-          onChange={handlePlayerInput}
-        ></input>
-        <input
-          type="text"
-          maxLength={1}
-          minLength={1}
-          name="playerInput2"
-          id="player-inputs"
-          className="second-player-input player-input"
-          value={playerInput.playerInput2}
-          onChange={handlePlayerInput}
-        ></input>
-        <input
-          type="text"
-          maxLength={1}
-          minLength={1}
-          name="playerInput3"
-          id="player-inputs"
-          className="third-player-input player-input"
-          value={playerInput.playerInput3}
-          onChange={handlePlayerInput}
-        ></input>
-        <input
-          type="text"
-          maxLength={1}
-          minLength={1}
-          name="playerInput4"
-          id="player-inputs"
-          className="fourth-player-input player-input"
-          value={playerInput.playerInput4}
-          onChange={handlePlayerInput}
-        ></input>
-        <button type="submit">Play</button>
+        <div className="input">
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput1"
+            id="player-inputs"
+            className="first-player-input player-input"
+            value={playerInput.playerInput1}
+            onChange={handlePlayerInput}
+          ></input>
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput2"
+            id="player-inputs"
+            className="second-player-input player-input"
+            value={playerInput.playerInput2}
+            onChange={handlePlayerInput}
+          ></input>
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput3"
+            id="player-inputs"
+            className="third-player-input player-input"
+            value={playerInput.playerInput3}
+            onChange={handlePlayerInput}
+          ></input>
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput4"
+            id="player-inputs"
+            className="fourth-player-input player-input"
+            value={playerInput.playerInput4}
+            onChange={handlePlayerInput}
+          ></input>
+        </div>
+        <div className="number-btns">
+          <button className="input-btn">0</button>
+          <button className="input-btn">1</button>
+          <button className="input-btn">2</button>
+          <button className="input-btn">3</button>
+          <button className="input-btn">4</button>
+          <button className="input-btn">5</button>
+          <button className="input-btn">6</button>
+          <button className="input-btn">7</button>
+          <button className="input-btn">8</button>
+          <button className="input-btn">9</button>
+        </div>
+        <button className="game-btn clear">Clear</button>
+        <button className="game-btn play" type="submit">
+          Play
+        </button>
       </form>
 
       <div className="attempts-and-trials">
@@ -82,14 +100,6 @@ const StartGame = () => {
           <span>{}</span>
         </div>
       </div>
-
-      <ul className="scores">
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-      </ul>
-
       <Link to="/">
         <button>Back</button>
       </Link>
