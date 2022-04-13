@@ -25,7 +25,7 @@ main {
 
 .dow-text .dow-text-or::before,
 .dow-text-or::after {
-  background: var(--sky-blue-black-gradient);
+  background: var(--light-green);
   content: "";
   display: inline-block;
   height: 2.5px;
