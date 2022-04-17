@@ -20,21 +20,7 @@ const StartGame = () => {
       setPlayerInput([...playerInput, e.target.value]);
     }
 
-    // Check if max length has been reached
-    if (value.length >= maxLength) {
-      // Check if it's not the last input field
-      if (parseInt(value, 10) < 4) {
-        // Get the next input field
-        const nextInputField = document.querySelector(
-          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-        );
-        // If found, focus next field
-        if (nextInputField !== null) {
-          nextInputField.focus();
-        }
-      }
-    }
-  };
+   
 
   const handlePlay = (e) => {
     /**================================================================
@@ -44,27 +30,28 @@ const StartGame = () => {
      */
 
     // Number of input fields that make up SSN
-    const numOfFields = 3;
+    const numOfFields = 4;
 
     const useSSNFields = () => {
-      const [ssnValues, setValue] = React.useState({
-        ssn1: "",
-        ssn2: "",
-        ssn3: "",
+      const [playerInput, setPlayerInput] = useState({
+        playerInput1: "",
+        playerInput2: "",
+        playerInput3: "",
+        playerInput4: "",
       });
 
       return {
-        handleChange: (e) => {
+        handlePlayerInput: (e) => {
           const { maxLength, value, name } = e.target;
           const [fieldName, fieldIndex] = name.split("-");
 
           // Check if they hit the max character length
-          if (value.length >= maxLength) {
+          if (value.length >= 1) {
             // Check if it's not the last input field
             if (parseInt(fieldIndex, 10) < 3) {
               // Get the next input field
               const nextSibling = document.querySelector(
-                `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
+                `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
               );
 
               // If found, focus the next field
@@ -76,55 +63,13 @@ const StartGame = () => {
 
           setValue({
             ...value,
-            [`ssn${fieldIndex}`]: value,
+            [`playerInput${fieldIndex}`]: value,
           });
         },
       };
     };
 
-    const SSNField = () => {
-      const { handleChange } = useSSNFields();
-
-      return (
-        <>
-          <input
-            type="text"
-            name="ssn-1"
-            maxLength={3}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="ssn-2"
-            maxLength={2}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="ssn-3"
-            maxLength={4}
-            onChange={handleChange}
-          />
-        </>
-      );
-    };
-
-    // FOCUS NEXT INPUT FIELD
-    const { maxLength, name, value } = e.target;
-    const { fieldName, fieldIndex } = name.split("-");
-    // Check if max length has been reached
-    if (value.length >= maxLength) {
-      // Check if it's not the last input field
-      if (parseInt(value, 10) < 4) {
-        // Get the next input field
-        const nextInputField = document.querySelector(
-          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-        );
-        // If found, focus next field
-        if (nextInputField !== null) {
-          nextInputField.focus();
-        }
-      }
+  
     }
     /*
     =
@@ -152,6 +97,13 @@ const StartGame = () => {
     10. If trials == 0 and user has not killed all numbers, display Game Over modal, else display Congratulations modal 
     
     */
+
+
+
+
+
+
+    
   };
   return (
     <Layout>
@@ -240,3 +192,69 @@ const StartGame = () => {
 };
 
 export default StartGame;
+
+
+/**
+ *   const SSNField = () => {
+      const { handleChange } = useSSNFields();
+
+      return (
+        <>
+          <input
+            type="text"
+            name="ssn-1"
+            maxLength={3}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="ssn-2"
+            maxLength={2}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="ssn-3"
+            maxLength={4}
+            onChange={handleChange}
+          />
+        </>
+      );
+    };
+
+    // FOCUS NEXT INPUT FIELD
+    const { maxLength, name, value } = e.target;
+    const { fieldName, fieldIndex } = name.split("-");
+    // Check if max length has been reached
+    if (value.length >= maxLength) {
+      // Check if it's not the last input field
+      if (parseInt(value, 10) < 4) {
+        // Get the next input field
+        const nextInputField = document.querySelector(
+          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
+        );
+        // If found, focus next field
+        if (nextInputField !== null) {
+          nextInputField.focus();
+        }
+      }
+
+
+      ===========================
+
+       // Check if max length has been reached
+    if (value.length >= maxLength) {
+      // Check if it's not the last input field
+      if (parseInt(value, 10) < 4) {
+        // Get the next input field
+        const nextInputField = document.querySelector(
+          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
+        );
+        // If found, focus next field
+        if (nextInputField !== null) {
+          nextInputField.focus();
+        }
+      }
+    }
+  };
+ */
