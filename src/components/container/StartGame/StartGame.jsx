@@ -20,57 +20,53 @@ const StartGame = () => {
       setPlayerInput([...playerInput, e.target.value]);
     }
 
-   
+    const handlePlay = (e) => {
+      /**================================================================
+       *
+       *
+       *
+       */
 
-  const handlePlay = (e) => {
-    /**================================================================
-     *
-     *
-     *
-     */
+      // Number of input fields that make up SSN
+      const numOfFields = 4;
 
-    // Number of input fields that make up SSN
-    const numOfFields = 4;
+      const useSSNFields = () => {
+        const [playerInput, setPlayerInput] = useState({
+          playerInput1: "",
+          playerInput2: "",
+          playerInput3: "",
+          playerInput4: "",
+        });
 
-    const useSSNFields = () => {
-      const [playerInput, setPlayerInput] = useState({
-        playerInput1: "",
-        playerInput2: "",
-        playerInput3: "",
-        playerInput4: "",
-      });
+        return {
+          handlePlayerInput: (e) => {
+            const { maxLength, value, name } = e.target;
+            const [fieldName, fieldIndex] = name.split("-");
 
-      return {
-        handlePlayerInput: (e) => {
-          const { maxLength, value, name } = e.target;
-          const [fieldName, fieldIndex] = name.split("-");
+            // Check if they hit the max character length
+            if (value.length >= 1) {
+              // Check if it's not the last input field
+              if (parseInt(fieldIndex, 10) < 3) {
+                // Get the next input field
+                const nextSibling = document.querySelector(
+                  `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
+                );
 
-          // Check if they hit the max character length
-          if (value.length >= 1) {
-            // Check if it's not the last input field
-            if (parseInt(fieldIndex, 10) < 3) {
-              // Get the next input field
-              const nextSibling = document.querySelector(
-                `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-              );
-
-              // If found, focus the next field
-              if (nextSibling !== null) {
-                nextSibling.focus();
+                // If found, focus the next field
+                if (nextSibling !== null) {
+                  nextSibling.focus();
+                }
               }
             }
-          }
 
-          setValue({
-            ...value,
-            [`playerInput${fieldIndex}`]: value,
-          });
-        },
+            setValue({
+              ...value,
+              [`playerInput${fieldIndex}`]: value,
+            });
+          },
+        };
       };
     };
-
-  
-    }
     /*
     =
     =
@@ -84,26 +80,6 @@ const StartGame = () => {
     console.log(playerInput);
     setPlayerInput([]);
     entries.reset();
-
-    /*
-    1. Set default focus to first input field onLoad or render
-    2. Push user input to the inputsArray => DONE
-    3. Jump focus to next field when user enters an input
-    3. Clear previous input field when user clicks Backspace or Clear button and replace element of focused index in inputsArray with new input
-    4. Disable Enter key or Play button and throw error("Please enter four unique numbers") when either is clicked before all fields are completely filled
-    5. Clear input fields when user clicks Enter or Play button => DONE
-    8. Store inputsArray as an attempt and display array in attempts section when user clicks enter or play button
-    9. Allow user to play until trials == 0
-    10. If trials == 0 and user has not killed all numbers, display Game Over modal, else display Congratulations modal 
-    
-    */
-
-
-
-
-
-
-    
   };
   return (
     <Layout>
@@ -192,7 +168,6 @@ const StartGame = () => {
 };
 
 export default StartGame;
-
 
 /**
  *   const SSNField = () => {
