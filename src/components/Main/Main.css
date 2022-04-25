@@ -11,24 +11,29 @@ main {
   padding-bottom: 0.5rem;
 }
 .dead-text {
-  background: linear-gradient(hsla(40, 95%, 10%, 0.85), hsla(0, 95%, 49%, 0.8));
+  background: -webkit-linear-gradient(
+    hsla(111, 97%, 49%, 0.75) 5%,
+    hsla(25, 97%, 49%, 0.75) 20%,
+    hsla(0, 98%, 49%, 0.933) 50%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .dow-text-border {
-  background: var(--sky-blue-black-gradient);
-  height: 2.5px;
+  background: var(--sky-blue-green-gradient);
+  height: 1.5px;
   width: 100%;
   margin: 1rem 0;
 }
 
 .dow-text .dow-text-or::before,
 .dow-text-or::after {
-  background: var(--light-green);
+  background: var(--sky-blue-green-gradient);
+  /* background: var(--light-green); */
   content: "";
   display: inline-block;
-  height: 2.5px;
+  height: 1.5px;
   position: relative;
   vertical-align: middle;
   width: 40%;

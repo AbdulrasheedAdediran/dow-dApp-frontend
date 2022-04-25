@@ -26,6 +26,12 @@
     hsl(184, 100%, 30%, 0.75),
     hsl(160, 94%, 43%, 0.75)
   );
+  --sky-blue-green-gradient: linear-gradient(
+    -200deg,
+    hsl(184, 100%, 30%, 0.75),
+    hsla(111, 97%, 49%, 0.75),
+    hsl(184, 100%, 30%, 0.75)
+  );
 
   --deep-green-red-gradient: linear-gradient(
     to bottom right,
@@ -61,12 +67,16 @@
 }
 
 body {
+  background: var(--deep-green-red-gradient),
+    url("./components/assets/dow-desktop-bg-1440x900.jpeg") no-repeat center
+      center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
+  min-height: 100vh;
+  min-width: 100vw;
+  /* overflow: hidden; */
   font-size: 1.2rem;
   letter-spacing: 0.1rem;
   font-family: var(--font-rubik-wet-paint);
@@ -75,8 +85,9 @@ body {
 h1,
 h2 {
   background: -webkit-linear-gradient(
-    hsla(111, 97%, 49%, 0.75),
-    hsla(0, 98%, 49%, 0.933)
+    hsla(111, 97%, 49%, 0.75) 20%,
+    hsla(25, 97%, 49%, 0.75),
+    hsla(0, 98%, 49%, 0.933) 90%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -101,21 +112,18 @@ button {
 button:hover {
   color: var(--light-green);
 }
-@media (min-width: 768px) {
+
+@media (min-width: 600px) {
   body {
-    background: var(--deep-green-red-gradient),
-      url("./components/assets/dow-desktop-bg-1440x900.jpeg");
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+  body {
+  }
+}
+@media (max-width: 600px) {
   body {
     background: var(--deep-green-red-gradient),
       url("./components/assets/dow-tab-bg-768x1024.jpeg");
-  }
-}
-@media (max-width: 650px) {
-  body {
-    background: var(--deep-green-red-gradient),
-      url("./components/assets/dow-mobile-bg-375x750.jpeg");
   }
 }

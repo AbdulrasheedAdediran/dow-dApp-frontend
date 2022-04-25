@@ -20,10 +20,10 @@ section {
   aspect-ratio: 1;
   width: 4rem;
   margin: 2.5rem 0.5rem;
-  color: var(--antique-white);
+  color: var(--light-green);
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
-  font-size: 1.2rem;
+  font-size: 2.5rem;
 }
 .number-btns {
   margin-bottom: 2.5rem;
@@ -57,6 +57,11 @@ section {
   color: var(--antique-white);
 }
 .clear {
+  background: var(--btn-deep-green-red-gradient);
+  opacity: 0.8;
+}
+.clear:hover {
+  opacity: 1;
   background: var(--btn-deep-green-red-gradient);
 }
 .attempts-and-dashboard {

@@ -6,81 +6,18 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 
 const StartGame = () => {
-  const setFocus = document.getElementById("#input1");
-  window.onload = () => setFocus.focus();
   const [playerInput, setPlayerInput] = useState([]);
+  const setFocus = document.querySelector(".first-player-input");
+  window.onload = setFocus.focus();
   const handlePlayerInput = (e) => {
     const regX = /^[0-9]+$/;
-    const value = e.target.value;
-    const { maxLength, name } = e.target;
-    const { fieldName, fieldIndex } = name.split("-");
-
-    e.preventDefault();
-    if (value === "" || regX.test(value)) {
+    oninput =
+      "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(..*)./g, '$1');";
+    if (e.target.value === "" || regX.test(e.target.value)) {
       setPlayerInput([...playerInput, e.target.value]);
     }
-
-    const handlePlay = (e) => {
-      /**================================================================
-       *
-       *
-       *
-       */
-
-      // Number of input fields that make up SSN
-      const numOfFields = 4;
-
-      const useSSNFields = () => {
-        const [playerInput, setPlayerInput] = useState({
-          playerInput1: "",
-          playerInput2: "",
-          playerInput3: "",
-          playerInput4: "",
-        });
-
-        return {
-          handlePlayerInput: (e) => {
-            const { maxLength, value, name } = e.target;
-            const [fieldName, fieldIndex] = name.split("-");
-
-            // Check if they hit the max character length
-            if (value.length >= 1) {
-              // Check if it's not the last input field
-              if (parseInt(fieldIndex, 10) < 3) {
-                // Get the next input field
-                const nextSibling = document.querySelector(
-                  `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-                );
-
-                // If found, focus the next field
-                if (nextSibling !== null) {
-                  nextSibling.focus();
-                }
-              }
-            }
-
-            setValue({
-              ...value,
-              [`playerInput${fieldIndex}`]: value,
-            });
-          },
-        };
-      };
-    };
-    /*
-    =
-    =
-    =
-    =
-    =
-    =
-    */
-    const entries = document.querySelector(".entries");
-    e.preventDefault();
-    console.log(playerInput);
-    setPlayerInput([]);
-    entries.reset();
   };
+  const handlePlay = (e) => {};
   return (
     <Layout>
       <section>
@@ -95,7 +32,7 @@ const StartGame = () => {
               maxLength={1}
               minLength={1}
               name="playerInput1"
-              id="player-inputs input1"
+              id="player-inputs"
               className="first-player-input player-input"
               value={playerInput.playerInput1}
               onChange={handlePlayerInput}
