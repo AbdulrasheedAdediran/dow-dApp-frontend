@@ -11,8 +11,7 @@ const StartGame = () => {
   window.onload = setFocus.focus();
   const handlePlayerInput = (e) => {
     const regX = /^[0-9]+$/;
-    oninput =
-      "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(..*)./g, '$1');";
+
     if (e.target.value === "" || regX.test(e.target.value)) {
       setPlayerInput([...playerInput, e.target.value]);
     }
