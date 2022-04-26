@@ -24,6 +24,11 @@ section {
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
   font-size: 2.5rem;
+  outline: 2px outset var(--dark-navy-blue);
+}
+input:focus {
+  outline: 2px inset var(--light-green);
+  border: 2px solid var(--dark-navy-blue);
 }
 .number-btns {
   margin-bottom: 2.5rem;
