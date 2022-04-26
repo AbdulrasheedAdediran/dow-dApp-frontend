@@ -24,11 +24,14 @@ section {
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
   font-size: 2.5rem;
-  outline: 2px outset var(--dark-navy-blue);
+  outline: 1px outset var(--dark-navy-blue);
 }
 input:focus {
+  background: var(--deeper-green);
   outline: 2px inset var(--light-green);
-  border: 2px solid var(--dark-navy-blue);
+  border: 1px solid var(--dark-navy-blue);
+  border-radius: 0.5rem;
+  transform: scale(1.075);
 }
 .number-btns {
   margin-bottom: 2.5rem;

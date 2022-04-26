@@ -15,6 +15,7 @@
   --dark-navy-blue: rgba(1, 8, 20, 0.75);
   --transparent-navy-blue: hsla(216, 66%, 10%, 0.75);
   --deep-green: hsl(167, 90%, 10%, 0.8);
+  --deeper-green: hsl(167, 90%, 10%, 0.95);
   --transparent-purple: rgba(177, 35, 243, 0.25);
   --green-blue-gradient: linear-gradient(
     -45deg,
@@ -114,6 +115,13 @@ button:hover {
 }
 input {
   caret-color: transparent;
+  border-radius: 0.5rem;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 @media (min-width: 600px) {
