@@ -7,11 +7,11 @@ import Layout from "../../Layout";
 
 const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
-  const setFocus = document.querySelector(".first-player-input");
-  window.onload = setFocus.focus();
+  // const setFocus = document.querySelector(".first-player-input");
+  // window.onload = setFocus.focus();
   const handlePlayerInput = (e) => {
     const regX = /^[0-9]+$/;
-
+    e.preventDefault();
     if (e.target.value === "" || regX.test(e.target.value)) {
       setPlayerInput([...playerInput, e.target.value]);
     }
@@ -35,6 +35,7 @@ const StartGame = () => {
               className="first-player-input player-input"
               value={playerInput.playerInput1}
               onChange={handlePlayerInput}
+              autocomplete="off"
             ></input>
             <input
               type="text"
@@ -45,6 +46,7 @@ const StartGame = () => {
               className="second-player-input player-input"
               value={playerInput.playerInput2}
               onChange={handlePlayerInput}
+              autocomplete="off"
             ></input>
             <input
               type="text"
@@ -55,6 +57,7 @@ const StartGame = () => {
               className="third-player-input player-input"
               value={playerInput.playerInput3}
               onChange={handlePlayerInput}
+              autocomplete="off"
             ></input>
             <input
               type="text"
@@ -65,6 +68,7 @@ const StartGame = () => {
               className="fourth-player-input player-input"
               value={playerInput.playerInput4}
               onChange={handlePlayerInput}
+              autocomplete="off"
             ></input>
           </div>
           <div className="number-btns">

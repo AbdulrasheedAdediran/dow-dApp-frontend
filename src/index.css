@@ -112,6 +112,9 @@ button {
 button:hover {
   color: var(--light-green);
 }
+input {
+  caret-color: transparent;
+}
 
 @media (min-width: 600px) {
   body {
