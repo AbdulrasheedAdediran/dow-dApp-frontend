@@ -60,6 +60,9 @@
   --font-rubik-wet-paint: "Rubik Wet Paint", cursive;
 }
 
+/*
+======= UNIVERSAL STYLES ======= 
+*/
 * {
   padding: 0;
   margin: 0;
@@ -124,6 +127,9 @@ input {
   -ms-user-select: none;
 }
 
+/*
+======= MEDIA QUERIES ======= 
+*/
 @media (min-width: 600px) {
   body {
   }
