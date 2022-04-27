@@ -6,22 +6,39 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 
 const StartGame = () => {
+  // Handles the player's inputs
   const [playerInput, setPlayerInput] = useState([]);
+  // Handles disabling/enabling input fields based on validity of input provided
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const handlePlayerInput = (e) => {
-    const regX = /^[0-9]+$/;
     e.preventDefault();
-    if (e.target.value === "" || regX.test(e.target.value)) {
+    // Set valid inputs to be 0 - 9
+    const regX = /^[0-9]+$/;
+    // Checks if inputs entered are valid and stores them in an array
+    if (regX.test(e.target.value)) {
       setPlayerInput([...playerInput, e.target.value]);
+      console.log(`regX is ${regX.test(e.target.value)}`);
+      console.log(`e.target.value is ${e.target.value}`);
+    } else {
+      // Do not store the player's input if they are invalid (not 0 - 9)
+      e.target.value = "";
     }
-    /*======= =======*/
+
+    /*======= 
+    
+    =======*/
 
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = function (e) {
       let target = e.target;
+      let pressedKey = String(e.key);
+      console.log(pressedKey);
       let maxLength = parseInt(target.attributes["maxlength"].value, 10);
-      let myLength = target.value.length;
-      if (myLength >= maxLength) {
+      let focusedInputLength = target.value.length;
+      if (focusedInputLength >= maxLength && regX.test(e.target.value)) {
         let next = target;
+        next.nextElementSibling.attributes["disabled"] = setIsDisabled(true);
         while ((next = next.nextElementSibling)) {
           if (next == null) break;
           if (next.tagName.toLowerCase() === "input") {
@@ -31,7 +48,7 @@ const StartGame = () => {
         }
       }
       // Move to previous field if empty (user pressed backspace)
-      else if (myLength === 0) {
+      else if (focusedInputLength === 0) {
         let previous = target;
         while ((previous = previous.previousElementSibling)) {
           if (previous == null) break;
@@ -44,7 +61,13 @@ const StartGame = () => {
     };
     /***======== */
   };
-  const handlePlay = (e) => {};
+  const handlePlay = (e) => {
+    const entries = document.querySelector(".entries");
+    e.preventDefault();
+    console.log(playerInput);
+    setPlayerInput([]);
+    entries.reset();
+  };
   return (
     <Layout>
       <section>
@@ -63,8 +86,9 @@ const StartGame = () => {
               className="first-player-input player-input"
               value={playerInput.playerInput1}
               onChange={handlePlayerInput}
-              autocomplete="off"
+              autoComplete="off"
               autoFocus
+              disabled={isDisabled}
             ></input>
             <input
               type="text"
@@ -75,7 +99,8 @@ const StartGame = () => {
               className="second-player-input player-input"
               value={playerInput.playerInput2}
               onChange={handlePlayerInput}
-              autocomplete="off"
+              autoComplete="off"
+              disabled={!isDisabled}
             ></input>
             <input
               type="text"
@@ -86,7 +111,8 @@ const StartGame = () => {
               className="third-player-input player-input"
               value={playerInput.playerInput3}
               onChange={handlePlayerInput}
-              autocomplete="off"
+              autoComplete="off"
+              disabled={!isDisabled}
             ></input>
             <input
               type="text"
@@ -97,20 +123,21 @@ const StartGame = () => {
               className="fourth-player-input player-input"
               value={playerInput.playerInput4}
               onChange={handlePlayerInput}
-              autocomplete="off"
+              autoComplete="off"
+              disabled={!isDisabled}
             ></input>
           </div>
           <div className="number-btns">
-            <button className="input-btn">0</button>
-            <button className="input-btn">1</button>
-            <button className="input-btn">2</button>
-            <button className="input-btn">3</button>
-            <button className="input-btn">4</button>
-            <button className="input-btn">5</button>
-            <button className="input-btn">6</button>
-            <button className="input-btn">7</button>
-            <button className="input-btn">8</button>
-            <button className="input-btn">9</button>
+            <button className="number-btn">0</button>
+            <button className="number-btn">1</button>
+            <button className="number-btn">2</button>
+            <button className="number-btn">3</button>
+            <button className="number-btn">4</button>
+            <button className="number-btn">5</button>
+            <button className="number-btn">6</button>
+            <button className="number-btn">7</button>
+            <button className="number-btn">8</button>
+            <button className="number-btn">9</button>
           </div>
           <div className="clear-play-btns">
             <button className="game-btn clear">Clear</button>

@@ -36,7 +36,7 @@ input:focus {
 .number-btns {
   margin-bottom: 2.5rem;
 }
-.input-btn {
+.number-btn {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
   aspect-ratio: 1;
@@ -44,7 +44,7 @@ input:focus {
   border-radius: 0.5rem;
   margin-inline: 0.5rem;
 }
-.input-btn:hover {
+.number-btn:hover {
   background: var(--blue-black-gradient);
   color: var(--antique-white);
 }
