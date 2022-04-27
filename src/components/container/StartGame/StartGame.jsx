@@ -7,8 +7,8 @@ import Layout from "../../Layout";
 
 const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
-  const setFocus = document.getElementsByClassName("player-input")[0];
-  window.onload = setFocus.focus();
+  // const setFocus = document.getElementsByClassName("player-input")[0];
+  // window.onload = setFocus.focus();
   const handlePlayerInput = (e) => {
     const regX = /^[0-9]+$/;
     e.preventDefault();
@@ -67,6 +67,7 @@ const StartGame = () => {
               value={playerInput.playerInput1}
               onChange={handlePlayerInput}
               autocomplete="off"
+              autoFocus
             ></input>
             <input
               type="text"
