@@ -7,24 +7,21 @@ import Layout from "../../Layout";
 
 const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
-  // const setFocus = document.getElementsByClassName("player-input")[0];
-  // window.onload = setFocus.focus();
   const handlePlayerInput = (e) => {
     const regX = /^[0-9]+$/;
     e.preventDefault();
     if (e.target.value === "" || regX.test(e.target.value)) {
       setPlayerInput([...playerInput, e.target.value]);
     }
+    /*======= =======*/
 
-    /***======== */
-
-    var container = document.getElementsByClassName("input")[0];
+    let container = document.getElementsByClassName("input")[0];
     container.onkeyup = function (e) {
-      var target = e.srcElement || e.target;
-      var maxLength = parseInt(target.attributes["maxlength"].value, 10);
-      var myLength = target.value.length;
+      let target = e.target;
+      let maxLength = parseInt(target.attributes["maxlength"].value, 10);
+      let myLength = target.value.length;
       if (myLength >= maxLength) {
-        var next = target;
+        let next = target;
         while ((next = next.nextElementSibling)) {
           if (next == null) break;
           if (next.tagName.toLowerCase() === "input") {
@@ -35,7 +32,7 @@ const StartGame = () => {
       }
       // Move to previous field if empty (user pressed backspace)
       else if (myLength === 0) {
-        var previous = target;
+        let previous = target;
         while ((previous = previous.previousElementSibling)) {
           if (previous == null) break;
           if (previous.tagName.toLowerCase() === "input") {
@@ -142,32 +139,7 @@ const StartGame = () => {
 export default StartGame;
 
 /**
- *   const SSNField = () => {
-      const { handleChange } = useSSNFields();
 
-      return (
-        <>
-          <input
-            type="text"
-            name="ssn-1"
-            maxLength={3}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="ssn-2"
-            maxLength={2}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="ssn-3"
-            maxLength={4}
-            onChange={handleChange}
-          />
-        </>
-      );
-    };
 
     // FOCUS NEXT INPUT FIELD
     const { maxLength, name, value } = e.target;
