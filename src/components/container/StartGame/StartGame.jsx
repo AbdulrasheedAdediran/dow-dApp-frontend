@@ -6,58 +6,110 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 
 const StartGame = () => {
-  // Handles the player's inputs
+  // Stores and handles the player's inputs
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handlePlayerInput = (e) => {
     e.preventDefault();
+    const target = e.target;
+    // const pressedKey = String(e.key);
+    const maxLength = parseInt(target.attributes["maxlength"].value, 10);
+    // const minLength = parseInt(target.attributes["minlength"].value, 10);
+    const previous = target.previousElementSibling;
+    const next = target.nextElementSibling;
+    const inputs = document.querySelectorAll("input");
+
     // Set valid inputs to be 0 - 9
     const regX = /^[0-9]+$/;
     // Checks if inputs entered are valid and stores them in an array
-    if (regX.test(e.target.value)) {
-      setPlayerInput([...playerInput, e.target.value]);
-      console.log(`regX is ${regX.test(e.target.value)}`);
-      console.log(`e.target.value is ${e.target.value}`);
+    if (regX.test(target.value)) {
+      console.log(`regX is ${regX.test(target.value)}`);
+      console.log(`e.target.value is ${target.value}`);
+      // setPlayerInput(playerInput =>[...playerInput, e.target.value]);
+      playerInput.push(e.target.value);
+      console.log(playerInput);
     } else {
       // Do not store the player's input if they are invalid (not 0 - 9)
-      e.target.value = "";
+      console.log(`regX is ${regX.test(target.value)}`);
+      target.value = "";
+      target.focus();
+      console.log(`e.target.value is ${target.value}`);
+      console.log(playerInput);
     }
 
     /*======= 
+    BUGS
+    1. Must focus on first input onLoad and disable following inputs
+    2. Must clear inputs onCLick of `Backspace` or `Clear` (including first input)
+    3. Must write to next available input field after clearing
+    4. Handle `null` error in console that pops up when the last input is filled
+    5. Handle incorrect entry of data into input array that result from cleared inputs
     
+
+
+    ===== CLEAR =====
+    - If the current input is !empty{
+    keep focus on current input
+    clear the current input; 
+    pop the value from the playerInput array;
+    accept a new value;
+    push new value to the playerInput array
+    } else if the current input is empty {
+    switch focus to the previous input; 
+    clear the previous input; 
+    pop the value from the playerInput array; 
+    accept a new value and push it to the playerInput array
+    }
+    else if current input is empty && current input is the first input || previous input is null{
+    keep focus on current input;
+    accept a new value and push it to the playerInput array
+    if maxLength{
+    switch focus to next input 
+    }
+    }
     =======*/
 
+    const clear = (e) => {
+      if (maxLength) {
+        target.focus();
+        target.value = "";
+        playerInput.pop();
+      } else if (!maxLength) {
+        previous.focus();
+      }
+    };
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = function (e) {
-      let target = e.target;
       let pressedKey = String(e.key);
-      console.log(pressedKey);
-      let maxLength = parseInt(target.attributes["maxlength"].value, 10);
+      console.log(` Pressed "${pressedKey}" key on the keyboard`);
       let focusedInputLength = target.value.length;
-      if (focusedInputLength >= maxLength && regX.test(e.target.value)) {
-        let next = target;
-        next.nextElementSibling.attributes["disabled"] = setIsDisabled(true);
-        while ((next = next.nextElementSibling)) {
-          if (next == null) break;
-          if (next.tagName.toLowerCase() === "input") {
-            next.focus();
-            break;
-          }
-        }
+      let lastInput = inputs[inputs.length - 1];
+      console.log(`Inputs length is ${inputs.length}`);
+      if (
+        focusedInputLength >= maxLength &&
+        regX.test(e.target.value) &&
+        next !== null
+      ) {
+        next.attributes["disabled"] = setIsDisabled(true);
+        next.focus();
+      } else {
+        lastInput.focus();
       }
       // Move to previous field if empty (user pressed backspace)
-      else if (focusedInputLength === 0) {
-        let previous = target;
-        while ((previous = previous.previousElementSibling)) {
-          if (previous == null) break;
-          if (previous.tagName.toLowerCase() === "input") {
-            previous.focus();
-            break;
-          }
-        }
-      }
+      // else if (focusedInputLength < minLength) {
+      //   // let previous = target.previousElementSibling;
+      //   if (previous === null) {
+      //     return;
+      //   } else if (
+      //     previous.tagName.toLowerCase() === "input" ||
+      //     previous.attributes[isDisabled]
+      //   ) {
+      //     previous.focus();
+      //     playerInput.pop();
+      //   }
+      // }
     };
     /***======== */
   };
@@ -65,8 +117,11 @@ const StartGame = () => {
     const entries = document.querySelector(".entries");
     e.preventDefault();
     console.log(playerInput);
+    // entries.reset();
+    let firstInput = document.getElementsByClassName("first-player-input");
+    console.log(firstInput.value);
+    firstInput.setAttribute("autofocus", "");
     setPlayerInput([]);
-    entries.reset();
   };
   return (
     <Layout>
@@ -145,6 +200,7 @@ const StartGame = () => {
               className="game-btn play"
               type="submit"
               onClick={handlePlay}
+              disabled="true"
             >
               Play
             </button>
