@@ -14,24 +14,21 @@ const StartGame = () => {
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
-    // const pressedKey = String(e.key);
     const maxLength = parseInt(target.attributes["maxlength"].value, 10);
-    // const minLength = parseInt(target.attributes["minlength"].value, 10);
     const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
     const inputs = document.querySelectorAll("input");
 
-    // Set valid inputs to be 0 - 9
+    // Set valid inputs to be numbers 0 - 9
     const regX = /^[0-9]+$/;
     // Checks if inputs entered are valid and stores them in an array
     if (regX.test(target.value)) {
       console.log(`regX is ${regX.test(target.value)}`);
       console.log(`e.target.value is ${target.value}`);
-      // setPlayerInput(playerInput =>[...playerInput, e.target.value]);
       playerInput.push(e.target.value);
       console.log(playerInput);
     } else {
-      // Do not store the player's input if they are invalid (not 0 - 9)
+      // Do not store the player's input if they are invalid (not numbers 0 - 9)
       console.log(`regX is ${regX.test(target.value)}`);
       target.value = "";
       target.focus();
@@ -41,10 +38,10 @@ const StartGame = () => {
 
     /*======= 
     BUGS
-    1. Must focus on first input onLoad and disable following inputs
+    1. Must focus on first input onLoad and disable following inputs => DONE
     2. Must clear inputs onCLick of `Backspace` or `Clear` (including first input)
     3. Must write to next available input field after clearing
-    4. Handle `null` error in console that pops up when the last input is filled
+    4. Handle `null` error in console that pops up when the last input is filled => DONE
     5. Handle incorrect entry of data into input array that result from cleared inputs
     
 
