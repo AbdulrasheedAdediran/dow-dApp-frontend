@@ -19,6 +19,7 @@ const StartGame = () => {
     const next = target.nextElementSibling;
     const inputs = document.querySelectorAll("input");
     const clearBtn = document.getElementsByClassName(".clear");
+    const playBtn = document.getElementsByClassName(".play");
 
     // Set valid inputs to be numbers 0 - 9
     const regX = /^[0-9]+$/;
@@ -105,6 +106,7 @@ const StartGame = () => {
 
       // Move to previous field if empty (user pressed backspace)
       if (focusedInputLength < maxLength) {
+        playerInput.pop();
         let firstInput = inputs[0];
         if (target === inputs[1]) {
           previous.attributes["disabled"] = setIsDisabled(false);
@@ -113,10 +115,16 @@ const StartGame = () => {
         }
         if (previous === null && target === firstInput) {
           target.focus();
+          playerInput.pop();
+          setPlayerInput([]);
         } else if (previous !== firstInput) {
           previous.attributes["disabled"] = setIsDisabled(true);
-          previous.focus();
           playerInput.pop();
+          previous.focus();
+        } else if (target === lastInput) {
+          target.value = "";
+          playerInput.pop();
+          target.focus();
         }
       }
 
@@ -156,7 +164,13 @@ const StartGame = () => {
     //     target.focus();
     //   }
     // }
-
+    // Disable Play button until all inputs are complete
+    const lastInput = inputs[inputs.length - 1];
+    if (lastInput.length >= maxLength) {
+      playBtn.attributes["disabled"] = setIsDisabled(true);
+    } else {
+      playBtn.attributes["disabled"] = setIsDisabled(false);
+    }
     /***======== */
   };
   const handlePlay = (e) => {

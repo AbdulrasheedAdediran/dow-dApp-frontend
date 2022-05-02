@@ -72,6 +72,12 @@ input:focus {
   opacity: 1;
   background: var(--btn-deep-green-red-gradient);
 }
+/* .play {
+  background: var(--sky-blue-black-gradient);
+}
+.play:disabled {
+  background: var(--btn-deep-green-red-gradient);
+} */
 .attempts-and-dashboard {
   display: flex;
   align-items: center;
