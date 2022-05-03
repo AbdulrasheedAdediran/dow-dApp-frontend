@@ -10,7 +10,8 @@ const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
-
+  let trials = 1;
+  let attempts = [];
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -106,7 +107,6 @@ const StartGame = () => {
 
       // Move to previous field if empty (user pressed backspace)
       if (focusedInputLength < maxLength) {
-        playerInput.pop();
         let firstInput = inputs[0];
         if (target === inputs[1]) {
           previous.attributes["disabled"] = setIsDisabled(false);
@@ -165,23 +165,27 @@ const StartGame = () => {
     //   }
     // }
     // Disable Play button until all inputs are complete
-    const lastInput = inputs[inputs.length - 1];
-    if (lastInput.length >= maxLength) {
-      playBtn.attributes["disabled"] = setIsDisabled(true);
-    } else {
-      playBtn.attributes["disabled"] = setIsDisabled(false);
-    }
+    // const lastInput = inputs[inputs.length - 1];
+    // if (lastInput.length >= maxLength) {
+    //   playBtn.attributes["disabled"] = setIsDisabled(true);
+    // } else {
+    //   playBtn.attributes["disabled"] = setIsDisabled(false);
+    // }
     /***======== */
   };
   const handlePlay = (e) => {
     const entries = document.querySelector(".entries");
+    const inputs = document.querySelectorAll("input");
+    let firstInput = inputs[0];
+    // let firstInput = document.querySelector(".first-player-input");
     e.preventDefault();
-    console.log(playerInput);
-    // entries.reset();
-    let firstInput = document.getElementsByClassName("first-player-input");
-    console.log(firstInput.value);
-    firstInput.setAttribute("autofocus", "");
-    console.log(`setPlayerInput is ${setPlayerInput([])}`);
+    console.log(`Player input before reset: ${playerInput}`);
+    entries.reset();
+    firstInput.attributes["disabled"] = setIsDisabled(false);
+    // firstInput.attributes["autofocus"] = true;
+    // firstInput.setAttribute("autofocus", true);
+    firstInput.focus();
+    console.log(`Player input after reset: ${playerInput}`);
   };
   return (
     <Layout>
@@ -202,7 +206,7 @@ const StartGame = () => {
               value={playerInput.playerInput1}
               onChange={handlePlayerInput}
               autoComplete="off"
-              autoFocus
+              autoFocus={true}
               disabled={isDisabled}
             ></input>
             <input
