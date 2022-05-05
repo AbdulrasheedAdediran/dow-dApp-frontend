@@ -189,17 +189,13 @@ const StartGame = () => {
         dead += 1;
       }
       // Check if player guess is in the sequence but not in the correct index of random numbers
-      else if (playerInput[i]) {
-        for (let j = 0; j < 4; j++) {
-          if (
-            playerInput[i] != randomNumber[i] &&
-            playerInput[i] == randomNumber[j]
-          ) {
-            wounded += 1;
-          }
+      for (let j = 0; j < 4; j++) {
+        if (
+          playerInput[i] != randomNumber[i] &&
+          playerInput[i] == randomNumber[j]
+        ) {
+          wounded += 1;
         }
-      } else {
-        console.log(`This shit ain't working`);
       }
     }
     attempts = playerInput;
