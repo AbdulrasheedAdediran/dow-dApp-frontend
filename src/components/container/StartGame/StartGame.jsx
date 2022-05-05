@@ -181,14 +181,16 @@ const StartGame = () => {
     e.preventDefault();
 
     // Check Player Input and Return Round Scores
-
     const randomNumber = [1, 3, 5, 7];
     let dead = 0;
     let wounded = 0;
     for (let i = 0; i < 4; i++) {
+      // Check if player guess is in the correct index as random number
       if (playerInput[i] == randomNumber[i]) {
         dead += 1;
-      } else if (playerInput[i]) {
+      }
+      // Check if player guess is in the sequence but not in the correct index as random number
+      else if (playerInput[i]) {
         for (let j = 0; j < 4; j++) {
           if (
             playerInput[i] != randomNumber[i] &&
