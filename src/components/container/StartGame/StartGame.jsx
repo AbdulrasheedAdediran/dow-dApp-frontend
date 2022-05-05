@@ -183,12 +183,11 @@ const StartGame = () => {
     // Check Player Input and Return Round Scores
 
     const randomNumber = [1, 3, 5, 7];
+    let dead = 0;
+    let wounded = 0;
     for (let i = 0; i < 4; i++) {
-      let dead = 0;
-      let wounded = 0;
       if (playerInput[i] == randomNumber[i]) {
         dead += 1;
-        console.log(`${dead} Dead`);
       } else if (playerInput[i]) {
         for (let j = 0; j < 4; j++) {
           if (
@@ -196,13 +195,14 @@ const StartGame = () => {
             playerInput[i] == randomNumber[j]
           ) {
             wounded += 1;
-            console.log(`${wounded} Wounded`);
           }
         }
       } else {
         console.log(`This shit ain't working`);
       }
     }
+    console.log(`${dead} Dead`);
+    console.log(`${wounded} Wounded`);
     // for (let i = 0; i < 4; i++) {
     //   let dead = 0;
     //   let wounded = 0;
