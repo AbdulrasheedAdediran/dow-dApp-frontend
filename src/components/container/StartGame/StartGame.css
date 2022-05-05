@@ -24,12 +24,12 @@ section {
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
   font-size: 2.5rem;
-  outline: 1px outset var(--dark-navy-blue);
+  outline: 1px solid var(--dark-navy-blue);
 }
 input:focus {
   background: var(--deeper-green);
-  outline: 2px inset var(--light-green);
-  border: 1px solid var(--dark-navy-blue);
+  outline: 2px groove var(--light-green);
+  border: 1px groove var(--dark-navy-blue);
   border-radius: 0.5rem;
   transform: scale(1.075);
 }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const HowToPlay = () => {
   return (
-    <div>
+    <div className="howToPlay">
       <h1>How To Play</h1>
       <p>There are four random unique numbers for each game.</p>
       <p>

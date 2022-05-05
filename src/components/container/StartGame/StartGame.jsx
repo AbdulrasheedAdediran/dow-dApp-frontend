@@ -177,19 +177,18 @@ const StartGame = () => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     let firstInput = inputs[0];
-    // let firstInput = document.querySelector(".first-player-input");
+    let dead = 0;
+    let wounded = 0;
     e.preventDefault();
 
     // Check Player Input and Return Round Scores
-    const randomNumber = [1, 3, 5, 7];
-    let dead = 0;
-    let wounded = 0;
+    const randomNumber = [4, 2, 3, 1];
     for (let i = 0; i < 4; i++) {
-      // Check if player guess is in the correct index as random number
+      // Check if player guess is in the correct index of random numbers
       if (playerInput[i] == randomNumber[i]) {
         dead += 1;
       }
-      // Check if player guess is in the sequence but not in the correct index as random number
+      // Check if player guess is in the sequence but not in the correct index of random numbers
       else if (playerInput[i]) {
         for (let j = 0; j < 4; j++) {
           if (
@@ -203,36 +202,13 @@ const StartGame = () => {
         console.log(`This shit ain't working`);
       }
     }
+    attempts = playerInput;
     console.log(`${dead} Dead`);
     console.log(`${wounded} Wounded`);
-    // for (let i = 0; i < 4; i++) {
-    //   let dead = 0;
-    //   let wounded = 0;
-    //   for (let j = 0; j < 4; j++) {
-    //     if (playerInput[i] == randomNumber[j]) {
-    //       dead += 1;
-    //       console.log(`${dead} Dead`);
-    //     } else if (playerInput[i]) {
-    //       for (let j = 0; j < 4; j++) {
-    //         if (
-    //           playerInput[i] != randomNumber[i] &&
-    //           playerInput[i] == randomNumber[j]
-    //         ) {
-    //           wounded += 1;
-    //           console.log(`${wounded} Wounded`);
-    //         }
-    //       }
-    //     } else {
-    //       console.log(`This shit ain't working`);
-    //     }
-    //   }
-    // }
     console.log(` Random Numbers Generated: ${randomNumber}`);
     console.log(`Your Guess: ${playerInput}`);
     entries.reset();
     firstInput.attributes["disabled"] = setIsDisabled(false);
-    // firstInput.attributes["autofocus"] = true;
-    // firstInput.setAttribute("autofocus", true);
     firstInput.focus();
     console.log(`Player input after reset: ${playerInput}`);
   };
