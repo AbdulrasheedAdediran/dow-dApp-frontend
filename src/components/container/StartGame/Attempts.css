@@ -1,6 +1,17 @@
 .attempts {
+  display: flex;
+  height: 17.5rem;
   width: 100%;
   background: var(--deep-green);
   color: var(--antique-white);
-  height: 100%;
+}
+.attempts h2 {
+  margin-bottom: 2.5rem;
+}
+.attempts ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  list-style: decimal;
 }

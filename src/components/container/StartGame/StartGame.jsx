@@ -10,8 +10,15 @@ const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
+  let [dead, setDead] = useState(0);
+  let [wounded, setWounded] = useState(0);
+  let [attempt, setAttempt] = useState(["*", "*", "*", "*"]);
   let trials = 1;
-  let attempts = [];
+  // let attempts = [];
+  // let dead = 0;
+  // let wounded = 0;
+  const randomNumbers = [4, 2, 3, 1];
+  const numberButtons = document.getElementsByClassName("number-btn");
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -19,8 +26,8 @@ const StartGame = () => {
     const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
     const inputs = document.querySelectorAll("input");
-    const clearBtn = document.getElementsByClassName(".clear");
-    const playBtn = document.getElementsByClassName(".play");
+    const clearBtn = document.getElementsByClassName("clear");
+    const playBtn = document.getElementsByClassName("play");
 
     // Set valid inputs to be numbers 0 - 9
     const regX = /^[0-9]+$/;
@@ -88,7 +95,7 @@ const StartGame = () => {
     // });
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
-      let pressedKey = String(e.key);
+      let pressedKey = parseInt(String(e.key));
       console.log(` Pressed "${pressedKey}" key on the keyboard`);
       let focusedInputLength = target.value.length;
       let lastInput = inputs[inputs.length - 1];
@@ -173,36 +180,37 @@ const StartGame = () => {
     // }
     /***======== */
   };
+  // numberButtons.addEventListener("click", (e) => {
+  //   e.target.value = numberButtons.innerText;
+  // });
   const handlePlay = (e) => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     let firstInput = inputs[0];
-    let dead = 0;
-    let wounded = 0;
     e.preventDefault();
 
     // Check Player Input and Return Round Scores
-    const randomNumber = [4, 2, 3, 1];
     for (let i = 0; i < 4; i++) {
       // Check if player guess is in the correct index of random numbers
-      if (playerInput[i] == randomNumber[i]) {
-        dead += 1;
+      if (playerInput[i] == randomNumbers[i]) {
+        setDead((dead += 1));
       }
       // Check if player guess is in the sequence but not in the correct index of random numbers
       for (let j = 0; j < 4; j++) {
         if (
-          playerInput[i] != randomNumber[i] &&
-          playerInput[i] == randomNumber[j]
+          playerInput[i] != randomNumbers[i] &&
+          playerInput[i] == randomNumbers[j]
         ) {
-          wounded += 1;
+          setWounded((wounded += 1));
         }
       }
     }
-    attempts = playerInput;
+    trials += 1;
+    setAttempt(playerInput);
+    console.log(`Random Numbers Generated: ${randomNumbers}`);
+    console.log(`Your Guess: ${playerInput}`);
     console.log(`${dead} Dead`);
     console.log(`${wounded} Wounded`);
-    console.log(` Random Numbers Generated: ${randomNumber}`);
-    console.log(`Your Guess: ${playerInput}`);
     entries.reset();
     firstInput.attributes["disabled"] = setIsDisabled(false);
     firstInput.focus();
@@ -269,7 +277,9 @@ const StartGame = () => {
             ></input>
           </div>
           <div className="number-btns">
-            <button className="number-btn">0</button>
+            <button className="number-btn" value="0">
+              0
+            </button>
             <button className="number-btn">1</button>
             <button className="number-btn">2</button>
             <button className="number-btn">3</button>
@@ -284,9 +294,10 @@ const StartGame = () => {
             <button className="game-btn clear">Clear</button>
             <button
               className="game-btn play"
-              type="submit"
-              onClick={handlePlay}
+              // type="submit"
               disabled="true"
+              // onSubmit={handlePlay}
+              onClick={handlePlay}
             >
               Play
             </button>
@@ -294,7 +305,12 @@ const StartGame = () => {
         </form>
 
         <div className="attempts-and-dashboard">
-          <Attempts confirmedInput={playerInput} />
+          <Attempts
+            trial={trials}
+            confirmedAttempt={attempt.join(" ")}
+            dead={dead}
+            wounded={wounded}
+          />
           <Dashboard />
         </div>
         <Link to="/">

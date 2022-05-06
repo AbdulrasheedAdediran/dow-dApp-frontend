@@ -1,18 +1,18 @@
 import React from "react";
 import "./Attempts.css";
 
-const Attempts = ({ confirmedInput }) => {
+const Attempts = (props) => {
   return (
     <section className="attempts">
       <h2>Attempts</h2>
       <ul>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
-        <li>{}</li>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead {props.wounded} Wounded
+        </li>
       </ul>
     </section>
   );
