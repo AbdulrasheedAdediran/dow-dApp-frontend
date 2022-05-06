@@ -11,7 +11,61 @@ const Attempts = (props) => {
           {props.confirmedAttempt}
         </li>
         <li>
-          {props.dead} Dead {props.wounded} Wounded
+          {props.dead} Dead - {props.wounded} Wounded
+        </li>
+      </ul>
+      <ul>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead - {props.wounded} Wounded
+        </li>
+      </ul>
+      <ul>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead - {props.wounded} Wounded
+        </li>
+      </ul>
+      <ul>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead - {props.wounded} Wounded
+        </li>
+      </ul>
+      <ul>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead - {props.wounded} Wounded
+        </li>
+      </ul>
+      <ul>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead - {props.wounded} Wounded
+        </li>
+      </ul>
+      <ul>
+        <li>
+          {/* {props.trial} */}
+          {props.confirmedAttempt}
+        </li>
+        <li>
+          {props.dead} Dead - {props.wounded} Wounded
         </li>
       </ul>
     </section>

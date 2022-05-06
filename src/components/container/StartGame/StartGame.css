@@ -7,7 +7,7 @@ section {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding-inline: 2.5rem;
+  padding-inline: 2rem;
 }
 .input {
   display: flex;
@@ -19,7 +19,7 @@ section {
   background: var(--deep-green);
   aspect-ratio: 1;
   width: 4rem;
-  margin: 2.5rem 0.5rem;
+  margin: 2rem 0.5rem;
   color: var(--light-green);
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
@@ -34,7 +34,7 @@ input:focus {
   transform: scale(1.075);
 }
 .number-btns {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 .number-btn {
   background: var(--sky-blue-black-gradient);
@@ -82,7 +82,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 2.5rem;
+  gap: 2rem;
   width: 100%;
-  margin-block: 2.5rem;
+  margin-block: 2rem;
 }

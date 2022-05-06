@@ -1,9 +1,12 @@
 .dashboard {
-  height: 17.5rem;
+  height: 20rem;
   width: 100%;
   background: var(--deep-green);
   color: var(--antique-white);
+  display: block;
 }
 .dashboard h2 {
-  margin-bottom: 2.5rem;
+  width: 100%;
+  margin-inline: auto;
+  margin-block: 1rem;
 }

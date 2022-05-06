@@ -1,17 +1,19 @@
 .attempts {
-  display: flex;
-  height: 17.5rem;
+  height: 20rem;
   width: 100%;
   background: var(--deep-green);
   color: var(--antique-white);
+  display: block;
 }
 .attempts h2 {
-  margin-bottom: 2.5rem;
+  width: 100%;
+  margin-inline: auto;
+  margin-block: 1rem;
 }
 .attempts ul {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  list-style: decimal;
+  line-height: 1.5;
 }
