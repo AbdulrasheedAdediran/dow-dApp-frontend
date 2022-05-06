@@ -46,7 +46,10 @@ main {
   left: -2.5%;
   margin-left: -50%;
 }
-
+.main-menu-links {
+  display: grid;
+  margin-block: 1rem;
+}
 .menu-button {
   margin-bottom: 1rem;
 }

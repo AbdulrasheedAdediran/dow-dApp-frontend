@@ -3,6 +3,7 @@
   width: 100%;
   background: var(--deep-green);
   color: var(--antique-white);
+  border-radius: 0.5rem;
   display: block;
 }
 .attempts h2 {
@@ -15,5 +16,5 @@
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  line-height: 1.5;
+  line-height: 1.6;
 }

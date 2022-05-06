@@ -3,6 +3,7 @@
   width: 100%;
   background: var(--deep-green);
   color: var(--antique-white);
+  border-radius: 0.5rem;
   display: block;
 }
 .dashboard h2 {

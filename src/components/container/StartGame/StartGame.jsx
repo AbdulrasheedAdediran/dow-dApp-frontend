@@ -12,7 +12,7 @@ const StartGame = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
-  let [attempt, setAttempt] = useState(["*", "*", "*", "*"]);
+  let [attempt, setAttempt] = useState(["-", "-", "-", "-"]);
   let trials = 1;
   // let attempts = [];
   // let dead = 0;
