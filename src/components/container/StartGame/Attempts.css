@@ -5,6 +5,7 @@
   color: var(--antique-white);
   border-radius: 0.5rem;
   display: block;
+  color: var(--light-green);
 }
 .attempts h2 {
   width: 100%;
