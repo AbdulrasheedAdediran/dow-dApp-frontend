@@ -11,3 +11,17 @@
   margin-inline: auto;
   margin-block: 1rem;
 }
+.statistics-and-balance {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  line-height: 1.6;
+  flex-basis: 70% 30%;
+}
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
