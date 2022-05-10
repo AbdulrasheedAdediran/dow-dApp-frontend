@@ -8,8 +8,7 @@ import About from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import Layout from "./components/Layout";
-import { Routes, Route, Link } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 // import About from "./components/container/About/About"
 
 const App = ({ Component, pageProps }) => {
