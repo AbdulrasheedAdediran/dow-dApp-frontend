@@ -9,6 +9,12 @@ section {
   text-align: center;
   padding-inline: 2rem;
 }
+.entries {
+  position: relative;
+  top: 0;
+  left: 0;
+  /* transform: translate(-50%, -50%); */
+}
 .input {
   display: flex;
   align-items: center;

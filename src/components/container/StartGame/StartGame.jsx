@@ -13,10 +13,8 @@ const StartGame = () => {
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   let [attempt, setAttempt] = useState(["-", "-", "-", "-"]);
-  let trials = 1;
-  // let attempts = [];
-  // let dead = 0;
-  // let wounded = 0;
+  let [trials, setTrials] = useState(0);
+  const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
   const numberButtons = document.getElementsByClassName("number-btn");
   const handlePlayerInput = (e) => {
@@ -184,37 +182,75 @@ const StartGame = () => {
   //   e.target.value = numberButtons.innerText;
   // });
   const handlePlay = (e) => {
+    // Handle Play
+    //     1. Check how many dead and how many wounded villians are in the array
+    //     2. Return the value in a the attempts sheet and reset the dead and wounded values
+    //     3.
+
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
+    const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
+    const loseMessage = "GAME OVER, BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
     e.preventDefault();
-
-    // Check Player Input and Return Round Scores
-    for (let i = 0; i < 4; i++) {
-      // Check if player guess is in the correct index of random numbers
-      if (playerInput[i] == randomNumbers[i]) {
-        setDead((dead += 1));
-      }
-      // Check if player guess is in the sequence but not in the correct index of random numbers
-      for (let j = 0; j < 4; j++) {
-        if (
-          playerInput[i] != randomNumbers[i] &&
-          playerInput[i] == randomNumbers[j]
-        ) {
-          setWounded((wounded += 1));
+    if (trials <= 7 && dead !== 4) {
+      setDead((dead = 0));
+      setWounded((wounded = 0));
+      setTrials((trials += 1));
+      // Check Player Input and Return Round Scores
+      for (let i = 0; i < 4; i++) {
+        // Check if player guess is in the correct index of random numbers
+        if (playerInput[i] == randomNumbers[i]) {
+          setDead((dead += 1));
+        }
+        // Check if player guess is in the sequence but not in the correct index of random numbers
+        for (let j = 0; j < 4; j++) {
+          if (
+            playerInput[i] != randomNumbers[i] &&
+            playerInput[i] == randomNumbers[j]
+          ) {
+            setWounded((wounded += 1));
+          }
         }
       }
     }
-    trials += 1;
+    // const n = 7;
+
+    // [...playerInput(n)].map((elementInArray, index) => (
+    //   <div className="" key={i}>
+    //     {" "}
+    //     Whatever needs to be rendered repeatedly{" "}
+    //   </div>
+    // ));
+
+    // console.log(`Trial Number: ${trials}`);
+    if (trials <= 7 && dead === 4) {
+      alert(winMessage);
+    } else if (trials >= 7 && dead !== 4) {
+      // Delay alert for few seconds for player to see wrong input
+      setTimeout(function () {
+        alert(loseMessage);
+      }, 500);
+      // Reset game interface and values
+      entries.reset();
+      firstInput.attributes["disabled"] = setIsDisabled(false);
+      firstInput.attributes["autofocus"] = true;
+      firstInput.focus();
+      setTrials((trials = 0));
+    }
     setAttempt(playerInput);
     console.log(`Random Numbers Generated: ${randomNumbers}`);
     console.log(`Your Guess: ${playerInput}`);
-    console.log(`${dead} Dead`);
-    console.log(`${wounded} Wounded`);
-    entries.reset();
-    firstInput.attributes["disabled"] = setIsDisabled(false);
-    firstInput.focus();
-    console.log(`Player input after reset: ${playerInput}`);
+    // console.log(`Score: ${dead} Dead - ${wounded} Wounded`);
+    // console.log(`Dead inputs after reset: ${dead} dead`);
+    // console.log(`Wounded inputs after reset: ${wounded} wounded`);
+    console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
+
+    // entries.reset();
+    // firstInput.attributes["disabled"] = setIsDisabled(false);
+    // firstInput.focus();
+
+    // console.log("Works to this point");
   };
   return (
     <Layout>
@@ -277,9 +313,7 @@ const StartGame = () => {
             ></input>
           </div>
           <div className="number-btns">
-            <button className="number-btn" value="0">
-              0
-            </button>
+            <button className="number-btn">0</button>
             <button className="number-btn">1</button>
             <button className="number-btn">2</button>
             <button className="number-btn">3</button>
