@@ -4,7 +4,7 @@ import "./Navbar.css";
 const Navbar = ({ handleConnectWallet }) => {
   return (
     <nav>
-      <div>DOW Logo</div>
+      <div>DOW</div>
       <button className="btn-connect-wallet" onClick={handleConnectWallet}>
         Connect Wallet
       </button>

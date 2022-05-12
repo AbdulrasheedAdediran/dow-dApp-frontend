@@ -181,7 +181,7 @@ const StartGame = () => {
   // numberButtons.addEventListener("click", (e) => {
   //   e.target.value = numberButtons.innerText;
   // });
-  const handlePlay = (e) => {
+  const handlePlay = async (e) => {
     // Handle Play
     //     1. Check how many dead and how many wounded villians are in the array
     //     2. Return the value in a the attempts sheet and reset the dead and wounded values
@@ -226,10 +226,12 @@ const StartGame = () => {
     // console.log(`Trial Number: ${trials}`);
     if (trials <= 7 && dead === 4) {
       alert(winMessage);
+      window.location.reload(false);
     } else if (trials >= 7 && dead !== 4) {
       // Delay alert for few seconds for player to see wrong input
       setTimeout(function () {
         alert(loseMessage);
+        window.location.reload(false);
       }, 500);
       // Reset game interface and values
       entries.reset();
@@ -251,6 +253,7 @@ const StartGame = () => {
     // firstInput.focus();
 
     // console.log("Works to this point");
+    // if (window.confirm()) window.location.reload(false);
   };
   return (
     <Layout>
