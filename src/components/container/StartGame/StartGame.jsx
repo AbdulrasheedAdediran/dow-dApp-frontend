@@ -7,12 +7,18 @@ import Layout from "../../Layout";
 
 const StartGame = () => {
   // Stores and handles the player's inputs
-  const [playerInput, setPlayerInput] = useState([]);
+  const [playerInput, setPlayerInput] = useState({
+    playerInput1: "",
+    playerInput2: "",
+    playerInput3: "",
+    playerInput4: "",
+  });
+
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
-  let [attempt, setAttempt] = useState(["-", "-", "-", "-"]);
+  let [attempt, setAttempt] = useState([]);
   let [trials, setTrials] = useState(0);
   const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
@@ -26,6 +32,11 @@ const StartGame = () => {
     const inputs = document.querySelectorAll("input");
     const clearBtn = document.getElementsByClassName("clear");
     const playBtn = document.getElementsByClassName("play");
+    const fieldName = target.getAttribute("name");
+    const fieldValue = target.value;
+    // playeScore == newFormData
+    // addFormData == playerInput
+    const playerScore = { ...playerInput };
 
     // Set valid inputs to be numbers 0 - 9
     const regX = /^[0-9]+$/;
@@ -33,7 +44,9 @@ const StartGame = () => {
     if (regX.test(target.value)) {
       console.log(`regX is ${regX.test(target.value)}`);
       console.log(`e.target.value is ${target.value}`);
-      setPlayerInput((playerInput) => [...playerInput, target.value]);
+      playerScore[fieldName] = fieldValue;
+      // setPlayerInput({ [target.name]: target.value });
+      // setPlayerInput([...playerInput, target.value])
       // playerInput.push(target.value);
       console.log(playerInput);
     } else {
@@ -42,56 +55,13 @@ const StartGame = () => {
       target.value = "";
       target.focus();
       console.log(`e.target.value is ${target.value}`);
-      console.log(playerInput);
+      console.log(`Player Input: ${playerInput.value}`);
+      console.log("PlayerInput1:", playerInput.playerInput1);
+      console.log("PlayerInput2:", playerInput.playerInput2);
+      console.log("PlayerInput3:", playerInput.playerInput3);
+      console.log("PlayerInput4:", playerInput.playerInput4);
     }
 
-    /*======= 
-    BUGS
-    1. Must focus on first input onLoad and disable following inputs => DONE
-    2. Must clear inputs onCLick of `Backspace` or `Clear` (including first input)
-    3. Must write to next available input field after clearing
-    4. Handle `null` error in console that pops up when the last input is filled => DONE
-    5. Handle incorrect entry of data into input array that result from cleared inputs
-    6. Handle received the string `true` for the boolean attribute `disabled` warning in console
-    
-
-
-    ===== CLEAR =====
-    - If the current input is !empty{
-    keep focus on current input
-    clear the current input; 
-    pop the value from the playerInput array;
-    accept a new value;
-    push new value to the playerInput array
-    } else if the current input is empty {
-    switch focus to the previous input; 
-    clear the previous input; 
-    pop the value from the playerInput array; 
-    accept a new value and push it to the playerInput array
-    }
-    else if current input is empty && current input is the first input || previous input is null{
-    keep focus on current input;
-    accept a new value and push it to the playerInput array
-    if maxLength{
-    switch focus to next input 
-    }
-    }
-    =======*/
-
-    // clearBtn.onClick(() => {
-    //   let firstInput = inputs[0];
-    //   if (maxLength) {
-    //     target.focus();
-    //     target.value = "";
-    //     playerInput.pop();
-    //   } else if (!maxLength) {
-    //     previous.focus();
-    //     previous.target.value = "";
-    //     playerInput.pop();
-    //   } else if (!maxLength && (target === firstInput || previous === null)) {
-    //     target.focus();
-    //   }
-    // });
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
       let pressedKey = parseInt(String(e.key));
@@ -112,77 +82,10 @@ const StartGame = () => {
       }
 
       // Move to previous field if empty (user pressed backspace)
-      if (focusedInputLength < maxLength) {
-        let firstInput = inputs[0];
-        if (target === inputs[1]) {
-          previous.attributes["disabled"] = setIsDisabled(false);
-          firstInput.focus();
-          playerInput.pop();
-        }
-        if (previous === null && target === firstInput) {
-          target.focus();
-          playerInput.pop();
-          setPlayerInput([]);
-        } else if (previous !== firstInput) {
-          previous.attributes["disabled"] = setIsDisabled(true);
-          playerInput.pop();
-          previous.focus();
-        } else if (target === lastInput) {
-          target.value = "";
-          playerInput.pop();
-          target.focus();
-        }
-      }
-
-      // Move to previous field if empty (user pressed backspace)
-      // else if (focusedInputLength < minLength) {
-      //   // let previous = target.previousElementSibling;
-      //   if (previous === null) {
-      //     return;
-      //   } else if (
-      //     previous.tagName.toLowerCase() === "input" ||
-      //     previous.attributes[isDisabled]
-      //   ) {
-      //     previous.focus();
-      //     playerInput.pop();
-      //   }
-      // }
     };
-    // const key = event.key;
-    // let pressedKey = String(e.key);
-    // if (pressedKey === "Backspace" || pressedKey === "Delete") {
-    //   e.preventDefault();
-    //   let firstInput = inputs[0];
-    //   let focusedInputLength = target.value.length;
-    //   if (focusedInputLength >= maxLength) {
-    //     target.focus();
-    //     target.value = "";
-    //     playerInput.pop();
-    //   } else if (focusedInputLength < maxLength) {
-    //     previous.attributes["disabled"] = setIsDisabled(true);
-    //     previous.focus();
-    //     previous.target.value = "";
-    //     playerInput.pop();
-    //   } else if (
-    //     focusedInputLength < maxLength &&
-    //     (target === firstInput || previous === null)
-    //   ) {
-    //     target.focus();
-    //   }
-    // }
-    // Disable Play button until all inputs are complete
-    // const lastInput = inputs[inputs.length - 1];
-    // if (lastInput.length >= maxLength) {
-    //   playBtn.attributes["disabled"] = setIsDisabled(true);
-    // } else {
-    //   playBtn.attributes["disabled"] = setIsDisabled(false);
-    // }
-    /***======== */
   };
-  // numberButtons.addEventListener("click", (e) => {
-  //   e.target.value = numberButtons.innerText;
-  // });
-  const handlePlay = (e) => {
+
+  const handlePlay = async (e) => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
@@ -356,43 +259,3 @@ const StartGame = () => {
 };
 
 export default StartGame;
-
-/**
-
-
-    // FOCUS NEXT INPUT FIELD
-    const { maxLength, name, value } = e.target;
-    const { fieldName, fieldIndex } = name.split("-");
-    // Check if max length has been reached
-    if (value.length >= maxLength) {
-      // Check if it's not the last input field
-      if (parseInt(value, 10) < 4) {
-        // Get the next input field
-        const nextInputField = document.querySelector(
-          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-        );
-        // If found, focus next field
-        if (nextInputField !== null) {
-          nextInputField.focus();
-        }
-      }
-
-
-      ===========================
-
-       // Check if max length has been reached
-    if (value.length >= maxLength) {
-      // Check if it's not the last input field
-      if (parseInt(value, 10) < 4) {
-        // Get the next input field
-        const nextInputField = document.querySelector(
-          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-        );
-        // If found, focus next field
-        if (nextInputField !== null) {
-          nextInputField.focus();
-        }
-      }
-    }
-  };
- */
