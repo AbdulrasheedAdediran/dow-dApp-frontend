@@ -12,10 +12,23 @@
   margin-inline: auto;
   margin-block: 1rem;
 }
-.attempts ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+.attempts table {
   width: 100%;
-  line-height: 1.6;
+  line-height: 1.5;
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #000;
+  text-align: left;
+  padding: 0.25rem 0.5rem;
+}
+
+th {
+  background-color: #222;
+}
+
+td {
+  background-color: #444;
 }

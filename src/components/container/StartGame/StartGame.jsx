@@ -33,7 +33,8 @@ const StartGame = () => {
     if (regX.test(target.value)) {
       console.log(`regX is ${regX.test(target.value)}`);
       console.log(`e.target.value is ${target.value}`);
-      playerInput.push(e.target.value);
+      setPlayerInput((playerInput) => [...playerInput, target.value]);
+      // playerInput.push(target.value);
       console.log(playerInput);
     } else {
       // Do not store the player's input if they are invalid (not numbers 0 - 9)
@@ -181,12 +182,7 @@ const StartGame = () => {
   // numberButtons.addEventListener("click", (e) => {
   //   e.target.value = numberButtons.innerText;
   // });
-  const handlePlay = async (e) => {
-    // Handle Play
-    //     1. Check how many dead and how many wounded villians are in the array
-    //     2. Return the value in a the attempts sheet and reset the dead and wounded values
-    //     3.
-
+  const handlePlay = (e) => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
@@ -214,6 +210,7 @@ const StartGame = () => {
         }
       }
     }
+
     // const n = 7;
 
     // [...playerInput(n)].map((elementInArray, index) => (
@@ -238,14 +235,12 @@ const StartGame = () => {
       firstInput.attributes["disabled"] = setIsDisabled(false);
       firstInput.attributes["autofocus"] = true;
       firstInput.focus();
-      setTrials((trials = 0));
+      setTrials(0);
     }
     setAttempt(playerInput);
     console.log(`Random Numbers Generated: ${randomNumbers}`);
     console.log(`Your Guess: ${playerInput}`);
-    // console.log(`Score: ${dead} Dead - ${wounded} Wounded`);
-    // console.log(`Dead inputs after reset: ${dead} dead`);
-    // console.log(`Wounded inputs after reset: ${wounded} wounded`);
+
     console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
 
     // entries.reset();
@@ -332,7 +327,7 @@ const StartGame = () => {
             <button
               className="game-btn play"
               // type="submit"
-              disabled="true"
+              disabled={true}
               // onSubmit={handlePlay}
               onClick={handlePlay}
             >
@@ -342,12 +337,14 @@ const StartGame = () => {
         </form>
 
         <div className="attempts-and-dashboard">
+          {/* {playerInput.map(() => ( */}
           <Attempts
             trial={trials}
             confirmedAttempt={attempt.join(" ")}
             dead={dead}
             wounded={wounded}
           />
+          {/* ))} */}
           <Dashboard />
         </div>
         <Link to="/">
