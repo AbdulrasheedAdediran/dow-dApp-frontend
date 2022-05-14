@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import "./Attempts.css";
 
 const Attempts = (props) => {
@@ -11,10 +11,10 @@ const Attempts = (props) => {
   //   },
   // ];
   console.log("Roundscores Full Data", props.roundScores);
-  console.log("Trial Number:", props.roundScores[0].trial);
-  console.log("Confirmed Attempt:", props.roundScores[0].attempt);
-  console.log("Dead:", props.roundScores[0].dead);
-  console.log("Wounded:", props.roundScores[0].wounded);
+  // console.log("Trial Number:", props.roundScores[0]?.trial);
+  // console.log("Confirmed Attempt:", props.roundScores[0]?.attempt);
+  // console.log("Dead:", props.roundScores[0]?.dead);
+  // console.log("Wounded:", props.roundScores[0]?.wounded);
   return (
     <section className="attempts">
       <h2>Attempts</h2>
@@ -30,7 +30,7 @@ const Attempts = (props) => {
           {props.roundScores.map((roundScore) => (
             <tr key={roundScore.trial}>
               <td>{roundScore.trial}</td>
-              <td>{roundScore.confirmedAttempt}</td>
+              <td>{roundScore.attempt}</td>
               <td>
                 {roundScore.dead} Dead - {roundScore.wounded} Wounded
               </td>

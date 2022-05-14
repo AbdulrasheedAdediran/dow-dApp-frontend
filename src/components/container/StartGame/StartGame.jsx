@@ -6,28 +6,18 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 
 const StartGame = () => {
-  let dead = 0;
-  let wounded = 0;
-  let trials = 0;
   // Stores and handles the player's inputs
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
-  // const [dead, setDead] = useState(0);
-  // const [wounded, setWounded] = useState(0);
-  // const [trials, setTrials] = useState(0);
+  let [dead, setDead] = useState(0);
+  let [wounded, setWounded] = useState(0);
   const [attempt, setAttempt] = useState(["-", "-", "-", "-"]);
+  let [trials, setTrials] = useState(0);
   const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
   const numberButtons = document.getElementsByClassName("number-btn");
-  const roundScores = [
-    {
-      trial: trials,
-      attempt: playerInput,
-      dead: dead,
-      wounded: wounded,
-    },
-  ];
+  const [roundScores, setRoundScores] = useState([]);
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -42,18 +32,18 @@ const StartGame = () => {
     const regX = /^[0-9]+$/;
     // Checks if inputs entered are valid and stores them in an array
     if (regX.test(target.value)) {
-      console.log(`regX is ${regX.test(target.value)}`);
-      console.log(`e.target.value is ${target.value}`);
-      // setPlayerInput([...playerInput, target.value]);
+      // console.log(`regX is ${regX.test(target.value)}`);
+      // console.log(`e.target.value is ${target.value}`);
+      setPlayerInput([...playerInput, target.value]);
       playerInput.push(target.value);
-      console.log(playerInput);
+      // console.log(playerInput);
     } else {
       // Do not store the player's input if they are invalid (not numbers 0 - 9)
-      console.log(`regX is ${regX.test(target.value)}`);
+      // console.log(`regX is ${regX.test(target.value)}`);
       target.value = "";
       target.focus();
-      console.log(`e.target.value is ${target.value}`);
-      console.log(playerInput);
+      // console.log(`e.target.value is ${target.value}`);
+      // console.log(playerInput);
     }
 
     /*======= 
@@ -201,14 +191,14 @@ const StartGame = () => {
     let firstInput = inputs[0];
     e.preventDefault();
     if (trials <= 7 && dead !== 4) {
-      dead = 0;
-      wounded = 0;
-      trials += 1;
+      setDead((dead = 0));
+      setWounded((wounded = 0));
+      setTrials((trials += 1));
       // Check Player Input and Return Round Scores
       for (let i = 0; i < 4; i++) {
         // Check if player guess is in the correct index of random numbers
         if (playerInput[i] == randomNumbers[i]) {
-          dead += 1;
+          setDead((dead += 1));
         }
         // Check if player guess is in the sequence but not in the correct index of random numbers
         for (let j = 0; j < 4; j++) {
@@ -216,16 +206,20 @@ const StartGame = () => {
             playerInput[i] != randomNumbers[i] &&
             playerInput[i] == randomNumbers[j]
           ) {
-            wounded += 1;
+            setWounded((wounded += 1));
           }
         }
       }
-      roundScores.push({
-        trial: trials,
-        attempt: playerInput,
-        dead: dead,
-        wounded: wounded,
-      });
+
+      setRoundScores([
+        ...roundScores,
+        {
+          trial: trials,
+          attempt: playerInput,
+          dead: dead,
+          wounded: wounded,
+        },
+      ]);
     }
     console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
 
@@ -237,7 +231,6 @@ const StartGame = () => {
     //     Whatever needs to be rendered repeatedly{" "}
     //   </div>
     // ));
-
     // console.log(`Trial Number: ${trials}`);
     if (trials <= 7 && dead === 4) {
       alert(winMessage);
@@ -253,12 +246,15 @@ const StartGame = () => {
       firstInput.attributes["disabled"] = setIsDisabled(false);
       firstInput.attributes["autofocus"] = true;
       firstInput.focus();
-      trials = 0;
+      setTrials(0);
     }
 
     setAttempt(playerInput);
-    console.log(`Random Numbers Generated: ${randomNumbers}`);
-    console.log(`Your Guess: ${playerInput}`);
+    console.log("Attempt:", attempt);
+    console.log("playerInput:", playerInput);
+    console.log("Round scores:", roundScores);
+    // console.log(`Random Numbers Generated: ${randomNumbers}`);
+    // console.log(`Your Guess: ${playerInput}`);
 
     console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
 
@@ -358,7 +354,7 @@ const StartGame = () => {
         <div className="attempts-and-dashboard">
           <Attempts
             trial={trials}
-            attempt={attempt.join(" ")}
+            confirmedAttempt={attempt.join(" ")}
             dead={dead}
             wounded={wounded}
             roundScores={roundScores}
