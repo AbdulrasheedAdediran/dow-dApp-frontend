@@ -20,7 +20,7 @@
 }
 th,
 td {
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
   text-align: left;
   padding: 0.25rem 0.5rem;
 }

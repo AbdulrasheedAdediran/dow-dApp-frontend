@@ -2,14 +2,19 @@ import { React, useState } from "react";
 import "./Attempts.css";
 
 const Attempts = (props) => {
-  const [roundScores, setRoundScores] = useState([
-    {
-      trial: props.trial,
-      attempt: props.confirmedAttempt,
-      dead: props.dead,
-      wounded: props.wounded,
-    },
-  ]);
+  // const roundScores = [
+  //   {
+  //     trial: props.trial,
+  //     attempt: props.confirmedAttempt,
+  //     dead: props.dead,
+  //     wounded: props.wounded,
+  //   },
+  // ];
+  console.log("Roundscores Full Data", props.roundScores);
+  console.log("Trial Number:", props.roundScores[0].trial);
+  console.log("Confirmed Attempt:", props.roundScores[0].attempt);
+  console.log("Dead:", props.roundScores[0].dead);
+  console.log("Wounded:", props.roundScores[0].wounded);
   return (
     <section className="attempts">
       <h2>Attempts</h2>
@@ -22,7 +27,7 @@ const Attempts = (props) => {
           </tr>
         </thead>
         <tbody>
-          {roundScores.map((roundScore) => (
+          {props.roundScores.map((roundScore) => (
             <tr key={roundScore.trial}>
               <td>{roundScore.trial}</td>
               <td>{roundScore.confirmedAttempt}</td>

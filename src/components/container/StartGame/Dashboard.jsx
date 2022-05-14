@@ -4,32 +4,36 @@ const Dashboard = () => {
   return (
     <section className="dashboard">
       <h2>Dashboard</h2>
-      <div className="statistics-and-balance">
-        <div className="statistics">
-          <div className="stats">
-            <p>Current Streak:</p>
-            <p>25 days</p>
+      <div className="statistics">
+        <div className="win-rate-and-game-stats">
+          <div className="win-rate">
+            <p>Win Rate</p>
+            <p>85%</p>
           </div>
-          <div className="stats">
-            <p>Longest Streak:</p>
-            <p>36 days</p>
-          </div>
-          <div className="stats">
-            <p>Games Played:</p>
-            <p>69</p>
-          </div>
-          <div className="stats">
-            <p>Win Percentage:</p>
-            <p>87%</p>
-          </div>
-          <div className="stats">
-            <p>Your Position:</p>
-            <p>115th</p>
+          <div className="played-won-lost">
+            <div className="game-stats played">
+              <p>47</p>
+              <p>Played</p>
+            </div>
+            <div className="game-stats won">
+              <p>40</p>
+              <p>Won</p>
+            </div>
+            <div className="game-stats lost">
+              <p>07</p>
+              <p>Lost</p>
+            </div>
           </div>
         </div>
-        <div className="balance">
-          <p>00.000 MATIC</p>
-          <p>00.000 DOW</p>
+        <div className="streak-stats">
+          <div className="current-streak">
+            <p>Current Streak</p>
+            <p>10 Wins</p>
+          </div>
+          <div className="max-streak">
+            <p>Highest Streak</p>
+            <p>20 Wins</p>
+          </div>
         </div>
       </div>
     </section>
