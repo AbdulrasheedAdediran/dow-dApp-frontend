@@ -16,8 +16,21 @@ const StartGame = () => {
   let [trials, setTrials] = useState(0);
   const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
-  const numberButtons = document.getElementsByClassName("number-btn");
   const [roundScores, setRoundScores] = useState([]);
+  const clearBtn = document.querySelector(".clear");
+  const playBtn = document.querySelector(".play");
+  const numberBtn = document.querySelectorAll(".number-btn");
+
+  const handleNumberButton = (e) => {
+    const inputs = document.querySelectorAll("input");
+
+    numberBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("Clicked: ", e.target.value);
+      setPlayerInput([...playerInput, e.target.value]);
+      console.log(playerInput);
+    });
+  };
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -25,8 +38,6 @@ const StartGame = () => {
     const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
     const inputs = document.querySelectorAll("input");
-    const clearBtn = document.getElementsByClassName("clear");
-    const playBtn = document.getElementsByClassName("play");
 
     // Set valid inputs to be numbers 0 - 9
     const regX = /^[0-9]+$/;
@@ -220,8 +231,15 @@ const StartGame = () => {
           wounded: wounded,
         },
       ]);
+      // entries.reset();
+      // firstInput.attributes["disabled"] = setIsDisabled(true);
+      // firstInput.attributes["autofocus"] = true;
+      setPlayerInput([]);
+      // for (let i = 3; i == 0; i--) {
+      //   firstInput.focus();
+      // }
     }
-    console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
+    // console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
 
     // const n = 7;
 
@@ -233,20 +251,22 @@ const StartGame = () => {
     // ));
     // console.log(`Trial Number: ${trials}`);
     if (trials <= 7 && dead === 4) {
-      alert(winMessage);
-      window.location.reload(false);
+      setTimeout(() => {
+        alert(winMessage);
+        window.location.reload(false);
+      }, 300);
     } else if (trials >= 7 && dead !== 4) {
       // Delay alert for few seconds for player to see wrong input
-      setTimeout(function () {
+      setTimeout(() => {
         alert(loseMessage);
         window.location.reload(false);
-      }, 500);
+      }, 300);
       // Reset game interface and values
       entries.reset();
       firstInput.attributes["disabled"] = setIsDisabled(false);
       firstInput.attributes["autofocus"] = true;
       firstInput.focus();
-      setTrials(0);
+      setTrials((trials = trials = 0));
     }
 
     setAttempt(playerInput);
@@ -326,16 +346,76 @@ const StartGame = () => {
             ></input>
           </div>
           <div className="number-btns">
-            <button className="number-btn">0</button>
-            <button className="number-btn">1</button>
-            <button className="number-btn">2</button>
-            <button className="number-btn">3</button>
-            <button className="number-btn">4</button>
-            <button className="number-btn">5</button>
-            <button className="number-btn">6</button>
-            <button className="number-btn">7</button>
-            <button className="number-btn">8</button>
-            <button className="number-btn">9</button>
+            <button
+              className="number-btn"
+              value="0"
+              onClick={handleNumberButton}
+            >
+              0
+            </button>
+            <button
+              className="number-btn"
+              value="1"
+              onClick={handleNumberButton}
+            >
+              1
+            </button>
+            <button
+              className="number-btn"
+              value="2"
+              onClick={handleNumberButton}
+            >
+              2
+            </button>
+            <button
+              className="number-btn"
+              value="3"
+              onClick={handleNumberButton}
+            >
+              3
+            </button>
+            <button
+              className="number-btn"
+              value="4"
+              onClick={handleNumberButton}
+            >
+              4
+            </button>
+            <button
+              className="number-btn"
+              value="5"
+              onClick={handleNumberButton}
+            >
+              5
+            </button>
+            <button
+              className="number-btn"
+              value="6"
+              onClick={handleNumberButton}
+            >
+              6
+            </button>
+            <button
+              className="number-btn"
+              value="7"
+              onClick={handleNumberButton}
+            >
+              7
+            </button>
+            <button
+              className="number-btn"
+              value="8"
+              onClick={handleNumberButton}
+            >
+              8
+            </button>
+            <button
+              className="number-btn"
+              value="9"
+              onClick={handleNumberButton}
+            >
+              9
+            </button>
           </div>
           <div className="clear-play-btns">
             <button className="game-btn clear">Clear</button>
