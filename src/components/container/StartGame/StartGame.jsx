@@ -20,6 +20,9 @@ const StartGame = () => {
   const clearBtn = document.querySelector(".clear");
   const playBtn = document.querySelector(".play");
   const numberBtn = document.querySelectorAll(".number-btn");
+  let played = 0;
+  let won = 0;
+  let lost = 0;
 
   const handleNumberButton = (e) => {
     const inputs = document.querySelectorAll("input");
@@ -255,12 +258,16 @@ const StartGame = () => {
         alert(winMessage);
         window.location.reload(false);
       }, 300);
+      won += 1;
+      played += 1;
     } else if (trials >= 7 && dead !== 4) {
       // Delay alert for few seconds for player to see wrong input
       setTimeout(() => {
         alert(loseMessage);
         window.location.reload(false);
       }, 300);
+      lost += 1;
+      played += 1;
       // Reset game interface and values
       entries.reset();
       firstInput.attributes["disabled"] = setIsDisabled(false);
@@ -440,7 +447,7 @@ const StartGame = () => {
             roundScores={roundScores}
           />
 
-          <Dashboard />
+          <Dashboard played="{played}" won="{won}" lost="{lost}" />
         </div>
         <Link to="/">
           <button>Back</button>

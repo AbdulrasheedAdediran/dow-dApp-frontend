@@ -22,19 +22,19 @@ const Attempts = (props) => {
       <table>
         <thead>
           <tr>
-            <th>Trial</th>
-            <th>Attempt</th>
-            <th>Score</th>
+            <th className="table__trial">Trial</th>
+            <th className="table__attempt">Attempt</th>
+            <th className="table__score">Score</th>
           </tr>
         </thead>
         <tbody>
           {props.roundScores.map((roundScore) => (
             <tr key={roundScore.trial}>
-              <td>
+              <td className="table__trial">
                 {roundScore.trial}/{maxTrials}
               </td>
-              <td>{roundScore.attempt}</td>
-              <td>
+              <td className="table__attempt">{roundScore.attempt}</td>
+              <td className="table__score">
                 {roundScore.dead} Dead - {roundScore.wounded} Wounded
               </td>
             </tr>
