@@ -447,7 +447,7 @@ const StartGame = () => {
             roundScores={roundScores}
           />
 
-          <Dashboard played="{played}" won="{won}" lost="{lost}" />
+          <Dashboard played={played} won={won} lost={lost} />
         </div>
         <Link to="/">
           <button>Back</button>
