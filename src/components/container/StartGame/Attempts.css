@@ -6,6 +6,8 @@
   border-radius: 0.5rem;
   display: block;
   color: var(--light-green);
+  /* overflow: scroll; */
+  /* margin-bottom: 2rem; */
 }
 .attempts h2 {
   width: 100%;
@@ -15,12 +17,10 @@
 .attempts table {
   width: 100%;
   line-height: 1.5;
-  width: 100%;
   border-collapse: collapse;
 }
 th,
 td {
-  /* border: 1px solid #000; */
   text-align: left;
   padding: 0.25rem 0.5rem;
 }
@@ -32,3 +32,33 @@ th {
 td {
   background-color: #444;
 }
+
+/* table {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+} */
+/* table thead { */
+/* head takes the height it requires, 
+    and it's not scaled when table is resized */
+/* flex: 0 0 auto; */
+/* width: calc(100% - 0.9em); */
+/* width: 100%; */
+/* } */
+/* table tbody { */
+/* body takes all the remaining available space */
+/* flex: 1 1 auto;
+  display: block;
+  overflow-y: scroll;
+  height: 5rem;
+  border: 2px solid red;
+}
+table tbody tr {
+  width: 100%;
+}
+table thead,
+table tbody tr {
+  display: table;
+  table-layout: fixed;
+} */

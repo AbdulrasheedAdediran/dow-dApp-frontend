@@ -10,29 +10,39 @@ const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
-  let [dead, setDead] = useState(0);
-  let [wounded, setWounded] = useState(0);
-  const [attempt, setAttempt] = useState(["-", "-", "-", "-"]);
-  let [trials, setTrials] = useState(0);
   const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
   const [roundScores, setRoundScores] = useState([]);
   const clearBtn = document.querySelector(".clear");
   const playBtn = document.querySelector(".play");
   const numberBtn = document.querySelectorAll(".number-btn");
-  let played = 0;
-  let won = 0;
-  let lost = 0;
+  let getPlayed = parseInt(localStorage.getItem("Played"), 10);
+  let getWon = parseInt(localStorage.getItem("Won"), 10);
+  let getLost = parseInt(localStorage.getItem("Lost"), 10);
+  let [dead, setDead] = useState(0);
+  let [wounded, setWounded] = useState(0);
+  let [trials, setTrials] = useState(0);
+  let [played, setPlayed] = useState(getPlayed);
+  let [won, setWon] = useState(getWon);
+  let [lost, setLost] = useState(getLost);
+  localStorage.getItem("Won");
+  localStorage.getItem("Lost");
+  console.log("Local Storage Played", getPlayed);
+  console.log("Local Storage Won", getWon);
+  console.log("Local Storage Lost", getLost);
+  // localStorage.removeItem("Played");
+  // localStorage.removeItem("Won");
+  // localStorage.removeItem("Lost");
 
   const handleNumberButton = (e) => {
     const inputs = document.querySelectorAll("input");
 
-    numberBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log("Clicked: ", e.target.value);
-      setPlayerInput([...playerInput, e.target.value]);
-      console.log(playerInput);
-    });
+    // numberBtn.addEventListener("click", (e) => {
+    //   e.preventDefault();
+    //   console.log("Clicked: ", e.target.value);
+    //   setPlayerInput([...playerInput, e.target.value]);
+    //   console.log(playerInput);
+    // });
   };
   const handlePlayerInput = (e) => {
     e.preventDefault();
@@ -258,16 +268,20 @@ const StartGame = () => {
         alert(winMessage);
         window.location.reload(false);
       }, 300);
-      won += 1;
-      played += 1;
+      setWon((won += 1));
+      setPlayed((played += 1));
+      localStorage.setItem("Won", won);
+      localStorage.setItem("Played", played);
     } else if (trials >= 7 && dead !== 4) {
       // Delay alert for few seconds for player to see wrong input
       setTimeout(() => {
         alert(loseMessage);
         window.location.reload(false);
       }, 300);
-      lost += 1;
-      played += 1;
+      setLost((lost += 1));
+      setPlayed((played += 1));
+      localStorage.setItem("Lost", lost);
+      localStorage.setItem("Played", played);
       // Reset game interface and values
       entries.reset();
       firstInput.attributes["disabled"] = setIsDisabled(false);
@@ -276,8 +290,8 @@ const StartGame = () => {
       setTrials((trials = trials = 0));
     }
 
-    setAttempt(playerInput);
-    console.log("Attempt:", attempt);
+    // setAttempt(playerInput);
+    // console.log("Attempt:", attempt);
     console.log("playerInput:", playerInput);
     console.log("Round scores:", roundScores);
     // console.log(`Random Numbers Generated: ${randomNumbers}`);
@@ -441,13 +455,13 @@ const StartGame = () => {
         <div className="attempts-and-dashboard">
           <Attempts
             trial={trials}
-            confirmedAttempt={attempt.join(" ")}
+            confirmedAttempt={playerInput}
             dead={dead}
             wounded={wounded}
             roundScores={roundScores}
           />
 
-          <Dashboard played={played} won={won} lost={lost} />
+          <Dashboard played={getPlayed} won={getWon} lost={getLost} />
         </div>
         <Link to="/">
           <button>Back</button>

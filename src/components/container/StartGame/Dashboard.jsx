@@ -1,11 +1,17 @@
 import React from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "./Dashboard.css";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+// import { easeQuadInOut } from "d3-ease";
 
 const Dashboard = (props) => {
   let percentage = (props.won / props.played) * 100;
   let winRate = Math.round(percentage);
-
+  console.log("Percentage: ", percentage);
+  console.log("Win Rate: ", winRate);
+  console.log("Won: ", props.won);
+  console.log("Played: ", props.played);
+  console.log("Lost: ", props.lost);
   return (
     <section className="dashboard">
       <h2>Dashboard</h2>
@@ -15,45 +21,35 @@ const Dashboard = (props) => {
             {/* <p>Win Rate</p>
             <p>{winRate}%</p> */}
             <CircularProgressbar
-              value={percentage}
+              className="progressBar"
+              // valueStart={0}
+              // valueEnd={winRate}
+              // duration={1.4}
+              // easingFunction={easeQuadInOut}
+              value={winRate}
               text={`${winRate}%`}
-              styles={{
-                // Customize the root svg element
-                root: {},
-                // Customize the path, i.e. the "completed progress"
-                path: {
-                  // Path color
-                  stroke: `rgba(62, 152, 199, ${percentage / 100})`,
-                  // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                  strokeLinecap: "butt",
-                  // Customize transition animation
-                  transition: "stroke-dashoffset 0.5s ease 0s",
-                  // Rotate the path
-                  transform: "rotate(0.25turn)",
-                  transformOrigin: "center center",
-                },
-                // Customize the circle behind the path, i.e. the "total progress"
-                trail: {
-                  // Trail color
-                  stroke: "#d6d6d6",
-                  // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                  strokeLinecap: "butt",
-                  // Rotate the trail
-                  transform: "rotate(0.25turn)",
-                  transformOrigin: "center center",
-                },
-                // Customize the text
-                text: {
-                  // Text color
-                  fill: "#f88",
-                  // Text size
-                  fontSize: "16px",
-                },
-                // Customize background - only used when the `background` prop is true
-                background: {
-                  fill: "#3e98c7",
-                },
-              }}
+              styles={buildStyles({
+                // Rotation of path and trail, in number of turns (0-1)
+                rotation: 0,
+
+                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                strokeLinecap: "round",
+
+                // Text size
+                textSize: "1rem",
+
+                // How long animation takes to go from one percentage to another, in seconds
+                pathTransitionDuration: 0.5,
+
+                // Can specify path transition in more detail, or remove it entirely
+                // pathTransition: 'none',
+
+                // Colors
+                pathColor: `hsla(111, 97%, 49%, 0.75), ${winRate / 100})`,
+                textColor: "hsl(35, 80%, 90%)",
+                trailColor: "hsl(35, 80%, 90%)",
+                backgroundColor: "#333",
+              })}
             />
           </div>
           <div className="played-won-lost">

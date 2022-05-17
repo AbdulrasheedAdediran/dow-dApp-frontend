@@ -31,16 +31,23 @@
   /* border: 2px solid white; */
 }
 .win-rate {
-  width: 100%;
+  width: 50%;
   display: grid;
   align-content: center;
   justify-content: center;
   /* border: 2px solid yellow; */
   text-align: center;
   color: var(--antique-white);
-
-  background-color: #222;
+  /* background-color: #222; */
 }
+.progressBar {
+  height: 100%;
+  /* width: 100%; */
+  /* border: 2px solid red; */
+  text-align: center;
+  white-space: pre-line;
+}
+
 .played-won-lost {
   width: 100%;
   display: grid;

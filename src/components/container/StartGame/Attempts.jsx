@@ -33,7 +33,7 @@ const Attempts = (props) => {
               <td className="table__trial">
                 {roundScore.trial}/{maxTrials}
               </td>
-              <td className="table__attempt">{roundScore.attempt}</td>
+              <td className="table__attempt">{roundScore.attempt.join(" ")}</td>
               <td className="table__score">
                 {roundScore.dead} Dead - {roundScore.wounded} Wounded
               </td>
