@@ -10,12 +10,12 @@ const StartGame = () => {
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
-  const [view, setView] = useState("hide");
+  // const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
   const [roundScores, setRoundScores] = useState([]);
-  const clearBtn = document.querySelector(".clear");
-  const playBtn = document.querySelector(".play");
-  const numberBtn = document.querySelectorAll(".number-btn");
+  // const clearBtn = document.querySelector(".clear");
+  // const playBtn = document.querySelector(".play");
+  // const numberBtn = document.querySelectorAll(".number-btn");
   let getPlayed = parseInt(localStorage.getItem("Played"), 10);
   let getWon = parseInt(localStorage.getItem("Won"), 10);
   let getLost = parseInt(localStorage.getItem("Lost"), 10);
