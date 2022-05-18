@@ -35,8 +35,7 @@ const StartGame = () => {
   // localStorage.removeItem("Lost");
 
   const handleNumberButton = (e) => {
-    const inputs = document.querySelectorAll("input");
-
+    // const inputs = document.querySelectorAll("input");
     // numberBtn.addEventListener("click", (e) => {
     //   e.preventDefault();
     //   console.log("Clicked: ", e.target.value);
@@ -221,13 +220,16 @@ const StartGame = () => {
       // Check Player Input and Return Round Scores
       for (let i = 0; i < 4; i++) {
         // Check if player guess is in the correct index of random numbers
+        // eslint-disable-next-line
         if (playerInput[i] == randomNumbers[i]) {
           setDead((dead += 1));
         }
         // Check if player guess is in the sequence but not in the correct index of random numbers
         for (let j = 0; j < 4; j++) {
           if (
+            // eslint-disable-next-line
             playerInput[i] != randomNumbers[i] &&
+            // eslint-disable-next-line
             playerInput[i] == randomNumbers[j]
           ) {
             setWounded((wounded += 1));
