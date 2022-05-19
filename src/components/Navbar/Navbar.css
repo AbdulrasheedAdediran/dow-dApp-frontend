@@ -6,10 +6,14 @@ nav {
   margin-bottom: 0.5rem;
   color: var(--antique-white);
 }
+nav a {
+  text-decoration: none;
+  color: var(--antique-white);
+}
 .btn-connect-wallet {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
-  /* font-size: 1rem; */
+  font-size: 1rem;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 }

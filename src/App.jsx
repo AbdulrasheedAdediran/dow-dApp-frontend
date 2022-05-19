@@ -1,4 +1,4 @@
-import React from "react";
+import { React } from "react";
 import "./App.css";
 // import { useState } from "react";
 import StartGame from "./components/container/StartGame/StartGame";
@@ -7,37 +7,27 @@ import Options from "./components/container/Options/Options";
 import About from "./components/container/About/About";
 // import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
-// import Layout from "./components/Layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import About from "./components/container/About/About"
 
-const App = ({ Component, pageProps }) => {
+const App = () => {
   // const [connectWallet, setConnectWallet] = useState(false);
   // const [startGame, setStartGame] = useState(false);
   // const [howToPlay, setHowToPlay] = useState(false);
   // const [options, setOptions] = useState(false);
   // const [about, setAbout] = useState(false);
+  // const [walletConnected, setWalletConnected] = useState(false);
 
-  // const handleConnectWallet = () => {
-  //   setConnectWallet(!connectWallet);
-  //   // console.log(connectWallet);
+  // const handleWalletConnect = async () => {
+  //   if (window.ethereum || window.web3) {
+  //     await window.ethereum.request({ method: "eth_requestAccounts" });
+  //   } else {
+  //     alert(
+  //       "Please Use a Web3 Enable Browser or Install Metamask Wallet Extension"
+  //     );
+  //   }
   // };
-  // const handleStart = () => {
-  //   setStartGame(!startGame);
-  //   // console.log(startGame);
-  // };
-  // const handleHowToPlay = () => {
-  //   setHowToPlay(!howToPlay);
-  //   // console.log(howToPlay);
-  // };
-  // const handleOptions = () => {
-  //   setOptions(!options);
-  //   // console.log(options);
-  // };
-  // const handleAbout = () => {
-  //   setAbout(!about);
-  //   // console.log(about);
-  // };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -48,17 +38,6 @@ const App = ({ Component, pageProps }) => {
         <Route path="/about" exact element={<About />} />
       </Routes>
     </BrowserRouter>
-
-    // <Main/>
-    // <BrowserRouter>
-    /* <Navbar handleConnectWallet={handleConnectWallet} />
-      <Main
-        handleStart={handleStart}
-        handleHowToPlay={handleHowToPlay}
-        handleOptions={handleOptions}
-        handleAbout={handleAbout}
-      /> */
-    // <Route  element={<Main/>}
   );
 };
 
