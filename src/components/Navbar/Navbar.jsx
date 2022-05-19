@@ -6,7 +6,7 @@ import Connected from "./Connected";
 const Navbar = () => {
   // const provider = new ethers.providers.Web3Provider(window.ethereum);
   // console.log(provider);
-  const [walletConnected, setWalletConnected] = useState(false);
+  const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const requestAccounts = async () => {
     if (window.ethereum || window.web3) {
@@ -15,7 +15,7 @@ const Navbar = () => {
           method: "eth_requestAccounts",
         });
         setWalletAddress(accounts[0]);
-        setWalletConnected(true);
+        setConnected(true);
       } catch (error) {
         console.log("Error Connecting");
       }
@@ -41,7 +41,7 @@ const Navbar = () => {
       </div>
 
       <div>
-        {walletConnected ? (
+        {connected ? (
           <Connected
             // dowBalance={dowBalance}
             // chainBalance={chainBalance}

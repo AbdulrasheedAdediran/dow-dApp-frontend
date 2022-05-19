@@ -1,13 +1,19 @@
 .attempts {
   height: 20rem;
   width: 100%;
-  background: var(--deep-green);
+  background: var(--deeper-green);
   color: var(--antique-white);
   border-radius: 0.5rem;
   display: block;
   color: var(--light-green);
   /* overflow: scroll; */
   /* margin-bottom: 2rem; */
+}
+@supports (backdrop-filter: blur(25px)) {
+  .attempts {
+    background: var(--deeper-green);
+    backdrop-filter: blur(15px);
+  }
 }
 .attempts h2 {
   width: 100%;
@@ -26,11 +32,11 @@ td {
 }
 
 th {
-  background-color: #222;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 td {
-  background-color: #444;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* table {
