@@ -9,10 +9,9 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Main from "./components/Main/Main";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
 import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
-const DOWContract = "0x94105EecF6DB901e46a737d2c9a9b1a30e729f5E";
+const DOWContract = "0x375ce330dE9dcA06cFBA5677C425f318A6BcC62c";
 const App = () => {
   const [generatedValues, setGeneratedValues] = useState([]);
   const [connected, setConnected] = useState(false);
@@ -55,13 +54,7 @@ const App = () => {
     const networkID = await window.ethereum.request({
       method: "eth_chainId",
     });
-    if (
-      Number(networkID) !== Number(process.env.POLYGON_NETWORK_ID) ||
-      Number(networkID) !== Number(process.env.METER_NETWORK_ID) ||
-      Number(networkID) !== Number(process.env.BOBA_NETWORK_ID) ||
-      Number(networkID) !== Number(process.env.GODWOKEN_NETWORK_ID)
-    )
-      return;
+    if (Number(networkID) !== Number(process.env.BOBA_NETWORK_ID)) return;
     const provider = new ethers.providers.Web3Provider(window.ehereum);
     const accounts = provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
@@ -142,13 +135,7 @@ const App = () => {
       const networkID = await window.ethereum.request({
         method: "eth_chainId",
       });
-      if (
-        Number(networkID) === Number(process.env.POLYGON_NETWORK_ID) ||
-        Number(networkID) === Number(process.env.METER_NETWORK_ID) ||
-        Number(networkID) === Number(process.env.BOBA_NETWORK_ID) ||
-        Number(networkID) === Number(process.env.GODWOKEN_NETWORK_ID)
-      )
-        return;
+      if (Number(networkID) === Number(process.env.BOBA_NETWORK_ID)) return;
       const userAccount = await getUserBalance(accounts[0]);
 
       setUserBalance({
@@ -165,12 +152,7 @@ const App = () => {
   };
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleChainChanged = async (networkID) => {
-    if (
-      Number(networkID) !== Number(process.env.POLYGON_NETWORK_ID) ||
-      Number(networkID) !== Number(process.env.METER_NETWORK_ID) ||
-      Number(networkID) !== Number(process.env.BOBA_NETWORK_ID) ||
-      Number(networkID) !== Number(process.env.GODWOKEN_NETWORK_ID)
-    ) {
+    if (Number(networkID) !== Number(process.env.BOBA_NETWORK_ID)) {
       setConnected(false);
       setUserBalance({
         DOWTokenBalance: 0,
@@ -227,6 +209,7 @@ const App = () => {
               eagerConnect={eagerConnect}
               connected={connected}
               handleStartGame={handleStartGame}
+              startGame={startGame}
             />
           }
         />

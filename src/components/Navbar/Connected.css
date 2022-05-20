@@ -2,15 +2,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--deeper-green);
+  /* background: var(--deeper-green); */
+  background: var(--dark-blue-black-gradient);
+  gap: 1rem;
   width: 100%;
-  color: var(--light-green);
+  /* color: var(--light-green); */
+  color: var(--deep-red-orange-gradient);
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
   font-size: 1rem;
-  outline: 1px solid var(--dark-navy-blue);
   outline: 2px groove var(--light-green);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
 }

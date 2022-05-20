@@ -49,10 +49,22 @@
     rgba(140, 250, 5, 0.782),
     rgba(230, 45, 5, 0.6)
   );
+
+  --input-gradient: linear-gradient(
+    to top left,
+    hsl(184, 100%, 30%, 0.75),
+    hsla(111, 97%, 49%, 0.75),
+    hsl(184, 100%, 30%, 0.75)
+  );
   --blue-black-gradient: linear-gradient(
     to bottom,
     rgba(1, 105, 112, 0.75),
     rgba(4, 157, 106, 0.75)
+  );
+  --dark-blue-black-gradient: linear-gradient(
+    to bottom left,
+    rgba(1, 65, 72, 0.75),
+    rgba(4, 107, 66, 0.75)
   );
   /*
   ======= FONTS ======= FONTS

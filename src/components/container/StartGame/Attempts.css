@@ -1,5 +1,5 @@
 .attempts {
-  height: 20rem;
+  height: 23rem;
   width: 100%;
   background: var(--deeper-green);
   color: var(--antique-white);
@@ -18,17 +18,19 @@
 .attempts h2 {
   width: 100%;
   margin-inline: auto;
-  margin-block: 1rem;
+  margin-bottom: 0.5rem;
 }
 .attempts table {
   width: 100%;
   line-height: 1.5;
   border-collapse: collapse;
+  text-align: center;
 }
 th,
 td {
   text-align: left;
   padding: 0.25rem 0.5rem;
+  text-align: center;
 }
 
 th {

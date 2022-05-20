@@ -5,7 +5,7 @@ import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 
-const StartGame = () => {
+const StartGame = (props) => {
   // Stores and handles the player's inputs
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
@@ -13,6 +13,11 @@ const StartGame = () => {
   // const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
   const [roundScores, setRoundScores] = useState([]);
+  console.log("Connected Status", props.connected);
+  console.log("Start Game", props.startGame);
+  console.log("Generated Values", props.generatedValues);
+  console.log("User Balance", props.userBalance);
+  console.log("Player Statistics", props.playerStatistics);
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");

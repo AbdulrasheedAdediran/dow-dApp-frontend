@@ -3,7 +3,6 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  margin-bottom: 0.5rem;
   color: var(--antique-white);
 }
 nav a {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./Main.css";
 
-const Main = ({ handleStart, handleHowToPlay, handleOptions, handleAbout }) => {
+const Main = (props) => {
   return (
     <Layout>
       <main>
@@ -19,25 +19,19 @@ const Main = ({ handleStart, handleHowToPlay, handleOptions, handleAbout }) => {
         <div className="main-menu-links">
           <Link to="/startGame">
             {" "}
-            <button className="menu-button" onClick={handleStart}>
+            <button className="menu-button" onClick={props.handleStartGame}>
               Start Game
             </button>{" "}
           </Link>
           <Link to="/howToPlay">
             {" "}
-            <button className="menu-button" onClick={handleHowToPlay}>
-              How to Play
-            </button>
+            <button className="menu-button">How to Play</button>
           </Link>
           <Link to="/options">
-            <button className="menu-button" onClick={handleOptions}>
-              Options
-            </button>
+            <button className="menu-button">Options</button>
           </Link>
           <Link to="/about">
-            <button className="menu-button" onClick={handleAbout}>
-              About
-            </button>
+            <button className="menu-button">About</button>
           </Link>
         </div>
       </main>
