@@ -14,12 +14,13 @@ import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
 const DOWContract = "0x94105EecF6DB901e46a737d2c9a9b1a30e729f5E";
 const App = () => {
+  const [generatedValues, setGeneratedValues] = useState([]);
   const [connected, setConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState("");
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
   });
+  // Handle player's statistics
   const [playerStatistics, setPlayerStatistics] = useState({
     gamesPlayed: 0,
     gamesLost: 0,
@@ -27,6 +28,7 @@ const App = () => {
     highestWinStreak: 0,
     gamesWon: 0,
   });
+  // Requests wallet connection
   const requestAccounts = async () => {
     if (window.ethereum || window.web3) {
       try {
@@ -45,13 +47,11 @@ const App = () => {
   const connectWallet = async () => {
     if (typeof window.ethereum !== "undefined") {
       await requestAccounts();
-
-      // const provider = ethers.providers.Web3Provider(window.ethereum)
-      // console.log(provider)
     }
   };
   // Eagerly connects user and fetches their account data
   const eagerConnect = async () => {
+    connectWallet();
     const networkID = await window.ethereum.request({
       method: "eth_chainId",
     });
@@ -70,6 +70,7 @@ const App = () => {
       networkCoinBalance: userAccount.networkCoinBalance,
       DOWTokenBalance: userAccount.DOWTokenBalance,
     });
+    getPlayerStatistics();
     setConnected(true);
   };
 
@@ -105,7 +106,21 @@ const App = () => {
       highestWinStreak: highestStreak,
     });
   };
-
+  const handleStartGame = async () => {
+    startGame();
+  };
+  // Start game
+  const startGame = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = new provider.getSigner();
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    const startGame = await DOWContractInstance.startGame();
+    const generatedValues = startGame.playerNumbers;
+    // const randomNumbers = await DOWContractInstance.queryFilter(
+    //   "PlayerNumbers"
+    // );
+    setGeneratedValues([generatedValues]);
+  };
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleAccountChanged = async (accounts) => {
     if (accounts.length) {
@@ -189,8 +204,35 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/layout" exact element={<Navbar />} />
-        <Route path="/" exact element={<Main />} />
-        <Route path="/startGame" exact element={<StartGame />} />
+        <Route
+          path="/"
+          exact
+          element={() => (
+            <Main
+              eagerConnect={eagerConnect}
+              connected={connected}
+              handleStartGame={handleStartGame}
+            />
+          )}
+        />
+        <Route
+          path="/startGame"
+          exact
+          element={() => (
+            <StartGame
+              generatedValues={generatedValues}
+              connected={connected}
+              handleStartGame={handleStartGame}
+              userBalance={userBalance}
+              setUserBalance={setUserBalance}
+              playerStatistics={playerStatistics}
+              setPlayerStatistics={setPlayerStatistics}
+              connectWallet={connectWallet}
+              eagerConnect={eagerConnect}
+              startGame={startGame}
+            />
+          )}
+        />
         <Route path="/howToPlay" exact element={<HowToPlay />} />
         <Route path="/options" exact element={<Options />} />
         <Route path="/about" exact element={<About />} />
