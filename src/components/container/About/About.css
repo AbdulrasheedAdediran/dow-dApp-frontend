@@ -1,0 +1,17 @@
+.about {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  margin-block: 3.5rem;
+  margin-inline: auto;
+  width: clamp(500px, 90%, 750px);
+  line-height: 1.5;
+}
+h1, p{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}

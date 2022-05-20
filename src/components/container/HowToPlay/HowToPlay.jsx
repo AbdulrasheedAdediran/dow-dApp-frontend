@@ -22,7 +22,7 @@ const HowToPlay = () => {
           correct position, that number is wounded and will be marked orange.
         </p>
         <p>Guess the correct sequence of numbers in 7 tries or less to win.</p>
-        <Link to="/">
+        <Link to="/" className="button">
           <button>Got It</button>
         </Link>
       </div>

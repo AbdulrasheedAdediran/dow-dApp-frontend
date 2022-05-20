@@ -6,7 +6,7 @@ import Layout from "../../Layout";
 const About = () => {
   return (
     <Layout>
-      <div>
+      <div class="about">
         <h1>About</h1>
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
@@ -22,7 +22,7 @@ const About = () => {
           repellendus rem veritatis vitae odit ipsam corporis? Tempore quos
           soluta quam?
         </p>
-        <Link to="/">
+        <Link to="/" className="button">
           <button>Back</button>
         </Link>
       </div>
