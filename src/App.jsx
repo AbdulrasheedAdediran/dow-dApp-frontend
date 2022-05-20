@@ -209,9 +209,9 @@ const App = () => {
     window.ethereum.on("accountChange", handleAccountChanged);
     window.ethereum.on("chainChanged", handleChainChanged);
 
-    window.removeListener("connect", eagerConnect);
-    window.removeListener("accountChange", handleAccountChanged);
-    window.removeListener("chainChanged", handleChainChanged);
+    // window.removeListener("connect", eagerConnect);
+    // window.removeListener("accountChange", handleAccountChanged);
+    // window.removeListener("chainChanged", handleChainChanged);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

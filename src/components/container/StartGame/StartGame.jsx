@@ -34,15 +34,7 @@ const StartGame = () => {
   // localStorage.removeItem("Won");
   // localStorage.removeItem("Lost");
 
-  const handleNumberButton = (e) => {
-    // const inputs = document.querySelectorAll("input");
-    // numberBtn.addEventListener("click", (e) => {
-    //   e.preventDefault();
-    //   console.log("Clicked: ", e.target.value);
-    //   setPlayerInput([...playerInput, e.target.value]);
-    //   console.log(playerInput);
-    // });
-  };
+  const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -69,53 +61,6 @@ const StartGame = () => {
       // console.log(playerInput);
     }
 
-    /*======= 
-    BUGS
-    1. Must focus on first input onLoad and disable following inputs => DONE
-    2. Must clear inputs onCLick of `Backspace` or `Clear` (including first input)
-    3. Must write to next available input field after clearing
-    4. Handle `null` error in console that pops up when the last input is filled => DONE
-    5. Handle incorrect entry of data into input array that result from cleared inputs
-    6. Handle received the string `true` for the boolean attribute `disabled` warning in console
-    
-
-
-    ===== CLEAR =====
-    - If the current input is !empty{
-    keep focus on current input
-    clear the current input; 
-    pop the value from the playerInput array;
-    accept a new value;
-    push new value to the playerInput array
-    } else if the current input is empty {
-    switch focus to the previous input; 
-    clear the previous input; 
-    pop the value from the playerInput array; 
-    accept a new value and push it to the playerInput array
-    }
-    else if current input is empty && current input is the first input || previous input is null{
-    keep focus on current input;
-    accept a new value and push it to the playerInput array
-    if maxLength{
-    switch focus to next input 
-    }
-    }
-    =======*/
-
-    // clearBtn.onClick(() => {
-    //   let firstInput = inputs[0];
-    //   if (maxLength) {
-    //     target.focus();
-    //     target.value = "";
-    //     playerInput.pop();
-    //   } else if (!maxLength) {
-    //     previous.focus();
-    //     previous.target.value = "";
-    //     playerInput.pop();
-    //   } else if (!maxLength && (target === firstInput || previous === null)) {
-    //     target.focus();
-    //   }
-    // });
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
       let pressedKey = parseInt(String(e.key));
@@ -474,43 +419,3 @@ const StartGame = () => {
 };
 
 export default StartGame;
-
-/**
-
-
-    // FOCUS NEXT INPUT FIELD
-    const { maxLength, name, value } = e.target;
-    const { fieldName, fieldIndex } = name.split("-");
-    // Check if max length has been reached
-    if (value.length >= maxLength) {
-      // Check if it's not the last input field
-      if (parseInt(value, 10) < 4) {
-        // Get the next input field
-        const nextInputField = document.querySelector(
-          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-        );
-        // If found, focus next field
-        if (nextInputField !== null) {
-          nextInputField.focus();
-        }
-      }
-
-
-      ===========================
-
-       // Check if max length has been reached
-    if (value.length >= maxLength) {
-      // Check if it's not the last input field
-      if (parseInt(value, 10) < 4) {
-        // Get the next input field
-        const nextInputField = document.querySelector(
-          `input[name=playerInput${parseInt(fieldIndex, 10) + 1}]`
-        );
-        // If found, focus next field
-        if (nextInputField !== null) {
-          nextInputField.focus();
-        }
-      }
-    }
-  };
- */
