@@ -4,8 +4,6 @@ import Connected from "./Connected";
 // import { ethers } from "ethers";
 
 const Navbar = () => {
-  // const provider = new ethers.providers.Web3Provider(window.ethereum);
-  // console.log(provider);
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const requestAccounts = async () => {
