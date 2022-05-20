@@ -74,6 +74,14 @@ const App = () => {
     setConnected(true);
   };
 
+  // Airdrop free DOW tokens to new players
+  const claimFreeTokens = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    await DOWContractInstance.claimFreeTokens();
+  };
+
   // Gets user chain balance and DOW token balance
   const getUserBalance = async (address) => {
     try {
@@ -120,6 +128,13 @@ const App = () => {
     //   "PlayerNumbers"
     // );
     setGeneratedValues([generatedValues]);
+  };
+  // Check number of trials it took player to win and reward player
+  const checkTrials = async (trial) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    await DOWContractInstance.checkTrials(trial);
   };
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleAccountChanged = async (accounts) => {
@@ -207,18 +222,18 @@ const App = () => {
         <Route
           path="/"
           exact
-          element={() => (
+          element={
             <Main
               eagerConnect={eagerConnect}
               connected={connected}
               handleStartGame={handleStartGame}
             />
-          )}
+          }
         />
         <Route
           path="/startGame"
           exact
-          element={() => (
+          element={
             <StartGame
               generatedValues={generatedValues}
               connected={connected}
@@ -231,7 +246,7 @@ const App = () => {
               eagerConnect={eagerConnect}
               startGame={startGame}
             />
-          )}
+          }
         />
         <Route path="/howToPlay" exact element={<HowToPlay />} />
         <Route path="/options" exact element={<Options />} />
