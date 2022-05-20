@@ -63,6 +63,10 @@ const StartGame = () => {
 
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
+       if (e.keycode === 8) {
+         console.log("delete");
+       }
+
       let pressedKey = parseInt(String(e.key));
       console.log(` Pressed "${pressedKey}" key on the keyboard`);
       let focusedInputLength = target.value.length;
@@ -79,7 +83,6 @@ const StartGame = () => {
       } else {
         lastInput.focus();
       }
-
       // Move to previous field if empty (user pressed backspace)
       if (focusedInputLength < maxLength) {
         let firstInput = inputs[0];
