@@ -102,55 +102,9 @@ const StartGame = () => {
           target.focus();
         }
       }
-
-      // Move to previous field if empty (user pressed backspace)
-      // else if (focusedInputLength < minLength) {
-      //   // let previous = target.previousElementSibling;
-      //   if (previous === null) {
-      //     return;
-      //   } else if (
-      //     previous.tagName.toLowerCase() === "input" ||
-      //     previous.attributes[isDisabled]
-      //   ) {
-      //     previous.focus();
-      //     playerInput.pop();
-      //   }
-      // }
     };
-    // const key = event.key;
-    // let pressedKey = String(e.key);
-    // if (pressedKey === "Backspace" || pressedKey === "Delete") {
-    //   e.preventDefault();
-    //   let firstInput = inputs[0];
-    //   let focusedInputLength = target.value.length;
-    //   if (focusedInputLength >= maxLength) {
-    //     target.focus();
-    //     target.value = "";
-    //     playerInput.pop();
-    //   } else if (focusedInputLength < maxLength) {
-    //     previous.attributes["disabled"] = setIsDisabled(true);
-    //     previous.focus();
-    //     previous.target.value = "";
-    //     playerInput.pop();
-    //   } else if (
-    //     focusedInputLength < maxLength &&
-    //     (target === firstInput || previous === null)
-    //   ) {
-    //     target.focus();
-    //   }
-    // }
-    // Disable Play button until all inputs are complete
-    // const lastInput = inputs[inputs.length - 1];
-    // if (lastInput.length >= maxLength) {
-    //   playBtn.attributes["disabled"] = setIsDisabled(true);
-    // } else {
-    //   playBtn.attributes["disabled"] = setIsDisabled(false);
-    // }
-    /***======== */
   };
-  // numberButtons.addEventListener("click", (e) => {
-  //   e.target.value = numberButtons.innerText;
-  // });
+
   const handlePlay = (e) => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
@@ -195,21 +149,8 @@ const StartGame = () => {
       // firstInput.attributes["disabled"] = setIsDisabled(true);
       // firstInput.attributes["autofocus"] = true;
       setPlayerInput([]);
-      // for (let i = 3; i == 0; i--) {
-      //   firstInput.focus();
-      // }
     }
-    // console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
 
-    // const n = 7;
-
-    // [...playerInput(n)].map((elementInArray, index) => (
-    //   <div className="" key={i}>
-    //     {" "}
-    //     Whatever needs to be rendered repeatedly{" "}
-    //   </div>
-    // ));
-    // console.log(`Trial Number: ${trials}`);
     if (trials <= 7 && dead === 4) {
       setTimeout(() => {
         alert(winMessage);
@@ -245,13 +186,6 @@ const StartGame = () => {
     // console.log(`Your Guess: ${playerInput}`);
 
     console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
-
-    // entries.reset();
-    // firstInput.attributes["disabled"] = setIsDisabled(false);
-    // firstInput.focus();
-
-    // console.log("Works to this point");
-    // if (window.confirm()) window.location.reload(false);
   };
   return (
     <Layout>
