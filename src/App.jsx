@@ -52,9 +52,7 @@ const App = () => {
       method: "eth_chainId",
     });
     if (Number(networkID) !== 28) return;
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
+    const accounts = await provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
     // console.log("User connected account", accounts[0]);
     // console.log("Connected account's balance", userAccount);
@@ -63,11 +61,11 @@ const App = () => {
     if (!accounts.length) return;
     // console.log("Number of accounts connected", accounts.length);
     setUserBalance({
-      DOWTokenBalance: userAccount.DOWTokenBalance,
-      networkCoinBalance: userAccount.networkCoinBalance,
+      DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+      networkCoinBalance: userAccount.formartedNetworkCoinBalance,
     });
-    // console.log("networkCoinBalance:", userAccount.formartedDOWTokenBalance);
-    // console.log("DOWTokenBalance:", userAccount.formartedNetworkCoinBalance);
+    // console.log("networkCoinBalance:", userBalance.DOWTokenBalance);
+    // console.log("DOWTokenBalance:", userBalance.networkCoinBalance);
     getPlayerStatistics();
     // console.log("Player Statistics", getPlayerStatistics);
     setConnected(true);
@@ -114,9 +112,9 @@ const App = () => {
 
     // console.log("Signer", signer);
     const playerStats = await DOWContractInstance.checkStreak();
-    // console.log("Player Stats", playerStats);
 
     // playerStats.wait();
+    // console.log("Player Stats", playerStats);
     const played = playerStats.gamesPlayed;
     const won = playerStats.gamesWon;
     const lost = playerStats.gamesLost;
@@ -138,10 +136,14 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
+    if (userBalance.DOWTokenBalance < 5) {
+      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
+      return;
+    }
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     const startGame = await DOWContractInstance.startGame();
-    startGame.wait();
+    // startGame.wait();
     const generatedValues = startGame.playerNumbers;
     const randomNumbers = await DOWContractInstance.queryFilter(
       "PlayerNumbers"
