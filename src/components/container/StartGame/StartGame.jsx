@@ -68,12 +68,12 @@ const StartGame = (props) => {
 
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
-       if (e.keycode === 8) {
-         console.log("delete");
-       }
+      if (e.keycode === 8) {
+        console.log("delete");
+      }
 
-      let pressedKey = parseInt(String(e.key));
-      console.log(` Pressed "${pressedKey}" key on the keyboard`);
+      // let pressedKey = parseInt(String(e.key));
+      // console.log(` Pressed "${pressedKey}" key on the keyboard`);
       let focusedInputLength = target.value.length;
       let lastInput = inputs[inputs.length - 1];
       if (
@@ -188,12 +188,12 @@ const StartGame = (props) => {
 
     // setAttempt(playerInput);
     // console.log("Attempt:", attempt);
-    console.log("playerInput:", playerInput);
-    console.log("Round scores:", roundScores);
+    // console.log("playerInput:", playerInput);
+    // console.log("Round scores:", roundScores);
     // console.log(`Random Numbers Generated: ${randomNumbers}`);
     // console.log(`Your Guess: ${playerInput}`);
 
-    console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
+    // console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
   };
   return (
     <Layout>

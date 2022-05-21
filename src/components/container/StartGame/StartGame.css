@@ -36,7 +36,7 @@ input:focus {
   background: var(--deeper-green);
   outline: 2px groove var(--light-green);
   border: 1px groove var(--dark-navy-blue);
-  transform: scale(1.075);
+  transform: scale(1.005);
 }
 .number-btns {
   margin-bottom: 1.5rem;

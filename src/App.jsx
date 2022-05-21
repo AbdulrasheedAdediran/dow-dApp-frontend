@@ -6,7 +6,7 @@ import HowToPlay from "./components/container/HowToPlay/HowToPlay";
 import Options from "./components/container/Options/Options";
 import About from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
+
 import Main from "./components/Main/Main";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
@@ -15,6 +15,7 @@ const DOWContract = "0x375ce330dE9dcA06cFBA5677C425f318A6BcC62c";
 const App = () => {
   const [generatedValues, setGeneratedValues] = useState([]);
   const [connected, setConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -27,25 +28,24 @@ const App = () => {
     highestWinStreak: 0,
     gamesWon: 0,
   });
+
   // Requests wallet connection
-  const requestAccounts = async () => {
+  const connectWallet = async () => {
     if (window.ethereum || window.web3) {
       try {
-        await window.ethereum.request({
+        const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
+        setWalletAddress(accounts[0]);
+        setConnected(true);
       } catch (error) {
-        if (error.code === 40001) {
+        console.error(error);
+        if (Number(error.code) === 4001) {
           alert("Please connect to Metamask");
         }
       }
     } else {
       alert("Please Use a Web3 Enable Browser or Install Metamask");
-    }
-  };
-  const connectWallet = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      await requestAccounts();
     }
   };
   // Eagerly connects user and fetches their account data
@@ -54,10 +54,11 @@ const App = () => {
     const networkID = await window.ethereum.request({
       method: "eth_chainId",
     });
-    if (Number(networkID) !== Number(process.env.BOBA_NETWORK_ID)) return;
-    const provider = new ethers.providers.Web3Provider(window.ehereum);
+    if (Number(networkID) === 28) return;
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
+    console.log("User connected account", accounts[0]);
     if (!accounts.length) return;
     setUserBalance({
       networkCoinBalance: userAccount.networkCoinBalance,
@@ -79,17 +80,22 @@ const App = () => {
   const getUserBalance = async (address) => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const accounts = provider.listAccounts();
       const networkCoinBalance = await provider.getBalance(address);
       const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
       const DOWTokenBalance = await DOWContractInstance.balanceOf(address);
-      return { networkCoinBalance, DOWTokenBalance };
+      return (
+        utils.formatUnits(networkCoinBalance, 18),
+        utils.formatUnits(DOWTokenBalance, 18)
+      );
     } catch (error) {
-      alert("Error getting user balance");
+      console.error(error);
+      console.log("Error getting user balance");
     }
   };
   // Get player's statistics
   const getPlayerStatistics = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereeum);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = new provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     const playerStats = await DOWContractInstance.checkStreak();
@@ -135,7 +141,7 @@ const App = () => {
       const networkID = await window.ethereum.request({
         method: "eth_chainId",
       });
-      if (Number(networkID) === Number(process.env.BOBA_NETWORK_ID)) return;
+      if (Number(networkID) === 28) return;
       const userAccount = await getUserBalance(accounts[0]);
 
       setUserBalance({
@@ -152,7 +158,7 @@ const App = () => {
   };
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleChainChanged = async (networkID) => {
-    if (Number(networkID) !== Number(process.env.BOBA_NETWORK_ID)) {
+    if (Number(networkID) !== 28) {
       setConnected(false);
       setUserBalance({
         DOWTokenBalance: 0,
@@ -174,20 +180,27 @@ const App = () => {
     }
   };
   const init = async () => {
-    const customProvider = new ethers.providers.JsonRpcProvider(
-      process.env.REACT_APP_RPC_URL
-    );
-    const DOWContractInstance = new Contract(
-      DOWContract,
-      DOW_ABI,
-      customProvider
-    );
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const accounts = await provider.listAccounts();
+    const signer = provider.getSigner();
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    if (!accounts.length) return;
+    const userAccount = await getUserBalance(accounts[0]);
+    setUserBalance({
+      networkCoinBalance: userAccount.networkCoinBalance,
+      DOWTokenBalance: userAccount.DOWTokenBalance,
+    });
+    setConnected(true);
+    getUserBalance();
+    getPlayerStatistics();
   };
   useEffect(() => {
     init();
     if (!window.ethereum) return;
 
     window.ethereum.on("connect", eagerConnect);
+    // window.ethereum.on("connect", connectWallet);
+    window.ethereum.on("connect", getUserBalance);
     window.ethereum.on("accountChange", handleAccountChanged);
     window.ethereum.on("chainChanged", handleChainChanged);
 
@@ -200,7 +213,19 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/layout" exact element={<Navbar />} />
+        <Route
+          path="/layout"
+          exact
+          element={
+            <Navbar
+              connectWallet={connectWallet}
+              connected={connected}
+              walletAddress={walletAddress}
+              userBalance={userBalance}
+              DOWContract={DOWContract}
+            />
+          }
+        />
         <Route
           path="/"
           exact
