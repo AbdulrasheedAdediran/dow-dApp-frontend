@@ -70,11 +70,11 @@ const Dashboard = (props) => {
         <div className="streak-stats">
           <div className="current-streak">
             <p>Current Streak</p>
-            <p>10 Wins</p>
+            <p>{props.currentStreak}</p>
           </div>
           <div className="max-streak">
             <p>Highest Streak</p>
-            <p>20 Wins</p>
+            <p>{props.highestStreak}</p>
           </div>
         </div>
       </div>

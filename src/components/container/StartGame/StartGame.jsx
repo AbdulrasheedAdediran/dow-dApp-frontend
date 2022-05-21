@@ -4,6 +4,7 @@ import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
+import { ethers, utils, Contract } from "ethers";
 
 const StartGame = (props) => {
   // Stores and handles the player's inputs
@@ -13,28 +14,28 @@ const StartGame = (props) => {
   // const [view, setView] = useState("hide");
   const randomNumbers = [4, 2, 3, 1];
   const [roundScores, setRoundScores] = useState([]);
-  console.log("Connected Status", props.connected);
-  console.log("Start Game", props.startGame);
+  // console.log("Connected Status", props.connected);
+  // console.log("Start Game", props.startGame);
   console.log("Generated Values", props.generatedValues);
-  console.log("User Balance", props.userBalance);
+  // console.log("User Balance", props.userBalance);
   console.log("Player Statistics", props.playerStatistics);
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
-  let getPlayed = parseInt(localStorage.getItem("Played"), 10);
-  let getWon = parseInt(localStorage.getItem("Won"), 10);
-  let getLost = parseInt(localStorage.getItem("Lost"), 10);
+  // let getPlayed = parseInt(localStorage.getItem("Played"), 10);
+  // let getWon = parseInt(localStorage.getItem("Won"), 10);
+  // let getLost = parseInt(localStorage.getItem("Lost"), 10);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   let [trials, setTrials] = useState(0);
-  let [played, setPlayed] = useState(getPlayed);
-  let [won, setWon] = useState(getWon);
-  let [lost, setLost] = useState(getLost);
-  localStorage.getItem("Won");
-  localStorage.getItem("Lost");
-  console.log("Local Storage Played", getPlayed);
-  console.log("Local Storage Won", getWon);
-  console.log("Local Storage Lost", getLost);
+  let [played, setPlayed] = useState(50);
+  let [won, setWon] = useState(45);
+  let [lost, setLost] = useState(5);
+  // localStorage.getItem("Won");
+  // localStorage.getItem("Lost");
+  // console.log("Local Storage Played", getPlayed);
+  // console.log("Local Storage Won", getWon);
+  // console.log("Local Storage Lost", getLost);
   // localStorage.removeItem("Played");
   // localStorage.removeItem("Won");
   // localStorage.removeItem("Lost");
@@ -55,7 +56,7 @@ const StartGame = (props) => {
       // console.log(`regX is ${regX.test(target.value)}`);
       // console.log(`e.target.value is ${target.value}`);
       setPlayerInput([...playerInput, target.value]);
-      playerInput.push(target.value);
+      // playerInput.push(target.value);
       // console.log(playerInput);
     } else {
       // Do not store the player's input if they are invalid (not numbers 0 - 9)
@@ -350,7 +351,13 @@ const StartGame = (props) => {
             roundScores={roundScores}
           />
 
-          <Dashboard played={getPlayed} won={getWon} lost={getLost} />
+          <Dashboard
+            played={played}
+            won={won}
+            lost={lost}
+            currentStreak={props.playerStatistics.currentStreak}
+            highestStreak={props.playerStatistics.highestStreak}
+          />
         </div>
         <Link to="/">
           <button>Back</button>

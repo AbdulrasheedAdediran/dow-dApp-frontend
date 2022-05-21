@@ -19,7 +19,7 @@ const Main = (props) => {
         <div className="main-menu-links">
           <Link to="/startGame">
             {" "}
-            <button className="menu-button" onClick={props.handleStartGame}>
+            <button className="menu-button" onClick={props.startGame}>
               Start Game
             </button>{" "}
           </Link>

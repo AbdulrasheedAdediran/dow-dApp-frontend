@@ -1,21 +1,20 @@
 import { React, useState, useEffect } from "react";
 import "./App.css";
-// import { useState } from "react";
 import StartGame from "./components/container/StartGame/StartGame";
 import HowToPlay from "./components/container/HowToPlay/HowToPlay";
 import Options from "./components/container/Options/Options";
 import About from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
-
 import Main from "./components/Main/Main";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
-const DOWContract = "0x375ce330dE9dcA06cFBA5677C425f318A6BcC62c";
+const DOWContract = "0x5032bD700701310d8571C109704e243B0842c891";
 const App = () => {
-  const [generatedValues, setGeneratedValues] = useState([]);
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
+  const [generatedValues, setGeneratedValues] = useState([]);
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -38,11 +37,10 @@ const App = () => {
         });
         setWalletAddress(accounts[0]);
         setConnected(true);
+        getUserBalance(accounts[0]);
+        getPlayerStatistics();
       } catch (error) {
         console.error(error);
-        if (Number(error.code) === 4001) {
-          alert("Please connect to Metamask");
-        }
       }
     } else {
       alert("Please Use a Web3 Enable Browser or Install Metamask");
@@ -50,28 +48,37 @@ const App = () => {
   };
   // Eagerly connects user and fetches their account data
   const eagerConnect = async () => {
-    connectWallet();
     const networkID = await window.ethereum.request({
       method: "eth_chainId",
     });
-    if (Number(networkID) === 28) return;
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const accounts = provider.listAccounts();
-    const userAccount = await getUserBalance(accounts[0]);
-    console.log("User connected account", accounts[0]);
-    if (!accounts.length) return;
-    setUserBalance({
-      networkCoinBalance: userAccount.networkCoinBalance,
-      DOWTokenBalance: userAccount.DOWTokenBalance,
+    if (Number(networkID) !== 28) return;
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
     });
+    const userAccount = await getUserBalance(accounts[0]);
+    // console.log("User connected account", accounts[0]);
+    // console.log("Connected account's balance", userAccount);
+    // console.log("Network ID", Number(networkID));
+
+    if (!accounts.length) return;
+    // console.log("Number of accounts connected", accounts.length);
+    setUserBalance({
+      DOWTokenBalance: userAccount.DOWTokenBalance,
+      networkCoinBalance: userAccount.networkCoinBalance,
+    });
+    // console.log("networkCoinBalance:", userAccount.formartedDOWTokenBalance);
+    // console.log("DOWTokenBalance:", userAccount.formartedNetworkCoinBalance);
     getPlayerStatistics();
+    // console.log("Player Statistics", getPlayerStatistics);
     setConnected(true);
+    // console.log("Connected status", connected);
   };
 
   // Airdrop free DOW tokens to new players
-  const claimFreeTokens = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+  const claimFreeTokens = async (e) => {
+    e.preventDefault();
+    const accounts = await provider.listAccounts();
+    const signer = provider.getSigner(accounts[0]);
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     await DOWContractInstance.claimFreeTokens();
   };
@@ -79,15 +86,22 @@ const App = () => {
   // Gets user chain balance and DOW token balance
   const getUserBalance = async (address) => {
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const accounts = provider.listAccounts();
-      const networkCoinBalance = await provider.getBalance(address);
       const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
+      const networkCoinBalance = await provider.getBalance(address);
       const DOWTokenBalance = await DOWContractInstance.balanceOf(address);
-      return (
-        utils.formatUnits(networkCoinBalance, 18),
-        utils.formatUnits(DOWTokenBalance, 18)
+      const formartedNetworkCoinBalance = utils.formatUnits(
+        networkCoinBalance,
+        18
       );
+      // const accounts = await provider.listAccounts();
+      // console.log("User connected account", accounts[0]);
+
+      const formartedDOWTokenBalance = utils.formatUnits(DOWTokenBalance, 18);
+      setUserBalance({
+        DOWTokenBalance: formartedDOWTokenBalance,
+        networkCoinBalance: formartedNetworkCoinBalance,
+      });
+      return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
       console.log("Error getting user balance");
@@ -95,42 +109,50 @@ const App = () => {
   };
   // Get player's statistics
   const getPlayerStatistics = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = new provider.getSigner();
+    const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+
+    // console.log("Signer", signer);
     const playerStats = await DOWContractInstance.checkStreak();
+    // console.log("Player Stats", playerStats);
+
+    // playerStats.wait();
     const played = playerStats.gamesPlayed;
     const won = playerStats.gamesWon;
     const lost = playerStats.gamesLost;
     const currentStreak = playerStats.currentWinStreak;
     const highestStreak = playerStats.maxWinStreak;
-
     setPlayerStatistics({
-      gamesPlayed: played,
-      gamesWon: won,
-      gamesLost: lost,
-      currentWinStreak: currentStreak,
-      highestWinStreak: highestStreak,
+      gamesPlayed: Number(played),
+      gamesWon: Number(won),
+      gamesLost: Number(lost),
+      currentWinStreak: Number(currentStreak),
+      highestWinStreak: Number(highestStreak),
     });
+    // console.log("User gamesPlayed:", playerStatistics.gamesPlayed);
+    // console.log("User gamesWon:", playerStatistics.gamesWon);
+    // console.log("User gamesLost:", playerStatistics.gamesLost);
+    // console.log("User currentWinStreak:", playerStatistics.currentWinStreak);
+    // console.log("User highestWinStreak:", playerStatistics.highestWinStreak);
   };
-  const handleStartGame = async () => {
-    startGame();
-  };
+
   // Start game
   const startGame = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = new provider.getSigner();
+    const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     const startGame = await DOWContractInstance.startGame();
+    startGame.wait();
     const generatedValues = startGame.playerNumbers;
-    // const randomNumbers = await DOWContractInstance.queryFilter(
-    //   "PlayerNumbers"
-    // );
+    const randomNumbers = await DOWContractInstance.queryFilter(
+      "PlayerNumbers"
+    );
+    console.log("generatedValues:", generatedValues);
+    console.log("randomNumbers:", randomNumbers);
     setGeneratedValues([generatedValues]);
+    console.log("generatedValues after setting:", generatedValues);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     await DOWContractInstance.checkTrials(trial);
@@ -233,7 +255,6 @@ const App = () => {
             <Main
               eagerConnect={eagerConnect}
               connected={connected}
-              handleStartGame={handleStartGame}
               startGame={startGame}
             />
           }
@@ -245,7 +266,6 @@ const App = () => {
             <StartGame
               generatedValues={generatedValues}
               connected={connected}
-              handleStartGame={handleStartGame}
               userBalance={userBalance}
               setUserBalance={setUserBalance}
               playerStatistics={playerStatistics}
@@ -265,3 +285,12 @@ const App = () => {
 };
 
 export default App;
+//===============//
+// const listedAccounts = await provider.listAccounts();
+// const provider = new ethers.providers.Web3Provider(window.ethereum);
+// const signer = new provider.getSigner();
+// console.log("Signer", signer);
+// const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+// console.log("listed accounts", accounts);
+// console.log("DOWContractInstance", DOWContractInstance);
+//===========//

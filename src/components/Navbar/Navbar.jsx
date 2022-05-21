@@ -3,7 +3,7 @@ import { ethers, utils, Contract } from "ethers";
 import "./Navbar.css";
 import Connected from "./Connected";
 import DOW_ABI from "../../util/DOW_ABI.json";
-const DOWContract = "0x375ce330dE9dcA06cFBA5677C425f318A6BcC62c";
+const DOWContract = "0x5032bD700701310d8571C109704e243B0842c891";
 
 const Navbar = () => {
   const [connected, setConnected] = useState(false);
@@ -61,6 +61,10 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    // console.log(
+    //   "Solidity pack of 1",
+    //   ethers.utils.solidityKeccak256(ethers.utils.solidityPack(1))
+    // );
     connectWallet();
   }, []);
   //======================//

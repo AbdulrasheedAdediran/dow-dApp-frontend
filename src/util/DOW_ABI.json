@@ -69,9 +69,9 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "bytes32[]",
+        "internalType": "uint256[]",
         "name": "compNum",
-        "type": "bytes32[]"
+        "type": "uint256[]"
       }
     ],
     "name": "PlayerNumbers",
@@ -132,7 +132,7 @@
             "type": "uint96"
           }
         ],
-        "internalType": "struct Meter_DOW.PlayerScore[]",
+        "internalType": "struct NON_VRF_DOW.PlayerScore[]",
         "name": "leaderBoard",
         "type": "tuple[]"
       }
@@ -278,7 +278,7 @@
             "type": "uint64"
           }
         ],
-        "internalType": "struct Meter_DOW.Player",
+        "internalType": "struct NON_VRF_DOW.Player",
         "name": "",
         "type": "tuple"
       }
@@ -431,9 +431,9 @@
     "name": "startGame",
     "outputs": [
       {
-        "internalType": "bytes32[]",
+        "internalType": "uint256[]",
         "name": "playerNumbers",
-        "type": "bytes32[]"
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "nonpayable",
