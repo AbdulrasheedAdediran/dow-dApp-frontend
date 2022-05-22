@@ -55,23 +55,16 @@ const App = () => {
     if (Number(networkID) !== 28) return;
     const accounts = await provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
-    // console.log("User connected account", accounts[0]);
-    // console.log("Connected account's balance", userAccount);
-    // console.log("Network ID", Number(networkID));
 
     if (!accounts.length) return;
-    // console.log("Number of accounts connected", accounts.length);
     setUserBalance({
       DOWTokenBalance: userAccount.formartedDOWTokenBalance,
       networkCoinBalance: userAccount.formartedNetworkCoinBalance,
     });
-    // console.log("networkCoinBalance:", userBalance.DOWTokenBalance);
-    // console.log("DOWTokenBalance:", userBalance.networkCoinBalance);
+
     getPlayerStatistics();
-    // console.log("Player Statistics", getPlayerStatistics);
     setConnected(true);
     setWalletAddress(accounts[0]);
-    // console.log("Connected status", connected);
   };
 
   // Airdrop free DOW tokens to new players
@@ -94,7 +87,6 @@ const App = () => {
         networkCoinBalance,
         18
       );
-      // console.log("User connected account", accounts[0]);
 
       const formartedDOWTokenBalance = utils.formatUnits(DOWTokenBalance, 18);
       setUserBalance({
@@ -104,7 +96,6 @@ const App = () => {
       return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
-      // console.log("Error getting user balance");
     }
   };
   // Get player's statistics
@@ -112,11 +103,9 @@ const App = () => {
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
 
-    // console.log("Signer", signer);
     const playerStats = await DOWContractInstance.checkStreak();
 
     // await playerStats.wait();
-    // console.log("Player Stats", playerStats);
     const played = playerStats.gamesPlayed;
     const won = playerStats.gamesWon;
     const lost = playerStats.gamesLost;
@@ -247,7 +236,6 @@ const App = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log("Generated Value:", generatedValues);
   return (
     <>
       <Navbar
