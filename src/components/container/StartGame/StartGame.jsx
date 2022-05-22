@@ -282,9 +282,9 @@ const StartGame = ({
         />
       </div>
       {isOpen && <Modal setIsOpen={setIsOpen} message={message} />}
-      <Link to="/">
+      {/* <Link to="/">
         <button>Back</button>
-      </Link>
+      </Link> */}
     </section>
   );
 };
