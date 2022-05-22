@@ -7,7 +7,19 @@ import Modal from "../../modal/Modal";
 import Layout from "../../Layout";
 import { ethers, utils, Contract } from "ethers";
 
-const StartGame = (props) => {
+const StartGame = ({
+  generatedValues,
+  connected,
+  userBalance,
+  setUserBalance,
+  playerStatistics,
+  setPlayerStatistics,
+  connectWallet,
+  eagerConnect,
+  startGame,
+  checkTrials,
+  claimFreeTokens,
+}) => {
   // Stores and handles the player's inputs
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
@@ -15,13 +27,14 @@ const StartGame = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   // const [view, setView] = useState("hide");
-  const randomNumbers = props.generatedValues;
+  const randomNumbers = generatedValues;
   const [roundScores, setRoundScores] = useState([]);
-  // console.log("Connected Status", props.connected);
-  // console.log("Start Game", props.startGame);
-  // console.log("Generated Values", props.generatedValues);
-  // console.log("User Balance", props.userBalance);
-  // console.log("Player Statistics", props.playerStatistics);
+  console.log("Connected Status", connected);
+  console.log("user Balance", userBalance);
+  console.log("Check Trials", checkTrials);
+  console.log("Generated Values", generatedValues);
+  console.log("Claim free tokens", claimFreeTokens);
+  console.log("Player Statistics", playerStatistics);
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
@@ -31,9 +44,11 @@ const StartGame = (props) => {
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   let [trials, setTrials] = useState(0);
-  let [played, setPlayed] = useState(50);
-  let [won, setWon] = useState(45);
-  let [lost, setLost] = useState(5);
+  const [played, setPlayed] = useState();
+  const [won, setWon] = useState();
+  const [lost, setLost] = useState();
+  const [currentStreak, setCurrentStreak] = useState();
+  const [highestStreak, setHighestStreak] = useState();
   // localStorage.getItem("Won");
   // localStorage.getItem("Lost");
   // console.log("Local Storage Played", getPlayed);
@@ -316,11 +331,11 @@ const StartGame = (props) => {
         />
 
         <Dashboard
-          played={played}
-          won={won}
-          lost={lost}
-          currentStreak={props.playerStatistics.currentStreak}
-          highestStreak={props.playerStatistics.highestStreak}
+          played={playerStatistics.gamesPlayed}
+          won={playerStatistics.gamesWon}
+          lost={playerStatistics.gamesLost}
+          currentStreak={playerStatistics.currentStreak}
+          highestStreak={playerStatistics.highestStreak}
         />
       </div>
       {isOpen && <Modal setIsOpen={setIsOpen} message={message} />}
