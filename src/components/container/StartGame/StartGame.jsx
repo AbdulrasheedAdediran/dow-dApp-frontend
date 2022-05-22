@@ -139,7 +139,7 @@ const StartGame = ({
           wounded: wounded,
         },
       ]);
-      // entries.reset();
+      entries.reset();
       // firstInput.attributes["disabled"] = setIsDisabled(true);
       // firstInput.attributes["autofocus"] = true;
       setPlayerInput([]);

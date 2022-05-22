@@ -1,10 +1,20 @@
-import { React } from "react";
-import Layout from "../Layout";
+import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./Main.css";
 
-const Main = (props) => {
+const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+  useEffect(() => {
+    if (!connected && parseInt(userBalance.DOWTokenBalance) < 5) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(connected);
+  console.log(userBalance.DOWTokenBalance);
   return (
     // <Layout>
     <main>
@@ -15,16 +25,20 @@ const Main = (props) => {
         <h1>Wounded</h1>
         <div className="dow-text-border" />
       </div>
-
+      <button className="claim-dow-button" onClick={claimFreeTokens}>
+        Claim DOW Tokens
+      </button>
       <div className="main-menu-links">
         <Link to="/startGame">
-          {" "}
-          <button className="menu-button" onClick={props.startGame}>
+          <button
+            className="menu-button start-game"
+            disabled={isDisabled}
+            onClick={startGame}
+          >
             Start Game
-          </button>{" "}
+          </button>
         </Link>
         <Link to="/howToPlay">
-          {" "}
           <button className="menu-button">How to Play</button>
         </Link>
         <Link to="/options">
