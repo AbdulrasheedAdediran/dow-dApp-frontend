@@ -168,7 +168,7 @@ const App = () => {
         networkCoinBalance: userAccount.formartedNetworkCoinBalance,
       });
       setConnected(true);
-      console.log("Account change bancele", userAccount.networkCoinBalance);
+      window.location.reload(false);
     } else {
       setConnected(false);
       setUserBalance({
@@ -216,7 +216,9 @@ const App = () => {
       setConnected(true);
       getPlayerStatistics();
 
+      console.log("Chain changed, reloading window");
       window.location.reload(false);
+      console.log("windowreloaded");
     }
   };
   const init = async () => {

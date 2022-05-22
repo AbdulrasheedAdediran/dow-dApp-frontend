@@ -2,11 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* background: var(--deeper-green); */
   background: var(--dark-blue-black-gradient);
   gap: 1rem;
   width: 100%;
-  /* color: var(--light-green); */
   color: var(--deep-red-orange-gradient);
   text-align: center;
   font-family: var(--font-rubik-wet-paint);

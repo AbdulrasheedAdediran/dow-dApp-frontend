@@ -62,12 +62,6 @@
   align-content: space-evenly;
   justify-content: center;
   background: var(--dark-blue-black-gradient);
-
-  /* color: var(--antique-white); */
-
-  /* background: var(--deeper-green); */
-  /* border: 2px solid blue; */
-  /* background: rgba(0, 0, 0, 0.2); */
 }
 .game-stats {
   width: 100%;

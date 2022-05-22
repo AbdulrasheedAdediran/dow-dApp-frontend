@@ -7,11 +7,7 @@ import "react-circular-progressbar/dist/styles.css";
 const Dashboard = (props) => {
   let percentage = (props.won / props.played) * 100;
   let winRate = Math.round(percentage);
-  // console.log("Percentage: ", percentage);
-  // console.log("Win Rate: ", winRate);
-  // console.log("Won: ", props.won);
-  // console.log("Played: ", props.played);
-  // console.log("Lost: ", props.lost);
+
   return (
     <section className="dashboard">
       <h2>Dashboard</h2>

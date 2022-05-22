@@ -5,12 +5,11 @@ const Connected = (props) => {
   const address = props.address;
   const DOWTokenBalance = props.DOWTokenBalance;
   const networkCoinBalance = props.networkCoinBalance;
-  // console.log("DOWTokenBalance:", DOWTokenBalance);
-  // console.log("networkCoinBalance:", networkCoinBalance);
+
   return (
     <ul className="connected">
-      <li>{DOWTokenBalance} DOW</li>
-      <li>{networkCoinBalance} BOBA</li>
+      <li>{parseFloat(DOWTokenBalance).toFixed(3)} DOW</li>
+      <li>{parseFloat(networkCoinBalance).toFixed(3)} BOBA</li>
       <li>
         {address.slice(0, 5)}...
         {address.slice(address.length - 4, address.length)}
