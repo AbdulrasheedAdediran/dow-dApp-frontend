@@ -1,5 +1,5 @@
 import React from "react";
-import  "./modal.css";
+import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
 
 const Modal = ({ setIsOpen, message, actionOnYes }) => {
@@ -12,7 +12,7 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
             <h5 className="heading"></h5>
           </div>
           <button className="closeBtn" onClick={() => setIsOpen(false)}>
-                      <RiCloseLine style={{ marginBottom: "-3px" }} />
+            <RiCloseLine style={{ marginBottom: "-3px" }} />
           </button>
           <div className="modalContent">
             {message}
@@ -20,12 +20,28 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
             <br></br>
             Play Again?
           </div>
+
           <div className="modalActions">
             <div className="actionsContainer">
-             <button className="deleteBtn" onClick={() => { window.location.reload(); setIsOpen(false);  }}>
+              <button
+                className="deleteBtn"
+                onClick={() => {
+                  window.open("https://deadorwounded.netlify.app", "_self");
+                  setIsOpen(false);
+                }}
+              >
                 Yes
               </button>
-              <button className="cancelBtn" onClick={() => setIsOpen(false)}>
+              <button
+                className="cancelBtn"
+                onClick={() => {
+                  setIsOpen(false);
+                  window.location.replace(
+                    "https://deadorwounded.netlify.app",
+                    "_self"
+                  );
+                }}
+              >
                 Cancel
               </button>
             </div>
