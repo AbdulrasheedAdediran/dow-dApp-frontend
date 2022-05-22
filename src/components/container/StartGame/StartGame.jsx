@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./StartGame.css";
 import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
@@ -38,11 +38,13 @@ const StartGame = ({
   // console.log("Generated Values", generatedValues);
   // console.log("Claim free tokens", claimFreeTokens);
   // console.log("Player Statistics", playerStatistics);
-  console.log("Random Numbers", randomNumbers);
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
 
+  useEffect(() => {
+    console.log("Random Numbers", randomNumbers);
+  }, [randomNumbers]);
   const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
     e.preventDefault();
@@ -173,7 +175,7 @@ const StartGame = ({
         alert(winMessage);
         window.location.reload(false);
       }, 300);
-    } else if (trials >= 7 && dead !== 4) {
+    } else if (trials === 7 && dead !== 4) {
       await DOWContractInstance.checkTrials(8);
       // Delay alert for few seconds for player to see wrong input
       setTimeout(() => {
@@ -315,8 +317,8 @@ const StartGame = ({
           played={playerStatistics.gamesPlayed}
           won={playerStatistics.gamesWon}
           lost={playerStatistics.gamesLost}
-          currentStreak={playerStatistics.currentStreak}
-          highestStreak={playerStatistics.highestStreak}
+          currentStreak={playerStatistics.currentWinStreak}
+          highestStreak={playerStatistics.highestWinStreak}
         />
       </div>
       <Link to="/">
