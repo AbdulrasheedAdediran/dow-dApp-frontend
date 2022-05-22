@@ -2,13 +2,7 @@ import { React } from "react";
 import "./Navbar.css";
 import Connected from "./Connected";
 
-const Navbar = ({
-  connectWallet,
-  connected,
-  walletAddress,
-  userBalance,
-  string,
-}) => {
+const Navbar = ({ connectWallet, connected, walletAddress, userBalance }) => {
   return (
     <nav>
       <div>

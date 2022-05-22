@@ -86,8 +86,8 @@ const App = () => {
   // Gets user chain balance and DOW token balance
   const getUserBalance = async (address) => {
     try {
-      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
       const networkCoinBalance = await provider.getBalance(address);
+      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
       const DOWTokenBalance = await DOWContractInstance.balanceOf(address);
       const formartedNetworkCoinBalance = utils.formatUnits(
         networkCoinBalance,
@@ -236,7 +236,7 @@ const App = () => {
     init();
     if (!window.ethereum) return;
 
-    window.ethereum.on("connect", eagerConnect);
+    // window.ethereum.on("connect", eagerConnect);
     window.ethereum.on("connect", getPlayerStatistics);
     window.ethereum.on("connect", getUserBalance);
     window.ethereum.on("accountsChanged", handleAccountChanged);
@@ -249,7 +249,6 @@ const App = () => {
   return (
     <>
       <Navbar
-        string={"test"}
         connectWallet={connectWallet}
         connected={connected}
         walletAddress={walletAddress}
