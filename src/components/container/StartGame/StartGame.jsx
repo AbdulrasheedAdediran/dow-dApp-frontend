@@ -220,34 +220,84 @@ const StartGame = ({
           ></input>
         </div>
         <div className="number-btns">
-          <button className="number-btn" value="0" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="0"
+            onClick={handleNumberButton}
+          >
             0
           </button>
-          <button className="number-btn" value="1" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="1"
+            onClick={handleNumberButton}
+          >
             1
           </button>
-          <button className="number-btn" value="2" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="2"
+            onClick={handleNumberButton}
+          >
             2
           </button>
-          <button className="number-btn" value="3" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="3"
+            onClick={handleNumberButton}
+          >
             3
           </button>
-          <button className="number-btn" value="4" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="4"
+            onClick={handleNumberButton}
+          >
             4
           </button>
-          <button className="number-btn" value="5" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="5"
+            onClick={handleNumberButton}
+          >
             5
           </button>
-          <button className="number-btn" value="6" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="6"
+            onClick={handleNumberButton}
+          >
             6
           </button>
-          <button className="number-btn" value="7" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="7"
+            onClick={handleNumberButton}
+          >
             7
           </button>
-          <button className="number-btn" value="8" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="8"
+            onClick={handleNumberButton}
+          >
             8
           </button>
-          <button className="number-btn" value="9" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={!isDisabled}
+            value="9"
+            onClick={handleNumberButton}
+          >
             9
           </button>
         </div>
