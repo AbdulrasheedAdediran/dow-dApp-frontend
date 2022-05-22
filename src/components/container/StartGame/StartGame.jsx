@@ -3,6 +3,7 @@ import "./StartGame.css";
 import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
+import Modal from "../../modal/Modal";
 import Layout from "../../Layout";
 import { ethers, utils, Contract } from "ethers";
 
@@ -11,6 +12,8 @@ const StartGame = (props) => {
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState(false);
   // const [view, setView] = useState("hide");
   const randomNumbers = props.generatedValues;
   const [roundScores, setRoundScores] = useState([]);
@@ -118,7 +121,7 @@ const StartGame = (props) => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
-    const loseMessage = "GAME OVER, BETTER LUCK NEXT TIME";
+    const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
     e.preventDefault();
     if (trials <= 7 && dead !== 4) {
@@ -161,20 +164,24 @@ const StartGame = (props) => {
     }
 
     if (trials <= 7 && dead === 4) {
-      setTimeout(() => {
-        alert(winMessage);
-        window.location.reload(false);
-      }, 300);
+      // setTimeout(() => {
+      //   alert(winMessage);
+      //   window.location.reload(false);
+      // }, 300);
+      setMessage(winMessage)
+      setIsOpen(true);
       setWon((won += 1));
       setPlayed((played += 1));
       localStorage.setItem("Won", won);
       localStorage.setItem("Played", played);
     } else if (trials >= 7 && dead !== 4) {
       // Delay alert for few seconds for player to see wrong input
-      setTimeout(() => {
-        alert(loseMessage);
-        window.location.reload(false);
-      }, 300);
+      // setTimeout(() => {
+      //   alert(loseMessage);
+      //   window.location.reload(false);
+      // }, 300);
+      setMessage(loseMessage)
+      setIsOpen(true);
       setLost((lost += 1));
       setPlayed((played += 1));
       localStorage.setItem("Lost", lost);
@@ -186,7 +193,6 @@ const StartGame = (props) => {
       firstInput.focus();
       setTrials((trials = trials = 0));
     }
-
     // setAttempt(playerInput);
     // console.log("Attempt:", attempt);
     // console.log("playerInput:", playerInput);
@@ -300,7 +306,6 @@ const StartGame = (props) => {
           </button>
         </div>
       </form>
-
       <div className="attempts-and-dashboard">
         <Attempts
           trial={trials}
@@ -318,6 +323,7 @@ const StartGame = (props) => {
           highestStreak={props.playerStatistics.highestStreak}
         />
       </div>
+      {isOpen && <Modal setIsOpen={setIsOpen} message={message} />}
       <Link to="/">
         <button>Back</button>
       </Link>
