@@ -26,7 +26,7 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
               <button
                 className="deleteBtn"
                 onClick={() => {
-                  window.open("https://0xdeadorwounded.netlify.app", "_self");
+                  window.open("https://deadorwounded.netlify.app", "_self");
                   setIsOpen(false);
                 }}
               >
@@ -37,7 +37,7 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
                 onClick={() => {
                   setIsOpen(false);
                   window.location.replace(
-                    "https://0xdeadorwounded.netlify.app",
+                    "https://deadorwounded.netlify.app",
                     "_self"
                   );
                 }}
