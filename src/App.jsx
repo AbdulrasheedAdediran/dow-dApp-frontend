@@ -84,16 +84,16 @@ const App = () => {
   };
 
   // Gets user chain balance and DOW token balance
-  const getUserBalance = async (address) => {
+  const getUserBalance = async () => {
+    const accounts = await provider.listAccounts();
     try {
-      const networkCoinBalance = await provider.getBalance(address);
+      const networkCoinBalance = await provider.getBalance(accounts[0]);
       const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
-      const DOWTokenBalance = await DOWContractInstance.balanceOf(address);
+      const DOWTokenBalance = await DOWContractInstance.balanceOf(accounts[0]);
       const formartedNetworkCoinBalance = utils.formatUnits(
         networkCoinBalance,
         18
       );
-      // const accounts = await provider.listAccounts();
       // console.log("User connected account", accounts[0]);
 
       const formartedDOWTokenBalance = utils.formatUnits(DOWTokenBalance, 18);
@@ -104,7 +104,7 @@ const App = () => {
       return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
-      console.log("Error getting user balance");
+      // console.log("Error getting user balance");
     }
   };
   // Get player's statistics
@@ -133,7 +133,7 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
-    if (userBalance.DOWTokenBalance < 0.1) {
+    if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
       return;
     }
@@ -236,7 +236,7 @@ const App = () => {
     init();
     if (!window.ethereum) return;
 
-    // window.ethereum.on("connect", eagerConnect);
+    window.ethereum.on("connect", eagerConnect);
     window.ethereum.on("connect", getPlayerStatistics);
     window.ethereum.on("connect", getUserBalance);
     window.ethereum.on("accountsChanged", handleAccountChanged);
@@ -283,6 +283,8 @@ const App = () => {
                 startGame={startGame}
                 checkTrials={checkTrials}
                 claimFreeTokens={claimFreeTokens}
+                provider={provider}
+                DOWContract={DOWContract}
               />
             }
           />
@@ -297,12 +299,3 @@ const App = () => {
 };
 
 export default App;
-//===============//
-// const listedAccounts = await provider.listAccounts();
-// const provider = new ethers.providers.Web3Provider(window.ethereum);
-// const signer = new provider.getSigner();
-// console.log("Signer", signer);
-// const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-// console.log("listed accounts", accounts);
-// console.log("DOWContractInstance", DOWContractInstance);
-//===========//

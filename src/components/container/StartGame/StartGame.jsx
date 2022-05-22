@@ -4,8 +4,9 @@ import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
 import Modal from "../../modal/Modal";
-import Layout from "../../Layout";
-import { ethers, utils, Contract } from "ethers";
+import DOW_ABI from "../../../util/DOW_ABI.json";
+import { Contract } from "ethers";
+
 
 const StartGame = ({
   generatedValues,
@@ -19,6 +20,8 @@ const StartGame = ({
   startGame,
   checkTrials,
   claimFreeTokens,
+  DOWContract,
+  provider,
 }) => {
   // Stores and handles the player's inputs
   const [playerInput, setPlayerInput] = useState([]);
@@ -26,37 +29,23 @@ const StartGame = ({
   const [isDisabled, setIsDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
-  // const [view, setView] = useState("hide");
-  const randomNumbers = generatedValues;
+  const randomNumbers = generatedValues[0];
   const [roundScores, setRoundScores] = useState([]);
-  console.log("Connected Status", connected);
-  console.log("user Balance", userBalance);
-  console.log("Check Trials", checkTrials);
-  console.log("Generated Values", generatedValues);
-  console.log("Claim free tokens", claimFreeTokens);
-  console.log("Player Statistics", playerStatistics);
+  let [dead, setDead] = useState(0);
+  let [wounded, setWounded] = useState(0);
+  const [trials, setTrials] = useState(1);
+  const signer = provider.getSigner();
+  const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+  // console.log("Connected Status", connected);
+  // console.log("user Balance", userBalance);
+  // console.log("Check Trials", checkTrials);
+  // console.log("Generated Values", generatedValues);
+  // console.log("Claim free tokens", claimFreeTokens);
+  // console.log("Player Statistics", playerStatistics);
+  console.log("Random Numbers", randomNumbers);
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
-  // let getPlayed = parseInt(localStorage.getItem("Played"), 10);
-  // let getWon = parseInt(localStorage.getItem("Won"), 10);
-  // let getLost = parseInt(localStorage.getItem("Lost"), 10);
-  let [dead, setDead] = useState(0);
-  let [wounded, setWounded] = useState(0);
-  let [trials, setTrials] = useState(0);
-  const [played, setPlayed] = useState();
-  const [won, setWon] = useState();
-  const [lost, setLost] = useState();
-  const [currentStreak, setCurrentStreak] = useState();
-  const [highestStreak, setHighestStreak] = useState();
-  // localStorage.getItem("Won");
-  // localStorage.getItem("Lost");
-  // console.log("Local Storage Played", getPlayed);
-  // console.log("Local Storage Won", getWon);
-  // console.log("Local Storage Lost", getLost);
-  // localStorage.removeItem("Played");
-  // localStorage.removeItem("Won");
-  // localStorage.removeItem("Lost");
 
   const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
@@ -131,18 +120,22 @@ const StartGame = ({
       }
     };
   };
-
-  const handlePlay = (e) => {
+  // console.log("Type of player input", typeof playerInput[0]);
+  // console.log("Type of random number element", typeof randomNumbers[0]);
+  // console.log("Type of random number", typeof randomNumbers);
+  // console.log("Length of random number", randomNumbers.length);
+  const handlePlay = async (e) => {
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
+
     e.preventDefault();
     if (trials <= 7 && dead !== 4) {
       setDead((dead = 0));
       setWounded((wounded = 0));
-      setTrials((trials += 1));
+      setTrials((trials) => (trials += 1));
       // Check Player Input and Return Round Scores
       for (let i = 0; i < 4; i++) {
         // Check if player guess is in the correct index of random numbers
@@ -179,43 +172,20 @@ const StartGame = ({
     }
 
     if (trials <= 7 && dead === 4) {
-      // setTimeout(() => {
-      //   alert(winMessage);
-      //   window.location.reload(false);
-      // }, 300);
       setMessage(winMessage)
       setIsOpen(true);
-      setWon((won += 1));
-      setPlayed((played += 1));
-      localStorage.setItem("Won", won);
-      localStorage.setItem("Played", played);
+      await DOWContractInstance.checkTrials(trials);
     } else if (trials >= 7 && dead !== 4) {
-      // Delay alert for few seconds for player to see wrong input
-      // setTimeout(() => {
-      //   alert(loseMessage);
-      //   window.location.reload(false);
-      // }, 300);
       setMessage(loseMessage)
       setIsOpen(true);
-      setLost((lost += 1));
-      setPlayed((played += 1));
-      localStorage.setItem("Lost", lost);
-      localStorage.setItem("Played", played);
-      // Reset game interface and values
+   await DOWContractInstance.checkTrials(8);
       entries.reset();
       firstInput.attributes["disabled"] = setIsDisabled(false);
       firstInput.attributes["autofocus"] = true;
       firstInput.focus();
-      setTrials((trials = trials = 0));
+      setTrials(0);
     }
-    // setAttempt(playerInput);
-    // console.log("Attempt:", attempt);
-    // console.log("playerInput:", playerInput);
-    // console.log("Round scores:", roundScores);
-    // console.log(`Random Numbers Generated: ${randomNumbers}`);
-    // console.log(`Your Guess: ${playerInput}`);
 
-    // console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
   };
   return (
     <section>
