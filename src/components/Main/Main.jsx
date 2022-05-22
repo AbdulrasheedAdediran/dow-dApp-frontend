@@ -13,8 +13,7 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(connected);
-  console.log(userBalance.DOWTokenBalance);
+
   return (
     // <Layout>
     <main>

@@ -47,10 +47,18 @@ const StartGame = ({
     const regX = /^[0-9]+$/;
     // Checks if inputs entered are valid and stores them in an array
     if (regX.test(target.value)) {
+      // console.log(`regX is ${regX.test(target.value)}`);
+      // console.log(`e.target.value is ${target.value}`);
       setPlayerInput([...playerInput, target.value]);
+      // playerInput.push(target.value);
+      // console.log(playerInput);
     } else {
+      // Do not store the player's input if they are invalid (not numbers 0 - 9)
+      // console.log(`regX is ${regX.test(target.value)}`);
       target.value = "";
       target.focus();
+      // console.log(`e.target.value is ${target.value}`);
+      // console.log(playerInput);
     }
 
     let container = document.getElementsByClassName("input")[0];
@@ -59,6 +67,8 @@ const StartGame = ({
         console.log("delete");
       }
 
+      // let pressedKey = parseInt(String(e.key));
+      // console.log(` Pressed "${pressedKey}" key on the keyboard`);
       let focusedInputLength = target.value.length;
       let lastInput = inputs[inputs.length - 1];
       if (
@@ -139,7 +149,7 @@ const StartGame = ({
           wounded: wounded,
         },
       ]);
-      // entries.reset();
+      entries.reset();
       // firstInput.attributes["disabled"] = setIsDisabled(true);
       // firstInput.attributes["autofocus"] = true;
       setPlayerInput([]);
@@ -220,34 +230,84 @@ const StartGame = ({
           ></input>
         </div>
         <div className="number-btns">
-          <button className="number-btn" value="0" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="0"
+            onClick={handleNumberButton}
+          >
             0
           </button>
-          <button className="number-btn" value="1" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="1"
+            onClick={handleNumberButton}
+          >
             1
           </button>
-          <button className="number-btn" value="2" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="2"
+            onClick={handleNumberButton}
+          >
             2
           </button>
-          <button className="number-btn" value="3" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="3"
+            onClick={handleNumberButton}
+          >
             3
           </button>
-          <button className="number-btn" value="4" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="4"
+            onClick={handleNumberButton}
+          >
             4
           </button>
-          <button className="number-btn" value="5" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="5"
+            onClick={handleNumberButton}
+          >
             5
           </button>
-          <button className="number-btn" value="6" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="6"
+            onClick={handleNumberButton}
+          >
             6
           </button>
-          <button className="number-btn" value="7" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="7"
+            onClick={handleNumberButton}
+          >
             7
           </button>
-          <button className="number-btn" value="8" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="8"
+            onClick={handleNumberButton}
+          >
             8
           </button>
-          <button className="number-btn" value="9" onClick={handleNumberButton}>
+          <button
+            className="number-btn"
+            disabled={true}
+            value="9"
+            onClick={handleNumberButton}
+          >
             9
           </button>
         </div>
