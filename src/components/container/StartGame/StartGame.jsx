@@ -12,13 +12,13 @@ const StartGame = (props) => {
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
   // const [view, setView] = useState("hide");
-  const randomNumbers = [4, 2, 3, 1];
+  const randomNumbers = props.generatedValues;
   const [roundScores, setRoundScores] = useState([]);
   // console.log("Connected Status", props.connected);
   // console.log("Start Game", props.startGame);
-  console.log("Generated Values", props.generatedValues);
+  // console.log("Generated Values", props.generatedValues);
   // console.log("User Balance", props.userBalance);
-  console.log("Player Statistics", props.playerStatistics);
+  // console.log("Player Statistics", props.playerStatistics);
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
@@ -197,173 +197,131 @@ const StartGame = (props) => {
     // console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
   };
   return (
-    <Layout>
-      <section>
-        <form className="entries" action="#" onSubmit={handlePlay}>
-          <label htmlFor="player-inputs">
-            {" "}
-            Enter four unique numbers from 0 - 9{" "}
-          </label>
-          <div className="input">
-            <input
-              type="text"
-              maxLength={1}
-              minLength={1}
-              name="playerInput1"
-              id="player-inputs"
-              className="first-player-input player-input"
-              value={playerInput.playerInput1}
-              onChange={handlePlayerInput}
-              autoComplete="off"
-              autoFocus={true}
-              disabled={isDisabled}
-            ></input>
-            <input
-              type="text"
-              maxLength={1}
-              minLength={1}
-              name="playerInput2"
-              id="player-inputs"
-              className="second-player-input player-input"
-              value={playerInput.playerInput2}
-              onChange={handlePlayerInput}
-              autoComplete="off"
-              required={true}
-              disabled={!isDisabled}
-            ></input>
-            <input
-              type="text"
-              maxLength={1}
-              minLength={1}
-              name="playerInput3"
-              id="player-inputs"
-              className="third-player-input player-input"
-              value={playerInput.playerInput3}
-              onChange={handlePlayerInput}
-              autoComplete="off"
-              disabled={!isDisabled}
-            ></input>
-            <input
-              type="text"
-              maxLength={1}
-              minLength={1}
-              name="playerInput4"
-              id="player-inputs"
-              className="fourth-player-input player-input"
-              value={playerInput.playerInput4}
-              onChange={handlePlayerInput}
-              autoComplete="off"
-              disabled={!isDisabled}
-            ></input>
-          </div>
-          <div className="number-btns">
-            <button
-              className="number-btn"
-              value="0"
-              onClick={handleNumberButton}
-            >
-              0
-            </button>
-            <button
-              className="number-btn"
-              value="1"
-              onClick={handleNumberButton}
-            >
-              1
-            </button>
-            <button
-              className="number-btn"
-              value="2"
-              onClick={handleNumberButton}
-            >
-              2
-            </button>
-            <button
-              className="number-btn"
-              value="3"
-              onClick={handleNumberButton}
-            >
-              3
-            </button>
-            <button
-              className="number-btn"
-              value="4"
-              onClick={handleNumberButton}
-            >
-              4
-            </button>
-            <button
-              className="number-btn"
-              value="5"
-              onClick={handleNumberButton}
-            >
-              5
-            </button>
-            <button
-              className="number-btn"
-              value="6"
-              onClick={handleNumberButton}
-            >
-              6
-            </button>
-            <button
-              className="number-btn"
-              value="7"
-              onClick={handleNumberButton}
-            >
-              7
-            </button>
-            <button
-              className="number-btn"
-              value="8"
-              onClick={handleNumberButton}
-            >
-              8
-            </button>
-            <button
-              className="number-btn"
-              value="9"
-              onClick={handleNumberButton}
-            >
-              9
-            </button>
-          </div>
-          <div className="clear-play-btns">
-            <button className="game-btn clear">Clear</button>
-            <button
-              className="game-btn play"
-              // type="submit"
-              disabled={true}
-              // onSubmit={handlePlay}
-              onClick={handlePlay}
-            >
-              Play
-            </button>
-          </div>
-        </form>
-
-        <div className="attempts-and-dashboard">
-          <Attempts
-            trial={trials}
-            confirmedAttempt={playerInput}
-            dead={dead}
-            wounded={wounded}
-            roundScores={roundScores}
-          />
-
-          <Dashboard
-            played={played}
-            won={won}
-            lost={lost}
-            currentStreak={props.playerStatistics.currentStreak}
-            highestStreak={props.playerStatistics.highestStreak}
-          />
+    <section>
+      <form className="entries" action="#" onSubmit={handlePlay}>
+        <label htmlFor="player-inputs">
+          {" "}
+          Enter four unique numbers from 0 - 9{" "}
+        </label>
+        <div className="input">
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput1"
+            id="player-inputs"
+            className="first-player-input player-input"
+            value={playerInput.playerInput1}
+            onChange={handlePlayerInput}
+            autoComplete="off"
+            autoFocus={true}
+            disabled={isDisabled}
+          ></input>
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput2"
+            id="player-inputs"
+            className="second-player-input player-input"
+            value={playerInput.playerInput2}
+            onChange={handlePlayerInput}
+            autoComplete="off"
+            required={true}
+            disabled={!isDisabled}
+          ></input>
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput3"
+            id="player-inputs"
+            className="third-player-input player-input"
+            value={playerInput.playerInput3}
+            onChange={handlePlayerInput}
+            autoComplete="off"
+            disabled={!isDisabled}
+          ></input>
+          <input
+            type="text"
+            maxLength={1}
+            minLength={1}
+            name="playerInput4"
+            id="player-inputs"
+            className="fourth-player-input player-input"
+            value={playerInput.playerInput4}
+            onChange={handlePlayerInput}
+            autoComplete="off"
+            disabled={!isDisabled}
+          ></input>
         </div>
-        <Link to="/">
-          <button>Back</button>
-        </Link>
-      </section>
-    </Layout>
+        <div className="number-btns">
+          <button className="number-btn" value="0" onClick={handleNumberButton}>
+            0
+          </button>
+          <button className="number-btn" value="1" onClick={handleNumberButton}>
+            1
+          </button>
+          <button className="number-btn" value="2" onClick={handleNumberButton}>
+            2
+          </button>
+          <button className="number-btn" value="3" onClick={handleNumberButton}>
+            3
+          </button>
+          <button className="number-btn" value="4" onClick={handleNumberButton}>
+            4
+          </button>
+          <button className="number-btn" value="5" onClick={handleNumberButton}>
+            5
+          </button>
+          <button className="number-btn" value="6" onClick={handleNumberButton}>
+            6
+          </button>
+          <button className="number-btn" value="7" onClick={handleNumberButton}>
+            7
+          </button>
+          <button className="number-btn" value="8" onClick={handleNumberButton}>
+            8
+          </button>
+          <button className="number-btn" value="9" onClick={handleNumberButton}>
+            9
+          </button>
+        </div>
+        <div className="clear-play-btns">
+          <button className="game-btn clear">Clear</button>
+          <button
+            className="game-btn play"
+            // type="submit"
+            disabled={true}
+            // onSubmit={handlePlay}
+            onClick={handlePlay}
+          >
+            Play
+          </button>
+        </div>
+      </form>
+
+      <div className="attempts-and-dashboard">
+        <Attempts
+          trial={trials}
+          confirmedAttempt={playerInput}
+          dead={dead}
+          wounded={wounded}
+          roundScores={roundScores}
+        />
+
+        <Dashboard
+          played={played}
+          won={won}
+          lost={lost}
+          currentStreak={props.playerStatistics.currentStreak}
+          highestStreak={props.playerStatistics.highestStreak}
+        />
+      </div>
+      <Link to="/">
+        <button>Back</button>
+      </Link>
+    </section>
   );
 };
 

@@ -9,6 +9,7 @@ import Main from "./components/Main/Main";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
+import Footer from "./components/Footer/Footer";
 const DOWContract = "0x5032bD700701310d8571C109704e243B0842c891";
 const App = () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -69,6 +70,7 @@ const App = () => {
     getPlayerStatistics();
     // console.log("Player Statistics", getPlayerStatistics);
     setConnected(true);
+    setWalletAddress(accounts[0]);
     // console.log("Connected status", connected);
   };
 
@@ -113,7 +115,7 @@ const App = () => {
     // console.log("Signer", signer);
     const playerStats = await DOWContractInstance.checkStreak();
 
-    // playerStats.wait();
+    // await playerStats.wait();
     // console.log("Player Stats", playerStats);
     const played = playerStats.gamesPlayed;
     const won = playerStats.gamesWon;
@@ -127,31 +129,23 @@ const App = () => {
       currentWinStreak: Number(currentStreak),
       highestWinStreak: Number(highestStreak),
     });
-    // console.log("User gamesPlayed:", playerStatistics.gamesPlayed);
-    // console.log("User gamesWon:", playerStatistics.gamesWon);
-    // console.log("User gamesLost:", playerStatistics.gamesLost);
-    // console.log("User currentWinStreak:", playerStatistics.currentWinStreak);
-    // console.log("User highestWinStreak:", playerStatistics.highestWinStreak);
   };
 
   // Start game
   const startGame = async () => {
-    if (userBalance.DOWTokenBalance < 5) {
+    if (userBalance.DOWTokenBalance < 0.1) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
       return;
     }
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    const startGame = await DOWContractInstance.startGame();
-    // startGame.wait();
-    const generatedValues = startGame.playerNumbers;
-    const randomNumbers = await DOWContractInstance.queryFilter(
-      "PlayerNumbers"
+    const playGame = await DOWContractInstance.startGame();
+    const gameData = await playGame.wait();
+    const randomNumbers = gameData.events[1].args.compNum;
+    const convertedValues = randomNumbers.map((randomNumber) =>
+      Number(randomNumber)
     );
-    console.log("generatedValues:", generatedValues);
-    console.log("randomNumbers:", randomNumbers);
-    setGeneratedValues([generatedValues]);
-    console.log("generatedValues after setting:", generatedValues);
+    setGeneratedValues([...generatedValues, convertedValues]);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
@@ -165,57 +159,77 @@ const App = () => {
       const networkID = await window.ethereum.request({
         method: "eth_chainId",
       });
-      if (Number(networkID) === 28) return;
+      if (Number(networkID) !== 28) return;
       const userAccount = await getUserBalance(accounts[0]);
-
+      setWalletAddress(accounts[0]);
+      getPlayerStatistics();
       setUserBalance({
-        networkCoinBalance: userAccount.networkCoinBalance,
-        DOWTokenBalance: userAccount.DOWTokenBalance,
+        DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+        networkCoinBalance: userAccount.formartedNetworkCoinBalance,
       });
+      setConnected(true);
+      console.log("Account change bancele", userAccount.networkCoinBalance);
     } else {
       setConnected(false);
       setUserBalance({
         DOWTokenBalance: 0,
         networkCoinBalance: 0,
       });
+      setPlayerStatistics({
+        gamesPlayed: 0,
+        gamesLost: 0,
+        currentWinStreak: 0,
+        highestWinStreak: 0,
+        gamesWon: 0,
+      });
     }
   };
   //Alerts user to switch to a supported network when account is switched from a supported network
-  const handleChainChanged = async (networkID) => {
+  const handleChainChanged = async () => {
+    const networkID = await window.ethereum.request({
+      method: "eth_chainId",
+    });
     if (Number(networkID) !== 28) {
       setConnected(false);
       setUserBalance({
         DOWTokenBalance: 0,
         networkCoinBalance: 0,
       });
-
+      setPlayerStatistics({
+        gamesPlayed: 0,
+        gamesLost: 0,
+        currentWinStreak: 0,
+        highestWinStreak: 0,
+        gamesWon: 0,
+      });
+      console.log("Chain changed");
       alert("Invalid network, please switch to a DOW supported network");
       return;
     } else {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const accounts = await provider.listAccounts();
       if (!accounts.length) return;
       const userAccount = await getUserBalance(accounts[0]);
       setUserBalance({
-        networkCoinBalance: userAccount.networkCoinBalance,
-        DOWTokenBalance: userAccount.DOWTokenBalance,
+        DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+        networkCoinBalance: userAccount.formartedNetworkCoinBalance,
       });
       setConnected(true);
+      getPlayerStatistics();
+
+      window.location.reload(false);
     }
   };
   const init = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.listAccounts();
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     if (!accounts.length) return;
     const userAccount = await getUserBalance(accounts[0]);
     setUserBalance({
-      networkCoinBalance: userAccount.networkCoinBalance,
-      DOWTokenBalance: userAccount.DOWTokenBalance,
+      DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+      networkCoinBalance: userAccount.formartedNetworkCoinBalance,
     });
     setConnected(true);
-    getUserBalance();
     getPlayerStatistics();
   };
   useEffect(() => {
@@ -223,66 +237,63 @@ const App = () => {
     if (!window.ethereum) return;
 
     window.ethereum.on("connect", eagerConnect);
-    // window.ethereum.on("connect", connectWallet);
+    window.ethereum.on("connect", getPlayerStatistics);
     window.ethereum.on("connect", getUserBalance);
-    window.ethereum.on("accountChange", handleAccountChanged);
+    window.ethereum.on("accountsChanged", handleAccountChanged);
     window.ethereum.on("chainChanged", handleChainChanged);
+    window.ethereum.removeListener("chainChanged", handleChainChanged);
 
-    // window.removeListener("connect", eagerConnect);
-    // window.removeListener("accountChange", handleAccountChanged);
-    // window.removeListener("chainChanged", handleChainChanged);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  // console.log("Generated Value:", generatedValues);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/layout"
-          exact
-          element={
-            <Navbar
-              connectWallet={connectWallet}
-              connected={connected}
-              walletAddress={walletAddress}
-              userBalance={userBalance}
-              DOWContract={DOWContract}
-            />
-          }
-        />
-        <Route
-          path="/"
-          exact
-          element={
-            <Main
-              eagerConnect={eagerConnect}
-              connected={connected}
-              startGame={startGame}
-            />
-          }
-        />
-        <Route
-          path="/startGame"
-          exact
-          element={
-            <StartGame
-              generatedValues={generatedValues}
-              connected={connected}
-              userBalance={userBalance}
-              setUserBalance={setUserBalance}
-              playerStatistics={playerStatistics}
-              setPlayerStatistics={setPlayerStatistics}
-              connectWallet={connectWallet}
-              eagerConnect={eagerConnect}
-              startGame={startGame}
-            />
-          }
-        />
-        <Route path="/howToPlay" exact element={<HowToPlay />} />
-        <Route path="/options" exact element={<Options />} />
-        <Route path="/about" exact element={<About />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <Navbar
+        string={"test"}
+        connectWallet={connectWallet}
+        connected={connected}
+        walletAddress={walletAddress}
+        userBalance={userBalance}
+      />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <Main
+                eagerConnect={eagerConnect}
+                connected={connected}
+                startGame={startGame}
+              />
+            }
+          />
+          <Route
+            path="/startGame"
+            exact
+            element={
+              <StartGame
+                generatedValues={generatedValues}
+                connected={connected}
+                userBalance={userBalance}
+                setUserBalance={setUserBalance}
+                playerStatistics={playerStatistics}
+                setPlayerStatistics={setPlayerStatistics}
+                connectWallet={connectWallet}
+                eagerConnect={eagerConnect}
+                startGame={startGame}
+                checkTrials={checkTrials}
+                claimFreeTokens={claimFreeTokens}
+              />
+            }
+          />
+          <Route path="/howToPlay" exact element={<HowToPlay />} />
+          <Route path="/options" exact element={<Options />} />
+          <Route path="/about" exact element={<About />} />
+        </Routes>
+      </BrowserRouter>
+      <Footer />
+    </>
   );
 };
 

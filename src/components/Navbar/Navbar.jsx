@@ -1,73 +1,14 @@
-import { React, useState, useEffect } from "react";
-import { ethers, utils, Contract } from "ethers";
+import { React } from "react";
 import "./Navbar.css";
 import Connected from "./Connected";
-import DOW_ABI from "../../util/DOW_ABI.json";
-const DOWContract = "0x5032bD700701310d8571C109704e243B0842c891";
 
-const Navbar = () => {
-  const [connected, setConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState("");
-  const [userBalance, setUserBalance] = useState({
-    DOWTokenBalance: 0,
-    networkCoinBalance: 0,
-  });
-  //----------------//
-  //==Connect Wallet==//
-  //----------------//
-  // Requests wallet connection
-  const connectWallet = async () => {
-    if (window.ethereum || window.web3) {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletAddress(accounts[0]);
-        setConnected(true);
-        getUserBalance(accounts[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      alert("Please Use a Web3 Enable Browser or Install Metamask");
-    }
-  };
-
-  //----------------//
-  //==Get Balance==//
-  //----------------//
-
-  // Gets user chain balance and DOW token balance
-  const getUserBalance = async (address) => {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
-      const DOWTokenBalance = await DOWContractInstance.balanceOf(address);
-      const networkCoinBalance = await provider.getBalance(address);
-      const formartedNetworkCoinBalance = utils.formatUnits(
-        networkCoinBalance,
-        18
-      );
-      const formartedDOWTokenBalance = utils.formatUnits(DOWTokenBalance, 18);
-      setUserBalance({
-        DOWTokenBalance: formartedDOWTokenBalance,
-        networkCoinBalance: formartedNetworkCoinBalance,
-      });
-      return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
-    } catch (error) {
-      console.error(error);
-      console.log("Error getting user balance");
-    }
-  };
-
-  useEffect(() => {
-    // console.log(
-    //   "Solidity pack of 1",
-    //   ethers.utils.solidityKeccak256(ethers.utils.solidityPack(1))
-    // );
-    connectWallet();
-  }, []);
-  //======================//
+const Navbar = ({
+  connectWallet,
+  connected,
+  walletAddress,
+  userBalance,
+  string,
+}) => {
   return (
     <nav>
       <div>
