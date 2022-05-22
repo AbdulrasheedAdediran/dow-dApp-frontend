@@ -10,7 +10,7 @@ const Connected = (props) => {
   return (
     <ul className="connected">
       <li>{DOWTokenBalance} DOW</li>
-      <li>{networkCoinBalance} BOBA</li>
+      <li>{Math.floor(networkCoinBalance)} BOBA</li>
       <li>
         {address.slice(0, 5)}...
         {address.slice(address.length - 4, address.length)}

@@ -3,8 +3,10 @@ import "./StartGame.css";
 import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
 import { Link } from "react-router-dom";
+import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
 import { Contract } from "ethers";
+
 
 const StartGame = ({
   generatedValues,
@@ -25,6 +27,8 @@ const StartGame = ({
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState(false);
   const randomNumbers = generatedValues[0];
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
@@ -124,7 +128,7 @@ const StartGame = ({
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
-    const loseMessage = "GAME OVER, BETTER LUCK NEXT TIME";
+    const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
 
     e.preventDefault();
@@ -168,19 +172,13 @@ const StartGame = ({
     }
 
     if (trials <= 7 && dead === 4) {
+      setMessage(winMessage)
+      setIsOpen(true);
       await DOWContractInstance.checkTrials(trials);
-      setTimeout(() => {
-        alert(winMessage);
-        window.location.reload(false);
-      }, 300);
     } else if (trials >= 7 && dead !== 4) {
-      await DOWContractInstance.checkTrials(8);
-      // Delay alert for few seconds for player to see wrong input
-      setTimeout(() => {
-        alert(loseMessage);
-        window.location.reload(false);
-      }, 300);
-      // Reset game interface and values
+      setMessage(loseMessage)
+      setIsOpen(true);
+   await DOWContractInstance.checkTrials(8);
       entries.reset();
       firstInput.attributes["disabled"] = setIsDisabled(false);
       firstInput.attributes["autofocus"] = true;
@@ -188,14 +186,6 @@ const StartGame = ({
       setTrials(0);
     }
 
-    // setAttempt(playerInput);
-    // console.log("Attempt:", attempt);
-    // console.log("playerInput:", playerInput);
-    // console.log("Round scores:", roundScores);
-    // console.log(`Random Numbers Generated: ${randomNumbers}`);
-    // console.log(`Your Guess: ${playerInput}`);
-
-    // console.log(`Trial Number ${trials}: ${dead} Dead - ${wounded} Wounded`);
   };
   return (
     <section>
@@ -301,7 +291,6 @@ const StartGame = ({
           </button>
         </div>
       </form>
-
       <div className="attempts-and-dashboard">
         <Attempts
           trial={trials}
@@ -319,6 +308,7 @@ const StartGame = ({
           highestStreak={playerStatistics.highestStreak}
         />
       </div>
+      {isOpen && <Modal setIsOpen={setIsOpen} message={message} />}
       <Link to="/">
         <button>Back</button>
       </Link>
