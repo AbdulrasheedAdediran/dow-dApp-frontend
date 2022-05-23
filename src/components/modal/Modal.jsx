@@ -1,8 +1,10 @@
 import React from "react";
 import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Modal = ({ setIsOpen, message, actionOnYes }) => {
+  let navigate = useNavigate();
   return (
     <>
       <div className="darkBG" onClick={() => setIsOpen(false)} />
@@ -26,7 +28,7 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
               <button
                 className="deleteBtn"
                 onClick={() => {
-                  window.open("https://bobadow.vercel.app", "_self");
+                  navigate("/");
                   setIsOpen(false);
                 }}
               >
@@ -35,11 +37,8 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
               <button
                 className="cancelBtn"
                 onClick={() => {
+                  navigate("/");
                   setIsOpen(false);
-                  window.location.replace(
-                    "https://bobadow.vercel.app",
-                    "_self"
-                  );
                 }}
               >
                 Cancel
