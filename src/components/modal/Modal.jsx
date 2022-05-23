@@ -1,12 +1,12 @@
 import React from "react";
 import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, BrowserRouter } from "react-router-dom";
 
 const Modal = ({ setIsOpen, message, numbers }) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   return (
-    <>
+    <BrowserRouter>
       <div className="darkBG" onClick={() => setIsOpen(false)} />
       <div className="centered">
         <div className="modal">
@@ -29,7 +29,6 @@ const Modal = ({ setIsOpen, message, numbers }) => {
                 className="deleteBtn"
                 onClick={() => {
                   navigate("/");
-                  setIsOpen(false);
                 }}
               >
                 Yes
@@ -38,7 +37,6 @@ const Modal = ({ setIsOpen, message, numbers }) => {
                 className="cancelBtn"
                 onClick={() => {
                   navigate("/");
-                  setIsOpen(false);
                 }}
               >
                 Cancel
@@ -47,7 +45,7 @@ const Modal = ({ setIsOpen, message, numbers }) => {
           </div>
         </div>
       </div>
-    </>
+    </BrowserRouter>
   );
 };
 

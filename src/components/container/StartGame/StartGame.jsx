@@ -327,7 +327,7 @@ const StartGame = ({
           </button>
         </div>
         <div className="clear-play-btns">
-          <button className="game-btn clear">Clear</button>
+          <button className="game-btn clear" onClick={() => { navigate("/")}} > Clear</button>
           <button
             className="game-btn play"
             // type="submit"
