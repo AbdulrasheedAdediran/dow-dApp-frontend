@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import "./Main.css";
 
 const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
+  const location = useLocation();
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     if (!connected && parseInt(userBalance.DOWTokenBalance) < 5) {
@@ -12,7 +13,7 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
       setIsDisabled(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location]);
 
   return (
     // <Layout>
