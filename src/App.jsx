@@ -16,6 +16,8 @@ const App = () => {
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const [generatedValues, setGeneratedValues] = useState([]);
+  const [loader, setLoader] = useState(false)
+  const [loadingSuccess, setLoadingSuccess] = useState(null)
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -124,19 +126,39 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
+    
+    setLoader(true);
     if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
       return;
+    } else {
+      setLoader(false);
+      setLoadingSuccess(false);
     }
+    let randomNumbers = []
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    const playGame = await DOWContractInstance.startGame();
-    const gameData = await playGame.wait();
-    const randomNumbers = gameData.events[1].args.compNum;
-    const convertedValues = randomNumbers.map((randomNumber) =>
-      Number(randomNumber)
-    );
-    setGeneratedValues([...generatedValues, convertedValues]);
+    try {
+      const playGame = await DOWContractInstance.startGame();
+      const gameData = await playGame.wait();
+      randomNumbers = gameData.events[1].args.compNum;
+      const convertedValues = randomNumbers.map((randomNumber) =>
+        Number(randomNumber)
+      );
+      setGeneratedValues([...generatedValues, convertedValues]);
+    } catch {
+      setLoader(false);
+      setLoadingSuccess(false);
+    }
+    
+    if (randomNumbers.length === 4) {
+      setLoader(false);
+      setLoadingSuccess(true);
+    } else {
+      setLoader(false);
+      setLoadingSuccess(false);
+
+    }
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
@@ -175,7 +197,9 @@ const App = () => {
       });
     }
   };
-
+  useEffect(() => {
+     if (loadingSuccess === false) alert("Connection Failed");
+   }, [loadingSuccess]);
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleChainChanged = async () => {
     const networkID = await window.ethereum.request({
@@ -273,6 +297,8 @@ const App = () => {
                 claimFreeTokens={claimFreeTokens}
                 provider={provider}
                 DOWContract={DOWContract}
+                loader={loader}
+                loadingSuccess={loadingSuccess}
               />
             }
           />

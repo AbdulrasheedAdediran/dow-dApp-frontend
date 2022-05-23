@@ -2,21 +2,28 @@ import { React, useState, useEffect } from "react";
 import "./StartGame.css";
 import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Main from "../../Main/Main";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
+import Loader from "../../loader/Loader";
 import { Contract } from "ethers";
 
 const StartGame = ({
   generatedValues,
   playerStatistics,
-
+  connected,
+  startGame,
+  userBalance,
   checkTrials,
   claimFreeTokens,
   DOWContract,
   provider,
+  loadingSuccess,
+  loader
 }) => {
   // Stores and handles the player's inputs
+  let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
   const [isDisabled, setIsDisabled] = useState(false);
@@ -162,6 +169,8 @@ const StartGame = ({
   };
   return (
     <section>
+      {loader && <Loader />}
+      {loadingSuccess === false && navigate("/")}
       <form className="entries" action="#" onSubmit={handlePlay}>
         <label htmlFor="player-inputs">
           {" "}
