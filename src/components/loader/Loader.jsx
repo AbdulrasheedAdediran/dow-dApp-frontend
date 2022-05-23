@@ -18,7 +18,7 @@ export default function DoubleBubble(props) {
                   cx="123.5"
                   cy="124.5"
                   r="104"
-                  stroke="(25, 97%, 49%, 0.75)"
+                  stroke="hsla(25, 97%, 49%, 0.75)"
                   stroke-width="11"
                 />
                 <circle
@@ -26,28 +26,28 @@ export default function DoubleBubble(props) {
                   cx="124"
                   cy="20"
                   r="20"
-                  fill="(111, 97%, 49%, 0.75)"
+                  fill="hsla(111, 97%, 49%, 0.75)"
                 />
                 <circle
                   id="Ellipse 5"
                   cx="124"
                   cy="227"
                   r="20"
-                  fill="(111, 97%, 49%, 0.75)"
+                  fill="hsla(111, 97%, 49%, 0.75)"
                 />
                 <circle
                   id="Ellipse 3"
                   cx="228"
                   cy="127"
                   r="20"
-                  fill="(111, 97%, 49%, 0.75)"
+                  fill="hsla(111, 97%, 49%, 0.75)"
                 />
                 <circle
                   id="Ellipse 4"
                   cx="20"
                   cy="127"
                   r="20"
-                  fill="(111, 97%, 49%, 0.75)"
+                  fill="hsla(111, 97%, 49%, 0.75)"
                 />
               </g>
               <g id="inner" style={{ animationDuration: props.speed + "s" }}>
@@ -57,7 +57,7 @@ export default function DoubleBubble(props) {
                   cy="125.545"
                   r="61.1714"
                   transform="rotate(32.5155 122.916 125.545)"
-                  stroke="#C4C4C4"
+                  stroke="hsla(25, 97%, 49%, 0.75)"
                   stroke-width="11"
                 />
                 <circle
@@ -66,7 +66,7 @@ export default function DoubleBubble(props) {
                   cy="72.0558"
                   r="12.1774"
                   transform="rotate(32.5155 157.374 72.0558)"
-                  fill="#DABDFF"
+                  fill="hsla(0, 98%, 49%, 0.933)"
                 />
                 <circle
                   id="Ellipse 5_2"
@@ -74,7 +74,7 @@ export default function DoubleBubble(props) {
                   cy="178.335"
                   r="12.1774"
                   transform="rotate(32.5155 89.626 178.335)"
-                  fill="#DABDFF"
+                  fill="hsla(0, 98%, 49%, 0.933)"
                 />
                 <circle
                   id="Ellipse 3_2"
@@ -82,7 +82,7 @@ export default function DoubleBubble(props) {
                   cy="161.03"
                   r="12.1774"
                   transform="rotate(32.5155 175.751 161.03)"
-                  fill="#DABDFF"
+                  fill="hsla(0, 98%, 49%, 0.933)"
                 />
                 <circle
                   id="Ellipse 4_2"
@@ -90,7 +90,7 @@ export default function DoubleBubble(props) {
                   cy="92.9549"
                   r="12.1774"
                   transform="rotate(32.5155 68.958 92.9549)"
-                  fill="#DABDFF"
+                  fill="hsla(0, 98%, 49%, 0.933)"
                 />
               </g>
             </g>

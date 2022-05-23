@@ -22,6 +22,10 @@ const App = () => {
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
   });
+  // useEffect(() => {
+  //   setLoadingSuccess(null);
+  // }, []);
+  
   // Handle player's statistics
   const [playerStatistics, setPlayerStatistics] = useState({
     gamesPlayed: 0,
@@ -39,9 +43,10 @@ const App = () => {
           method: "eth_requestAccounts",
         });
         setWalletAddress(accounts[0]);
-        setConnected(true);
+        eagerConnect();
         getUserBalance(accounts[0]);
-        getPlayerStatistics();
+        if (connected) getPlayerStatistics();
+        else alert("Not connected to a supported DOW Network")
       } catch (error) {
         console.error(error);
       }
@@ -56,7 +61,7 @@ const App = () => {
     });
     if (Number(networkID) !== 28) {
       setConnected(false);
-    }
+    } else setConnected(true)
     const accounts = await provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
 
@@ -130,11 +135,10 @@ const App = () => {
     setLoader(true);
     if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
-      return;
-    } else {
       setLoader(false);
       setLoadingSuccess(false);
     }
+
     let randomNumbers = []
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
@@ -197,9 +201,7 @@ const App = () => {
       });
     }
   };
-  useEffect(() => {
-     if (loadingSuccess === false) alert("Connection Failed");
-   }, [loadingSuccess]);
+
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleChainChanged = async () => {
     const networkID = await window.ethereum.request({
@@ -220,19 +222,15 @@ const App = () => {
       });
 
       alert("Invalid network, please switch to a DOW supported network");
+      window.location.reload();
       return;
     } else {
-      const accounts = await provider.listAccounts();
-      if (!accounts.length) return;
-      const userAccount = await getUserBalance(accounts[0]);
-      setUserBalance({
-        DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-        networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-      });
+       connectWallet();
       setConnected(true);
-      getPlayerStatistics();
+      window.location.reload();
     }
   };
+
   const init = async () => {
     const accounts = await provider.listAccounts();
     if (!accounts.length) return;
@@ -247,16 +245,21 @@ const App = () => {
   useEffect(() => {
     init();
     if (!window.ethereum) return;
-
+    
     window.ethereum.on("connect", eagerConnect);
     window.ethereum.on("connect", getPlayerStatistics);
     window.ethereum.on("connect", getUserBalance);
     window.ethereum.on("accountsChanged", handleAccountChanged);
+    // window.ethereum.removeListener("chainChanged", handleChainChanged);
     window.ethereum.on("chainChanged", handleChainChanged);
-    window.ethereum.removeListener("chainChanged", handleChainChanged);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+     console.log(loadingSuccess);
+     if (loadingSuccess === false) alert("Connection Failed");
+  }, [loadingSuccess]);
+  
   return (
     <>
       <Navbar

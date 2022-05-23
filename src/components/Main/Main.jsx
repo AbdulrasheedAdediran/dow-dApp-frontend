@@ -7,12 +7,12 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     if (!connected && parseInt(userBalance.DOWTokenBalance) < 5) {
-      setIsDisabled(false);
-    } else {
       setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [connected]);
 
   return (
     // <Layout>
@@ -24,7 +24,11 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
         <h1>Wounded</h1>
         <div className="dow-text-border" />
       </div>
-      <button className="claim-dow-button" onClick={claimFreeTokens}>
+      <button
+        className="claim-dow-button"
+        onClick={claimFreeTokens}
+        disabled={isDisabled}
+      >
         Claim DOW Tokens
       </button>
       <div className="main-menu-links">
