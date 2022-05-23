@@ -34,13 +34,18 @@ const StartGame = ({
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
+  const [isLoading, setIsLoading] = useState(false)
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
 
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
-
+    useEffect(() => {
+      console.log(generatedValues[0]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  
   const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
     e.preventDefault();
@@ -154,22 +159,33 @@ const StartGame = ({
 
     if (trials <= 7 && dead === 4) {
       setMessage(winMessage);
-      setIsOpen(true);
-      await DOWContractInstance.checkTrials(trials);
+       setIsLoading(true);
+       const res = await DOWContractInstance.checkTrials(trials);
+       res.wait();
+       console.log(res);
+       setIsLoading(false);
+       setIsOpen(true);
+     
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
+      setIsLoading(true)
+      const res = await DOWContractInstance.checkTrials(8);
+      res.wait()
+      console.log(res)
+      setIsLoading(false);
       setIsOpen(true);
-      await DOWContractInstance.checkTrials(8);
       entries.reset();
       firstInput.attributes["disabled"] = setIsDisabled(false);
       firstInput.attributes["autofocus"] = true;
       firstInput.focus();
       setTrials(0);
     }
+    
   };
   return (
     <section>
       {loader && <Loader />}
+      {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
       <form className="entries" action="#" onSubmit={handlePlay}>
         <label htmlFor="player-inputs">
@@ -340,7 +356,13 @@ const StartGame = ({
           highestStreak={playerStatistics.highestWinStreak}
         />
       </div>
-      {isOpen && <Modal setIsOpen={setIsOpen} message={message} />}
+      {isOpen && (
+        <Modal
+          setIsOpen={setIsOpen}
+          message={message}
+          numbers={generatedValues[0]}
+        />
+      )}
       {/* <Link to="/">
         <button>Back</button>
       </Link> */}

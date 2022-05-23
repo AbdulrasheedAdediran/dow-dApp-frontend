@@ -3,7 +3,7 @@ import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 
-const Modal = ({ setIsOpen, message, actionOnYes }) => {
+const Modal = ({ setIsOpen, message, numbers }) => {
   let navigate = useNavigate();
   return (
     <>
@@ -11,7 +11,7 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
       <div className="centered">
         <div className="modal">
           <div className="modalHeader">
-            <h5 className="heading"></h5>
+            <h5 className="heading">{numbers}</h5>
           </div>
           <button className="closeBtn" onClick={() => setIsOpen(false)}>
             <RiCloseLine style={{ marginBottom: "-3px" }} />
