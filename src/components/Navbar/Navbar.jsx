@@ -6,7 +6,9 @@ const Navbar = ({ connectWallet, connected, walletAddress, userBalance }) => {
   return (
     <nav>
       <div>
-        <a href="./">DOW</a>
+        <a href="./">
+          <img src="/assets/dowLogo.png" alt="" />
+        </a>
       </div>
 
       <div>

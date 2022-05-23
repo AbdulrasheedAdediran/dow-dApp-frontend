@@ -37,16 +37,26 @@ const StartGame = ({
   const [isLoading, setIsLoading] = useState(false)
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+  const numberButton = document.getElementsByClassName(".number-btn");
 
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
+<<<<<<< HEAD
     useEffect(() => {
       console.log(generatedValues[0]);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   
   const handleNumberButton = (e) => {};
+=======
+
+  const handleNumberButton = (e) => {
+    console.log(`Clicked ${numberButton.value}`);
+    setIsDisabled(true);
+    console.log(`disabled: ${numberButton.disabled}`);
+  };
+>>>>>>> be75971 (favicon)
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
