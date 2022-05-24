@@ -34,17 +34,22 @@ const StartGame = ({
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(null)
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
 
   // const clearBtn = document.querySelector(".clear");
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
-    useEffect(() => {
-      console.log(generatedValues[0]);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  useEffect(() => {
+  if (document.readyState === "complete") {
+    console.log("page loaded")
+    // startGame()
+  } else {
+     console.log("page not loaded");
+  }
+},[])
+    
   
   const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
@@ -327,7 +332,7 @@ const StartGame = ({
           </button>
         </div>
         <div className="clear-play-btns">
-          <button className="game-btn clear" onClick={() => { navigate("/")}} > Clear</button>
+          <button className="game-btn clear" onClick={() => {}} > Clear</button>
           <button
             className="game-btn play"
             // type="submit"

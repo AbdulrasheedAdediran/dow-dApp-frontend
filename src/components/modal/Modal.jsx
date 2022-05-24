@@ -27,17 +27,13 @@ const Modal = ({ setIsOpen, message, numbers }) => {
             <div className="actionsContainer">
               <button
                 className="deleteBtn"
-                onClick={() => {
-                  navigate("/");
-                }}
+                onClick={() => navigate("/")}
               >
                 Yes
               </button>
               <button
                 className="cancelBtn"
-                onClick={() => {
-                  navigate("/");
-                }}
+                onClick={() => navigate("/")}
               >
                 Cancel
               </button>

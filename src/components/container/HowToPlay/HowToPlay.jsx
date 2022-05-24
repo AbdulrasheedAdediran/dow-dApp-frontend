@@ -9,6 +9,9 @@ const HowToPlay = () => {
       <h1>How To Play</h1>
       <ul>
         <li>
+          Each game costs 5 DOW tokens
+        </li>
+        <li>
           There are four unique random numbers for each game. The goal is to
           guess the correct number and correct position of all four numbers.
         </li>

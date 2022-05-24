@@ -132,37 +132,38 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
-    
+    init()
     setLoader(true);
-    if (userBalance.DOWTokenBalance < 5) {
-      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
-      
-    }
-
     let randomNumbers = []
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    try {
-      const playGame = await DOWContractInstance.startGame();
-      const gameData = await playGame.wait();
-      randomNumbers = gameData.events[1].args.compNum;
-      const convertedValues = randomNumbers.map((randomNumber) =>
-        Number(randomNumber)
-      );
-      setGeneratedValues([...generatedValues, convertedValues]);
-    } catch {
-      setLoader(false);
-      setLoadingSuccess(false);
-    }
-    
-    if (randomNumbers.length === 4) {
-      setLoader(false);
-      setLoadingSuccess(true);
-    } else {
-      setLoader(false);
-      setLoadingSuccess(false);
+      console.log(userBalance.DOWTokenBalance);
+      if (userBalance.DOWTokenBalance < 5) {
+        alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
+      }
+      try {
+        const playGame = await DOWContractInstance.startGame();
+        const gameData = await playGame.wait();
+        randomNumbers = gameData.events[1].args.compNum;
+        const convertedValues = randomNumbers.map((randomNumber) =>
+          Number(randomNumber)
+        );
+        setGeneratedValues([...generatedValues, convertedValues]);
 
-    }
+      } catch {
+        setLoader(false);
+        setLoadingSuccess(false);
+      }
+     setTimeout(() => {
+       console.log(randomNumbers);
+       if (randomNumbers.length === 4) {
+         setLoader(false);
+         setLoadingSuccess(true);
+       } else {
+         setLoader(false);
+         setLoadingSuccess(false);
+       }
+     }, 5000);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {

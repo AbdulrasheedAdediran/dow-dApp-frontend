@@ -1,7 +1,7 @@
 /* @src/components/Modal.module.css */
 
 .darkBG {
-  background-color: rgba(0, 0, 0, 0.291);
+  background-color: rgba(0, 0, 0, 0.517);
   width: 100vw;
   height: 100vh;
   z-index: 1;
@@ -16,6 +16,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 100;
 }
 
 .modal {
@@ -23,7 +24,6 @@
   height: 250px;
   background: white;
   color: white;
-  z-index: 1000;
   border-radius: 16px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
   padding:1rem;
@@ -54,16 +54,19 @@
 }
 
 .modalActions {
-  position: absolute;
   bottom: 2px;
   margin-bottom: 1rem;
   width: 100%;
+  position: absolute;
 }
 
 .actionsContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
+  width:100%;
+  margin-left:-1rem;
+  margin-bottom:1rem;
 }
 
 .closeBtn {
@@ -84,6 +87,7 @@
   margin-top: -7px;
   margin-right: -7px;
   cursor:hover;
+   z-index: 100;
 }
 
 .closeBtn:hover {
@@ -100,34 +104,38 @@
   border-radius: 12px;
   font-size: 0.8rem;
   border: none;
-  color: #fff;
-  background:
-    hsla(0, 98%, 49%, 0.933);
+  width:7rem;
+  background: 
+    hsla(111, 97%, 49%, 0.75);
+  color: #fcfcfc;
   transition: all 0.25s ease;
 }
 
 .deleteBtn:hover {
-  box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
+   box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
+  background: hsla(111, 97%, 49%, 0.75);
+  color:#ff3e4e;
   transform: translateY(-5px);
-  background: #ff3e4e;
 }
 
 .cancelBtn {
-  margin-top: 10px;
+ margin-top: 10px;
   cursor: pointer;
   font-weight: 500;
   padding: 11px 28px;
   border-radius: 12px;
   font-size: 0.8rem;
   border: none;
-  color: 
-    hsla(111, 97%, 49%, 0.75);
-  background: #fcfcfc;
+  color: #fff;
+  background:
+    hsla(0, 98%, 49%, 0.933);
   transition: all 0.25s ease;
+
+  
 }
 
 .cancelBtn:hover {
-  box-shadow: none;
-  transform: none;
-  background: whitesmoke;
+  box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
+  transform: translateY(-5px);
+  background: #ff3e4e;
 }
