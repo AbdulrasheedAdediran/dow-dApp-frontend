@@ -1,9 +1,16 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import Sound from "../container/Sound/Sound";
+import charshoeX from "../assets/Charshoe-X.mp3";
 import "./Main.css";
 
-const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
+const Main = ({
+  connected,
+  claimFreeTokens,
+  startGame,
+  userBalance,
+  isPlaying,
+}) => {
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     if (!connected && parseInt(userBalance.DOWTokenBalance) < 5) {
@@ -38,6 +45,7 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
             disabled={isDisabled}
             onClick={startGame}
           >
+            <Sound isPlaying={isPlaying} url={charshoeX} />
             Start Game
           </button>
         </Link>

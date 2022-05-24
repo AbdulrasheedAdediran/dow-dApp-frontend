@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Options.css";
 import { Link } from "react-router-dom";
 import Switch from "../../Switch/Switch";
+import Sound from "../Sound/Sound";
 
 const Options = () => {
-  const [value, setValue] = useState(false);
   const [secondValue, setSecondValue] = useState(false);
+  // let getIsPlaying = localStorage.getItem("isPlaying");
+  const [isPlaying, setIsPlaying] = useState(false);
+  useEffect(() => {
+    // localStorage.setItem("isPlaying", isPlaying);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying]);
   return (
     <div className="options">
       <h1>Options</h1>
@@ -13,11 +19,13 @@ const Options = () => {
         <div className="div_flex">
           <p>Music</p>
           <Switch
-            isOn={value}
+            isOn={isPlaying}
             onColor="hsla(111, 97%, 49%, 0.75)"
-            handleToggle={() => setValue(!value)}
+            handleToggle={() => setIsPlaying(!isPlaying)}
           />
+          {!isPlaying ? "Off" : "On"}
         </div>
+        <Sound isPlaying={isPlaying} />;
         <div className="div_flex">
           <p>Sound Effects</p>
           <Switch

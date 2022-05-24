@@ -2,8 +2,23 @@ import React from "react";
 import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import DOW_ABI from "../../util/DOW_ABI.json";
+import { Contract } from "ethers";
 
-const Modal = ({ setIsOpen, message, numbers }) => {
+const Modal = ({ setIsOpen, message, provider, DOWContract, numbers }) => {
+  const playAgain = async (e) => {
+    e.preventDefault();
+    console.log("Reloading...");
+    window.setTimeout(() => {
+      window.location.reload();
+    }, [300]);
+    console.log("Reloaded, Now Restarting game...");
+    const accounts = await provider.listAccounts();
+    const signer = provider.getSigner(accounts[0]);
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    await DOWContractInstance.startGame();
+  };
+
   const navigate = useNavigate();
   return (
     <>
@@ -25,10 +40,7 @@ const Modal = ({ setIsOpen, message, numbers }) => {
 
           <div className="modalActions">
             <div className="actionsContainer">
-              <button
-                className="deleteBtn"
-                onClick={() => navigate("/")}
-              >
+              <button className="deleteBtn" onClick={playAgain}>
                 Yes
               </button>
               <button

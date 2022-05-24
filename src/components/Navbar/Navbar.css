@@ -9,6 +9,13 @@ nav a {
   text-decoration: none;
   color: var(--antique-white);
 }
+.logo {
+  width: 120px;
+}
+.dow-logo {
+  width: 100%;
+}
+
 .btn-connect-wallet {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);

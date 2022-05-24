@@ -16,8 +16,8 @@ const App = () => {
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const [generatedValues, setGeneratedValues] = useState([]);
-  const [loader, setLoader] = useState(false)
-  const [loadingSuccess, setLoadingSuccess] = useState(null)
+  const [loader, setLoader] = useState(false);
+  const [loadingSuccess, setLoadingSuccess] = useState(null);
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -26,7 +26,7 @@ const App = () => {
   // useEffect(() => {
   //   setLoadingSuccess(null);
   // }, []);
-  
+
   // Handle player's statistics
   const [playerStatistics, setPlayerStatistics] = useState({
     gamesPlayed: 0,
@@ -47,7 +47,7 @@ const App = () => {
         eagerConnect();
         getUserBalance(accounts[0]);
         if (connected) getPlayerStatistics();
-        else alert("Not connected to a supported DOW Network")
+        else alert("Not connected to a supported DOW Network");
       } catch (error) {
         console.error(error);
       }
@@ -62,7 +62,7 @@ const App = () => {
     });
     if (Number(networkID) !== 28) {
       setConnected(false);
-    } else setConnected(true)
+    } else setConnected(true);
     const accounts = await provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
 
@@ -226,7 +226,7 @@ const App = () => {
       window.location.reload();
       return;
     } else {
-       connectWallet();
+      connectWallet();
       setConnected(true);
       window.location.reload();
     }
@@ -246,7 +246,7 @@ const App = () => {
   useEffect(() => {
     init();
     if (!window.ethereum) return;
-    
+
     window.ethereum.on("connect", eagerConnect);
     window.ethereum.on("connect", getPlayerStatistics);
     window.ethereum.on("connect", getUserBalance);
@@ -257,10 +257,9 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-     console.log(loadingSuccess);
-     if (loadingSuccess === false) alert("Connection Failed");
+    if (loadingSuccess === false) alert("Connection Failed");
   }, [loadingSuccess]);
-  
+
   return (
     <>
       <Navbar
