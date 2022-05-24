@@ -20,7 +20,7 @@ const StartGame = ({
   DOWContract,
   provider,
   loadingSuccess,
-  loader
+  loader,
 }) => {
   // Stores and handles the player's inputs
   let navigate = useNavigate();
@@ -34,29 +34,31 @@ const StartGame = ({
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
   const numberButton = document.getElementsByClassName(".number-btn");
 
-  // const clearBtn = document.querySelector(".clear");
-  // const playBtn = document.querySelector(".play");
-  // const numberBtn = document.querySelectorAll(".number-btn");
-<<<<<<< HEAD
-    useEffect(() => {
-      console.log(generatedValues[0]);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  
-  const handleNumberButton = (e) => {};
-=======
-
+  useEffect(() => {
+    console.log(generatedValues[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  //=======================//
+  //-Handles Number Button-//
+  //=======================//
   const handleNumberButton = (e) => {
-    console.log(`Clicked ${numberButton.value}`);
-    setIsDisabled(true);
-    console.log(`disabled: ${numberButton.disabled}`);
+    e.preventDefault();
+    const target = e.target;
+    console.log("Clicked");
+    console.log("target value = ", target.value);
+    while (playerInput.length < 4) {
+      playerInput.push(target.value);
+    }
+    console.log("Player input: ", playerInput);
   };
->>>>>>> be75971 (favicon)
+  //=======================//
+  //- Handles Player Input-//
+  //=======================//
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -77,10 +79,6 @@ const StartGame = ({
 
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
-      if (e.keycode === 8) {
-        console.log("delete");
-      }
-
       let focusedInputLength = target.value.length;
       let lastInput = inputs[inputs.length - 1];
       if (
@@ -119,69 +117,128 @@ const StartGame = ({
       }
     };
   };
+  //=======================//
+  //-Handles Clear Button--//
+  //=======================//
+  // const handleClear = (e) => {
+  //   e.preventDefault();
+  //   const target = e.target;
+  //   const maxLength = parseInt(target.attributes["maxlength"].value, 10);
+  //   const previous = target.previousElementSibling;
+  //   // const next = target.nextElementSibling;
+  //   const inputs = document.querySelectorAll("input");
 
+  //   let container = document.getElementsByClassName("input")[0];
+  //   container.onkeyup = (e) => {
+  //     let focusedInputLength = target.value.length;
+  //     let lastInput = inputs[inputs.length - 1];
+  //     // Move to previous field if empty (user pressed backspace)
+  //     if (focusedInputLength < maxLength) {
+  //       let firstInput = inputs[0];
+  //       if (target === inputs[1]) {
+  //         previous.attributes["disabled"] = setIsDisabled(false);
+  //         firstInput.focus();
+  //         playerInput.pop();
+  //       }
+  //       if (previous === null && target === firstInput) {
+  //         target.focus();
+  //         playerInput.pop();
+  //         setPlayerInput([]);
+  //       } else if (previous !== firstInput) {
+  //         previous.attributes["disabled"] = setIsDisabled(true);
+  //         playerInput.pop();
+  //         previous.focus();
+  //       } else if (target === lastInput) {
+  //         target.value = "";
+  //         playerInput.pop();
+  //         target.focus();
+  //       }
+  //     }
+  //   };
+  // };
+  //  if (e.key === 8) {
+  //    console.log("Pressed Backspace");
+  //  }
+  //=======================//
+  //--Checks for Duplicate-//
+  //=======================//
+  const containsDuplicate = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < i; j++) {
+        if (arr[i] === arr[j]) {
+          return true;
+        } else {
+        }
+      }
+    }
+    return false;
+  };
+  //=======================//
+  //----  Handles Play ----//
+  //=======================//
   const handlePlay = async (e) => {
+    e.preventDefault();
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
 
-    e.preventDefault();
-    if (trials <= 7 && dead !== 4) {
-      setDead((dead = 0));
-      setWounded((wounded = 0));
-      setTrials((trials) => (trials += 1));
-      // Check Player Input and Return Round Scores
-      for (let i = 0; i < 4; i++) {
-        // Check if player guess is in the correct index of random numbers
-        // eslint-disable-next-line
-        if (playerInput[i] == randomNumbers[i]) {
-          setDead((dead += 1));
-        }
-        // Check if player guess is in the sequence but not in the correct index of random numbers
-        for (let j = 0; j < 4; j++) {
-          if (
-            // eslint-disable-next-line
-            playerInput[i] != randomNumbers[i] &&
-            // eslint-disable-next-line
-            playerInput[i] == randomNumbers[j]
-          ) {
-            setWounded((wounded += 1));
+    if (containsDuplicate(playerInput)) {
+      return alert("PLEASE ENTER FOUR UNIQUE NUMBERS");
+    } else {
+      if (trials <= 7 && dead !== 4) {
+        setDead((dead = 0));
+        setWounded((wounded = 0));
+        setTrials((trials) => (trials += 1));
+        // Check Player Input and Return Round Scores
+        for (let i = 0; i < 4; i++) {
+          // Check if player guess is in the correct index of random numbers
+          // eslint-disable-next-line
+          if (playerInput[i] == randomNumbers[i]) {
+            setDead((dead += 1));
+          }
+          // Check if player guess is in the sequence but not in the correct index of random numbers
+          for (let j = 0; j < 4; j++) {
+            if (
+              // eslint-disable-next-line
+              playerInput[i] != randomNumbers[i] &&
+              // eslint-disable-next-line
+              playerInput[i] == randomNumbers[j]
+            ) {
+              setWounded((wounded += 1));
+            }
           }
         }
-      }
 
-      setRoundScores([
-        ...roundScores,
-        {
-          trial: trials,
-          attempt: playerInput,
-          dead: dead,
-          wounded: wounded,
-        },
-      ]);
-      // entries.reset();
-      // firstInput.attributes["disabled"] = setIsDisabled(true);
-      // firstInput.attributes["autofocus"] = true;
-      setPlayerInput([]);
+        setRoundScores([
+          ...roundScores,
+          {
+            trial: trials,
+            attempt: playerInput,
+            dead: dead,
+            wounded: wounded,
+          },
+        ]);
+        // entries.reset();
+        // firstInput.attributes["disabled"] = setIsDisabled(true);
+        // firstInput.attributes["autofocus"] = true;
+        setPlayerInput([]);
+      }
     }
 
     if (trials <= 7 && dead === 4) {
       setMessage(winMessage);
-       setIsLoading(true);
-       const res = await DOWContractInstance.checkTrials(trials);
-       res.wait();
-       console.log(res);
-       setIsLoading(false);
-       setIsOpen(true);
-     
+      setIsLoading(true);
+      const res = await DOWContractInstance.checkTrials(trials);
+      res.wait();
+      setIsLoading(false);
+      setIsOpen(true);
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
-      setIsLoading(true)
+      setIsLoading(true);
       const res = await DOWContractInstance.checkTrials(8);
-      res.wait()
-      console.log(res)
+      res.wait();
       setIsLoading(false);
       setIsOpen(true);
       entries.reset();
@@ -190,8 +247,11 @@ const StartGame = ({
       firstInput.focus();
       setTrials(0);
     }
-    
   };
+
+  //  if (e.key === 13 && playerInput.length === 4) {
+  //    handlePlay();
+  //  }
   return (
     <section>
       {loader && <Loader />}
@@ -199,8 +259,7 @@ const StartGame = ({
       {loadingSuccess === false && navigate("/")}
       <form className="entries" action="#" onSubmit={handlePlay}>
         <label htmlFor="player-inputs">
-          {" "}
-          Enter four unique numbers from 0 - 9{" "}
+          Enter four unique numbers from 0 - 9
         </label>
         <div className="input">
           <input
@@ -257,7 +316,7 @@ const StartGame = ({
         <div className="number-btns">
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="0"
             onClick={handleNumberButton}
           >
@@ -265,7 +324,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="1"
             onClick={handleNumberButton}
           >
@@ -273,7 +332,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="2"
             onClick={handleNumberButton}
           >
@@ -281,7 +340,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="3"
             onClick={handleNumberButton}
           >
@@ -289,7 +348,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="4"
             onClick={handleNumberButton}
           >
@@ -297,7 +356,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="5"
             onClick={handleNumberButton}
           >
@@ -305,7 +364,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="6"
             onClick={handleNumberButton}
           >
@@ -313,7 +372,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="7"
             onClick={handleNumberButton}
           >
@@ -321,7 +380,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="8"
             onClick={handleNumberButton}
           >
@@ -329,7 +388,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="9"
             onClick={handleNumberButton}
           >
@@ -337,12 +396,19 @@ const StartGame = ({
           </button>
         </div>
         <div className="clear-play-btns">
-          <button className="game-btn clear" onClick={() => { navigate("/")}} > Clear</button>
+          <button
+            className="game-btn clear"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            Clear
+          </button>
           <button
             className="game-btn play"
-            // type="submit"
+            type="submit"
             disabled={true}
-            // onSubmit={handlePlay}
+            onSubmit={handlePlay}
             onClick={handlePlay}
           >
             Play
@@ -368,6 +434,16 @@ const StartGame = ({
       </div>
       {isOpen && (
         <Modal
+          DOWContract={DOWContract}
+          signer={signer}
+          generatedValues={generatedValues}
+          playerStatistics={playerStatistics}
+          connected={connected}
+          userBalance={userBalance}
+          checkTrials={checkTrials}
+          claimFreeTokens={claimFreeTokens}
+          provider={provider}
+          startGame={startGame}
           setIsOpen={setIsOpen}
           message={message}
           numbers={generatedValues[0]}

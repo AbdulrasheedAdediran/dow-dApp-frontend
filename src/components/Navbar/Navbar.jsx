@@ -1,13 +1,14 @@
 import { React } from "react";
 import "./Navbar.css";
 import Connected from "./Connected";
+import dowWhite from "../assets/dowWhite.png";
 
 const Navbar = ({ connectWallet, connected, walletAddress, userBalance }) => {
   return (
     <nav>
-      <div>
+      <div className="logo">
         <a href="./">
-          <img src="/assets/dowLogo.png" alt="" />
+          <img className="dow-logo" src={dowWhite} alt={""} />
         </a>
       </div>
 

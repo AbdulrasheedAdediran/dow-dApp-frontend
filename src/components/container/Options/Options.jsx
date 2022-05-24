@@ -3,8 +3,7 @@ import "./Options.css";
 import { Link } from "react-router-dom";
 import Switch from "../../Switch/Switch";
 
-const Options = () => {
-  const [value, setValue] = useState(false);
+const Options = ({ isPlaying, setIsPlaying }) => {
   const [secondValue, setSecondValue] = useState(false);
   return (
     <div className="options">
@@ -13,10 +12,11 @@ const Options = () => {
         <div className="div_flex">
           <p>Music</p>
           <Switch
-            isOn={value}
+            isOn={isPlaying}
             onColor="hsla(111, 97%, 49%, 0.75)"
-            handleToggle={() => setValue(!value)}
+            handleToggle={() => setIsPlaying(!isPlaying)}
           />
+          {!isPlaying ? "Play" : "Stop"}
         </div>
         <div className="div_flex">
           <p>Sound Effects</p>
