@@ -254,7 +254,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log(loadingSuccess);
     if (loadingSuccess === false) alert("Connection Failed");
   }, [loadingSuccess]);
 

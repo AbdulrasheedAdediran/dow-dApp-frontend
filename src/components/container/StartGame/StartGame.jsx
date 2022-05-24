@@ -8,7 +8,7 @@ import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
 import Loader from "../../loader/Loader";
 import { Contract } from "ethers";
-
+import Sound from "../Sound/Sound";
 const StartGame = ({
   generatedValues,
   playerStatistics,
@@ -21,6 +21,7 @@ const StartGame = ({
   provider,
   loadingSuccess,
   loader,
+  isPlaying,
 }) => {
   // Stores and handles the player's inputs
   let navigate = useNavigate();
@@ -40,21 +41,20 @@ const StartGame = ({
   const numberButton = document.getElementsByClassName(".number-btn");
 
   useEffect(() => {
-    console.log(generatedValues[0]);
+    // console.log(generatedValues[0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //=======================//
   //-Handles Number Button-//
   //=======================//
   const handleNumberButton = (e) => {
-    e.preventDefault();
-    const target = e.target;
-    console.log("Clicked");
-    console.log("target value = ", target.value);
-    while (playerInput.length < 4) {
-      playerInput.push(target.value);
-    }
-    console.log("Player input: ", playerInput);
+    // const entries = document.querySelector(".entries");
+    // e.preventDefault();
+    // const target = e.target;
+    // // console.log("Clicked");
+    // console.log("Clicked ", target.value, "onScreen Button");
+    //   setPlayerInput([...playerInput, target.value]);
+    // console.log("Player input: ", playerInput);
   };
   //=======================//
   //- Handles Player Input-//
@@ -62,7 +62,7 @@ const StartGame = ({
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;
-    const maxLength = parseInt(target.attributes["maxlength"].value, 10);
+    const maxLength = parseInt(target.attributes["maxlength"].value);
     const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
     const inputs = document.querySelectorAll("input");
@@ -177,15 +177,19 @@ const StartGame = ({
   //----  Handles Play ----//
   //=======================//
   const handlePlay = async (e) => {
-    e.preventDefault();
     const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll("input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
-
+    e.preventDefault();
+    if (playerInput.length < 4) {
+      alert("INCOMPLETE ENTRIES");
+      return;
+    }
     if (containsDuplicate(playerInput)) {
-      return alert("PLEASE ENTER FOUR UNIQUE NUMBERS");
+      alert("NUMBERS MUST BE UNIQUE");
+      return;
     } else {
       if (trials <= 7 && dead !== 4) {
         setDead((dead = 0));
@@ -220,7 +224,7 @@ const StartGame = ({
             wounded: wounded,
           },
         ]);
-        // entries.reset();
+        entries.reset();
         // firstInput.attributes["disabled"] = setIsDisabled(true);
         // firstInput.attributes["autofocus"] = true;
         setPlayerInput([]);
@@ -254,6 +258,7 @@ const StartGame = ({
   //  }
   return (
     <section>
+      <Sound isPlaying={isPlaying} />
       {loader && <Loader />}
       {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
@@ -407,7 +412,7 @@ const StartGame = ({
           <button
             className="game-btn play"
             type="submit"
-            disabled={true}
+            // disabled={true}
             onSubmit={handlePlay}
             onClick={handlePlay}
           >

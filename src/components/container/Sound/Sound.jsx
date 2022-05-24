@@ -11,7 +11,7 @@ const PlayMusic = ({ isPlaying }) => {
       <Sound
         url={aSpiritOfBushi}
         playStatus={isPlaying ? Sound.status.PLAYING : Sound.status.STOPPED}
-        playFromPosition={300}
+        playFromPosition={0}
         onLoading={handleMusicLoading}
         onPlaying={handleMusicPlaying}
         onFinishedPlaying={handleMusicFinishedPlaying}
