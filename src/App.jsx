@@ -22,6 +22,7 @@ const App = () => {
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
   });
+  // const [insufficientTokens, setInsufficientTokens] = useState(false)
   // useEffect(() => {
   //   setLoadingSuccess(null);
   // }, []);
@@ -135,8 +136,7 @@ const App = () => {
     setLoader(true);
     if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
-      setLoader(false);
-      setLoadingSuccess(false);
+      
     }
 
     let randomNumbers = []
