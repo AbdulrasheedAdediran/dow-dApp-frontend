@@ -43,7 +43,7 @@ const Main = ({
           <button
             className="menu-button start-game"
             disabled={isDisabled}
-            onClick={startGame}
+            // onClick={startGame}
           >
             <Sound isPlaying={isPlaying} url={charshoeX} />
             Start Game

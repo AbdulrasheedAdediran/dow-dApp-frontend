@@ -35,30 +35,29 @@ const StartGame = ({
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(null)
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
   const numberButton = document.getElementsByClassName(".number-btn");
 
+  // const clearBtn = document.querySelector(".clear");
+  // const playBtn = document.querySelector(".play");
+  // const numberBtn = document.querySelectorAll(".number-btn");
   useEffect(() => {
-    // console.log(generatedValues[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  //=======================//
-  //-Handles Number Button-//
-  //=======================//
-  const handleNumberButton = (e) => {
-    // const entries = document.querySelector(".entries");
-    // e.preventDefault();
-    // const target = e.target;
-    // // console.log("Clicked");
-    // console.log("Clicked ", target.value, "onScreen Button");
-    //   setPlayerInput([...playerInput, target.value]);
-    // console.log("Player input: ", playerInput);
-  };
-  //=======================//
-  //- Handles Player Input-//
-  //=======================//
+    setTimeout(() => {
+      console.log(document.readyState);
+      if (document.readyState === "complete") {
+        console.log("i've ran");
+        callStart();
+      }
+    }, 1000);
+  }, [document.readyState]);
+ 
+    
+  const callStart = () => {
+    startGame();
+  }
+  const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
     e.preventDefault();
     const target = e.target;

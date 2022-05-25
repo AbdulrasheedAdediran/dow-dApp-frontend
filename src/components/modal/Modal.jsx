@@ -5,19 +5,7 @@ import { useNavigate } from "react-router-dom";
 import DOW_ABI from "../../util/DOW_ABI.json";
 import { Contract } from "ethers";
 
-const Modal = ({ setIsOpen, message, provider, DOWContract, numbers }) => {
-  const playAgain = async (e) => {
-    e.preventDefault();
-    console.log("Reloading...");
-    window.setTimeout(() => {
-      window.location.reload();
-    }, [300]);
-    console.log("Reloaded, Now Restarting game...");
-    const accounts = await provider.listAccounts();
-    const signer = provider.getSigner(accounts[0]);
-    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    await DOWContractInstance.startGame();
-  };
+const Modal = ({ setIsOpen, message, provider, DOWContract, numbers, startGame }) => {
 
   const navigate = useNavigate();
   return (
@@ -40,15 +28,10 @@ const Modal = ({ setIsOpen, message, provider, DOWContract, numbers }) => {
 
           <div className="modalActions">
             <div className="actionsContainer">
-              <button className="deleteBtn" onClick={playAgain}>
+              <button className="deleteBtn" onClick={() => { startGame(); setIsOpen(false); }  }>
                 Yes
               </button>
-              <button
-                className="cancelBtn"
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
+              <button className="cancelBtn" onClick={() => navigate("/")}>
                 Cancel
               </button>
             </div>
