@@ -25,7 +25,7 @@ const Options = () => {
           />
           {!isPlaying ? "Off" : "On"}
         </div>
-        <Sound isPlaying={isPlaying} />;
+        <Sound isPlaying={isPlaying} />
         <div className="div_flex">
           <p>Sound Effects</p>
           <Switch

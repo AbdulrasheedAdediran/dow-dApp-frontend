@@ -132,8 +132,8 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
-    init()
     setLoader(true);
+    getPlayerStatistics();
     let randomNumbers = []
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);

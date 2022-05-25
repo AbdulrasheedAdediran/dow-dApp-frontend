@@ -44,15 +44,19 @@ const StartGame = ({
   // const playBtn = document.querySelector(".play");
   // const numberBtn = document.querySelectorAll(".number-btn");
   useEffect(() => {
-  if (document.readyState === "complete") {
-    console.log("page loaded")
-    // startGame()
-  } else {
-     console.log("page not loaded");
-  }
-},[])
+    setTimeout(() => {
+      console.log(document.readyState);
+      if (document.readyState === "complete") {
+        console.log("i've ran");
+        callStart();
+      }
+    }, 1000);
+  }, [document.readyState]);
+ 
     
-  
+  const callStart = () => {
+    startGame();
+  }
   const handleNumberButton = (e) => {};
   const handlePlayerInput = (e) => {
     e.preventDefault();
