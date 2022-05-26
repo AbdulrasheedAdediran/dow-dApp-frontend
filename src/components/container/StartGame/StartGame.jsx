@@ -44,15 +44,17 @@ const StartGame = ({
       console.log(document.readyState);
       if (document.readyState === "complete") {
         console.log("i've ran");
-        console.log(randomNumbers);
         callStart();
       }
     }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const callStart = () => {
     startGame();
   };
+  console.log(generatedValues[0]);
+
   const handleNumberButton = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -163,42 +165,43 @@ const StartGame = ({
         console.log("Next sibling:", next);
         // next.attributes["disabled"] = setIsDisabled(true);
         next.focus();
-      } else if (target === lastInput) {
+      } else if (target === lastInput && next === null) {
         console.log("Current target:", target);
         console.log("Next sibling:", next);
         target.focus();
-      } else {
-        next.focus();
-        console.log("Dunno how i got here Boss!");
-        // lastInput.focus();
       }
+      // else if (target === lastInput && next === null) {
+      //   next.focus();
+      //   console.log("Dunno how i got here Boss!");
+      //   // lastInput.focus();
+      // }
       // Move to previous field if empty (user pressed backspace)
-      if (focusedInputLength < maxLength) {
-        let firstInput = inputs[0];
-        if (target === inputs[1]) {
-          // previous.attributes["disabled"] = setIsDisabled(false);
-          firstInput.focus();
-          playerInput.pop();
-        }
-        if (previous === null && target === firstInput) {
-          target.focus();
-          playerInput.pop();
-          setPlayerInput([]);
-        } else if (previous !== null && target >= maxLength) {
-          // previous.attributes["disabled"] = setIsDisabled(true);
-          playerInput.pop();
-          previous.focus();
-          target.value = "";
-        } else if (target.value === "" && e.key === 8) {
-          playerInput.pop();
-          previous.focus();
-          target.value = "";
-        } else {
-          target.value = "";
-          playerInput.pop();
-          target.focus();
-        }
-      }
+      // if (focusedInputLength < maxLength) {
+      //   let firstInput = inputs[0];
+      //   if (target === inputs[1]) {
+      //     // previous.attributes["disabled"] = setIsDisabled(false);
+      //     firstInput.focus();
+      //     playerInput.pop();
+      //   }
+      //   if (previous === null && target === firstInput) {
+      //     target.focus();
+      //     playerInput.pop();
+      //     setPlayerInput([]);
+      //   } else if (previous !== null && target >= maxLength) {
+      //     // previous.attributes["disabled"] = setIsDisabled(true);
+      //     playerInput.pop();
+      //     previous.focus();
+      //     target.value = "";
+      //   } else if (target.value === "" && e.key === 8) {
+      //     playerInput.pop();
+      //     previous.focus();
+      //     target.value = "";
+      //   } else {
+      //     target.value = "";
+      //     playerInput.pop();
+      //     target.focus();
+      //   }
+      // }
     };
   };
   //=======================//
