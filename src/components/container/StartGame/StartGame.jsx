@@ -48,7 +48,7 @@ const StartGame = ({
         callStart();
       }
     }, 1000);
-  }, [document.readyState]);
+  }, []);
 
   const callStart = () => {
     startGame();
