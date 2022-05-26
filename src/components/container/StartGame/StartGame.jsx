@@ -49,22 +49,26 @@ const StartGame = ({
   const callStart = () => {
     startGame();
   };
-  console.log(generatedValues[0]);
+  // console.log(generatedValues[0]);
 
   const handleNumberButton = (e) => {
     // const entries = document.querySelector(".entries");
     e.preventDefault();
     const target = e.target;
-    if (playerInput < 4) {
-      setPlayerInput([...playerInput, target.value]);
+    // console.log("target", target);
+    if (playerInput.length < 4) {
+      setPlayerInput((playerInput) => [...playerInput, parseInt(target.value)]);
     }
-    console.log("Player input: ", playerInput);
+    // console.log("Player input: ", playerInput);
   };
 
   const handlePlayerInput = (e) => {
     const target = e.target;
+    // console.log("PI target before okU", target);
     const maxLength = parseInt(target.attributes["maxlength"].value);
+    const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
+
     const inputs = document.querySelectorAll(".input");
     e.preventDefault();
 
@@ -78,7 +82,7 @@ const StartGame = ({
       target.focus();
     }
 
-    const container = document.getElementsByClassName("input")[0];
+    let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
       let focusedInputLength = target.value.length;
       let lastInput = inputs[inputs.length - 1];
@@ -87,43 +91,38 @@ const StartGame = ({
         regX.test(e.target.value) &&
         next !== null
       ) {
-        console.log("Current target:", target);
-        console.log("Next sibling:", next);
+        // console.log("Current target:", target);
+        // console.log("Next sibling:", next);
         // next.attributes["disabled"] = setIsDisabled(true);
         next.focus();
       } else if (target === lastInput && next === null) {
-        console.log("Current target:", target);
-        console.log("Next sibling:", next);
+        // console.log("Current target:", target);
+        // console.log("Next sibling:", next);
         target.focus();
       }
+      // console.log("PI target after okU", target);
 
       // Move to previous field if empty (user pressed backspace)
-      // if (focusedInputLength < maxLength) {
-      //   let firstInput = inputs[0];
-      //   if (target === inputs[1]) {
-      //     // previous.attributes["disabled"] = setIsDisabled(false);
-      //     firstInput.focus();
-      //     playerInput.pop();
-      //   }
-      //   if (previous === null && target === firstInput) {
-      //     target.focus();
-      //     playerInput.pop();
-      //     setPlayerInput([]);
-      //   } else if (previous !== null && target >= maxLength) {
-      //     // previous.attributes["disabled"] = setIsDisabled(true);
-      //     playerInput.pop();
-      //     previous.focus();
-      //     target.value = "";
-      //   } else if (target.value === "" && e.key === 8) {
-      //     playerInput.pop();
-      //     previous.focus();
-      //     target.value = "";
-      //   } else {
-      //     target.value = "";
-      //     playerInput.pop();
-      //     target.focus();
-      //   }
-      // }
+      if (focusedInputLength < maxLength) {
+        let firstInput = inputs[0];
+        if (target === inputs[1]) {
+          // previous.attributes["disabled"] = setIsDisabled(false);
+          firstInput.focus();
+          playerInput.pop();
+        }
+        if (previous === null && target === firstInput) {
+          target.focus();
+          playerInput.pop();
+          setPlayerInput([]);
+        } else if (previous !== firstInput) {
+          playerInput.pop();
+          previous.focus();
+        } else if (target === lastInput) {
+          target.value = "";
+          playerInput.pop();
+          target.focus();
+        }
+      }
     };
   };
   //=======================//
@@ -136,36 +135,7 @@ const StartGame = ({
     // const inputs = document.querySelectorAll(".input");
     // const clearButton = document.querySelector(".clear");
     e.preventDefault();
-    console.log("Clicked clear button");
-    // clearButton.addEventListener("click", (e) => {
-    //   let container = document.getElementsByClassName("input")[0];
-    //   container.onkeyup = (e) => {
-    //     let focusedInputLength = target.value.length;
-    //     let lastInput = inputs[inputs.length - 1];
-    //     // Move to previous field if empty (user pressed backspace)
-    //     if (focusedInputLength < maxLength) {
-    //       let firstInput = inputs[0];
-    //       if (target === inputs[1]) {
-    //         // previous.attributes["disabled"] = setIsDisabled(false);
-    //         firstInput.focus();
-    //         playerInput.pop();
-    //       }
-    //       if (previous === null && target === firstInput) {
-    //         target.focus();
-    //         playerInput.pop();
-    //         setPlayerInput([]);
-    //       } else if (previous !== firstInput) {
-    //         // previous.attributes["disabled"] = setIsDisabled(true);
-    //         playerInput.pop();
-    //         previous.focus();
-    //       } else if (target === lastInput) {
-    //         target.value = "";
-    //         playerInput.pop();
-    //         target.focus();
-    //       }
-    //     }
-    //   };
-    // });
+    // console.log("Clear button is currently inactive");
   };
   //  if (e.key === 8) {
   //    console.log("Pressed Backspace");
@@ -233,9 +203,9 @@ const StartGame = ({
         ]);
         entries.reset();
         setPlayerInput([]);
-        // firstInput.attributes["autofocus"] = true;
-        console.log("firstInput", firstInput);
-        console.log("entries", entries);
+        firstInput.attributes["autofocus"] = true;
+        // console.log("firstInput", firstInput);
+        // console.log("entries", entries);
         firstInput.focus();
         entries[0].focus();
       }
