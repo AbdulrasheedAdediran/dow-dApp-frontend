@@ -134,36 +134,33 @@ const App = () => {
   const startGame = async () => {
     setLoader(true);
     getPlayerStatistics();
-    let randomNumbers = []
+    let randomNumbers = [];
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-      console.log(userBalance.DOWTokenBalance);
-      if (userBalance.DOWTokenBalance < 5) {
-        alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
-      }
-      try {
-        const playGame = await DOWContractInstance.startGame();
-        const gameData = await playGame.wait();
-        randomNumbers = gameData.events[1].args.compNum;
-        const convertedValues = randomNumbers.map((randomNumber) =>
-          Number(randomNumber)
-        );
-        setGeneratedValues([...generatedValues, convertedValues]);
-
-      } catch {
+    if (userBalance.DOWTokenBalance < 5) {
+      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
+    }
+    try {
+      const playGame = await DOWContractInstance.startGame();
+      const gameData = await playGame.wait();
+      randomNumbers = gameData.events[1].args.compNum;
+      const convertedValues = randomNumbers.map((randomNumber) =>
+        Number(randomNumber)
+      );
+      setGeneratedValues([...generatedValues, convertedValues]);
+    } catch {
+      setLoader(false);
+      setLoadingSuccess(false);
+    }
+    setTimeout(() => {
+      if (randomNumbers.length === 4) {
+        setLoader(false);
+        setLoadingSuccess(true);
+      } else {
         setLoader(false);
         setLoadingSuccess(false);
       }
-     setTimeout(() => {
-       console.log(randomNumbers);
-       if (randomNumbers.length === 4) {
-         setLoader(false);
-         setLoadingSuccess(true);
-       } else {
-         setLoader(false);
-         setLoadingSuccess(false);
-       }
-     }, 5000);
+    }, 5000);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {

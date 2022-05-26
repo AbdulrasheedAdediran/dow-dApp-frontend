@@ -2,11 +2,8 @@ import React from "react";
 import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import DOW_ABI from "../../util/DOW_ABI.json";
-import { Contract } from "ethers";
 
-const Modal = ({ setIsOpen, message, provider, DOWContract, numbers, startGame }) => {
-
+const Modal = ({ setIsOpen, message, numbers, startGame }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -28,7 +25,13 @@ const Modal = ({ setIsOpen, message, provider, DOWContract, numbers, startGame }
 
           <div className="modalActions">
             <div className="actionsContainer">
-              <button className="deleteBtn" onClick={() => { startGame(); setIsOpen(false); }  }>
+              <button
+                className="deleteBtn"
+                onClick={() => {
+                  startGame();
+                  setIsOpen(false);
+                }}
+              >
                 Yes
               </button>
               <button className="cancelBtn" onClick={() => navigate("/")}>

@@ -9,15 +9,12 @@ const HowToPlay = () => {
       <h1>How To Play</h1>
       <ul>
         <li>
-          Each game costs 5 DOW tokens
-        </li>
-        <li>
           There are four unique random numbers for each game. The goal is to
           guess the correct number and correct position of all four numbers.
         </li>
         <li>
           Enter four unique numbers and click Play or hit Enter on your keyboard
-          to submit. Each attempt you make will be recored to inform your next
+          to submit. Each attempt you make will be recorded to inform your next
           trial.
         </li>
         <li></li>

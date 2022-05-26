@@ -19,7 +19,7 @@ export default function DoubleBubble(props) {
                   cy="124.5"
                   r="104"
                   stroke="hsla(25, 97%, 49%, 0.75)"
-                  stroke-width="11"
+                  strokeWidth="11"
                 />
                 <circle
                   id="Ellipse 2"
@@ -58,7 +58,7 @@ export default function DoubleBubble(props) {
                   r="61.1714"
                   transform="rotate(32.5155 122.916 125.545)"
                   stroke="hsla(25, 97%, 49%, 0.75)"
-                  stroke-width="11"
+                  strokeWidth="11"
                 />
                 <circle
                   id="Ellipse 2_2"

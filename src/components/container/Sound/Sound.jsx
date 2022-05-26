@@ -16,6 +16,8 @@ const PlayMusic = ({ isPlaying }) => {
         onPlaying={handleMusicPlaying}
         onFinishedPlaying={handleMusicFinishedPlaying}
         loop={true}
+        volume={50}
+        autoLoad={true}
       />
     </div>
   );

@@ -8,7 +8,7 @@ const Navbar = ({ connectWallet, connected, walletAddress, userBalance }) => {
     <nav>
       <div className="logo">
         <a href="./">
-          <img className="dow-logo" src={dowWhite} alt={""} />
+          <img className="dow-logo" src={dowWhite} alt={"DOW Logo"} />
         </a>
       </div>
 
