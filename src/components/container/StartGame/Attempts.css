@@ -5,7 +5,7 @@
   color: var(--antique-white);
   border-radius: 0.5rem;
   display: block;
-  color: var(--light-green);
+  /* color: var(--light-green); */
   /* overflow: scroll; */
   /* margin-bottom: 2rem; */
 }
@@ -25,6 +25,7 @@
   line-height: 1.5;
   border-collapse: collapse;
   text-align: center;
+  opacity: 0.85;
 }
 th,
 td {
