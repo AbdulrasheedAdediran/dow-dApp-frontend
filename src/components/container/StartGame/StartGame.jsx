@@ -3,7 +3,6 @@ import "./StartGame.css";
 import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
 import { useNavigate } from "react-router-dom";
-// import Main from "../../Main/Main";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
 import Loader from "../../loader/Loader";
@@ -27,7 +26,6 @@ const StartGame = ({
   let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
   // Handles disabling/enabling input fields based on validity of input provided
-  // const [isDisabled, setIsDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const randomNumbers = generatedValues[0];
@@ -41,9 +39,7 @@ const StartGame = ({
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(document.readyState);
       if (document.readyState === "complete") {
-        console.log("i've ran");
         callStart();
       }
     }, 1000);
@@ -56,80 +52,18 @@ const StartGame = ({
   console.log(generatedValues[0]);
 
   const handleNumberButton = (e) => {
+    // const entries = document.querySelector(".entries");
     e.preventDefault();
     const target = e.target;
-    const entries = document.querySelector(".entries");
-    const maxLength = parseInt(target.attributes["maxlength"].value);
-    const next = target.nextElementSibling;
-    const playButton = document.querySelector(".play");
-    const inputs = document.querySelectorAll(".input");
-    // const container = document.getElementsByClassName("input")[0];
-
-    console.log("Clicked");
-    console.log("target value = ", target.value);
-    console.log("playerInput.length = ", playerInput.length);
-    console.log("entries = ", entries);
-    console.log("container = ", container);
-    console.log("entries = ", entries[0]);
-    console.log("container = ", container[0]);
-    if (playerInput.length < 4) {
-      setPlayerInput((playerInput) => [...playerInput, parseInt(target.value)]);
-    }
-    // entries.onChange = (e) => {
-    //   e.preventDefault();
-    //   setPlayerInput([...playerInput, parseInt(e.target.value)]);
-    // };
-    //======= ======//
-    // Set valid inputs to be numbers 0 - 9
-    const regX = /^[0-9]+$/;
-    // Checks if inputs entered are valid and stores them in an array
-    if (regX.test(target.value)) {
-      setPlayerInput((playerInput) => [...playerInput, parseInt(target.value)]);
-    } else {
-      target.value = "";
-      target.focus();
-    }
-    const container = document.getElementsByClassName("input")[0];
-    container.onclick = (e) => {
-      let focusedInputLength = target.value.length;
-      let lastInput = inputs[inputs.length - 1];
-      if (
-        focusedInputLength >= maxLength &&
-        regX.test(e.target.value) &&
-        next !== null
-      ) {
-        // next.attributes["disabled"] = setIsDisabled(true);
-        next.focus();
-      } else if (target !== lastInput) {
-        target.focus();
-      } else {
-        lastInput.focus();
-      }
-    };
-    //======= ======//
-    if (playerInput.length < 3) {
-      console.log("Less than 4 inputs");
-    } else if (playerInput.length >= 3) {
-      console.log("Up to 4 inputs");
-      playButton.focus();
+    if (playerInput < 4) {
+      setPlayerInput([...playerInput, target.value]);
     }
     console.log("Player input: ", playerInput);
   };
 
-  // const handleNumberButton = (e) => {
-  //   const entries = document.querySelector(".entries");
-  //   // let container = document.getElementsByClassName("input")[0];
-  //   // const numberButton = document.getElementsByClassName(".number-btn");
-  //   entries.onChange = (e) => {
-  //     e.preventDefault();
-  //     setPlayerInput([...playerInput, parseInt(e.target.value)]);
-  //   };
-  // };
-
   const handlePlayerInput = (e) => {
     const target = e.target;
     const maxLength = parseInt(target.attributes["maxlength"].value);
-    const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
     const inputs = document.querySelectorAll(".input");
     e.preventDefault();
@@ -143,15 +77,7 @@ const StartGame = ({
       target.value = "";
       target.focus();
     }
-    //======= Check player input =======//
-    // const playButton = document.querySelector(".play");
-    // if (playerInput.length < 3) {
-    //   console.log("Less than 4 inputs");
-    // } else if (playerInput.length >= 3) {
-    //   console.log("Up to 4 inputs");
-    //   playButton.focus();
-    // }
-    //======= Check player input =======//
+
     const container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
       let focusedInputLength = target.value.length;
@@ -170,11 +96,7 @@ const StartGame = ({
         console.log("Next sibling:", next);
         target.focus();
       }
-      // else if (target === lastInput && next === null) {
-      //   next.focus();
-      //   console.log("Dunno how i got here Boss!");
-      //   // lastInput.focus();
-      // }
+
       // Move to previous field if empty (user pressed backspace)
       // if (focusedInputLength < maxLength) {
       //   let firstInput = inputs[0];
@@ -207,42 +129,44 @@ const StartGame = ({
   //=======================//
   //-Handles Clear Button--//
   //=======================//
-  // const handleClear = (e) => {
-  //   const target = e.target;
-  //   const maxLength = parseInt(target.attributes["maxlength"].value);
-  //   const previous = target.previousElementSibling;
-  //   //  const next = target.nextElementSibling;
-  //   const inputs = document.querySelectorAll("input");
-  //   e.preventDefault();
-
-  //   let container = document.getElementsByClassName("input")[0];
-  //   container.onkeyup = (e) => {
-  //     let focusedInputLength = target.value.length;
-  //     let lastInput = inputs[inputs.length - 1];
-  //     // Move to previous field if empty (user pressed backspace)
-  //     if (focusedInputLength < maxLength) {
-  //       let firstInput = inputs[0];
-  //       if (target === inputs[1]) {
-  //         // previous.attributes["disabled"] = setIsDisabled(false);
-  //         firstInput.focus();
-  //         playerInput.pop();
-  //       }
-  //       if (previous === null && target === firstInput) {
-  //         target.focus();
-  //         playerInput.pop();
-  //         setPlayerInput([]);
-  //       } else if (previous !== firstInput) {
-  //         // previous.attributes["disabled"] = setIsDisabled(true);
-  //         playerInput.pop();
-  //         previous.focus();
-  //       } else if (target === lastInput) {
-  //         target.value = "";
-  //         playerInput.pop();
-  //         target.focus();
-  //       }
-  //     }
-  //   };
-  // };
+  const handleClear = (e) => {
+    // const target = e.target;
+    // const maxLength = parseInt(target.attributes["maxlength"].value);
+    // const previous = target.previousElementSibling;
+    // const inputs = document.querySelectorAll(".input");
+    // const clearButton = document.querySelector(".clear");
+    e.preventDefault();
+    console.log("Clicked clear button");
+    // clearButton.addEventListener("click", (e) => {
+    //   let container = document.getElementsByClassName("input")[0];
+    //   container.onkeyup = (e) => {
+    //     let focusedInputLength = target.value.length;
+    //     let lastInput = inputs[inputs.length - 1];
+    //     // Move to previous field if empty (user pressed backspace)
+    //     if (focusedInputLength < maxLength) {
+    //       let firstInput = inputs[0];
+    //       if (target === inputs[1]) {
+    //         // previous.attributes["disabled"] = setIsDisabled(false);
+    //         firstInput.focus();
+    //         playerInput.pop();
+    //       }
+    //       if (previous === null && target === firstInput) {
+    //         target.focus();
+    //         playerInput.pop();
+    //         setPlayerInput([]);
+    //       } else if (previous !== firstInput) {
+    //         // previous.attributes["disabled"] = setIsDisabled(true);
+    //         playerInput.pop();
+    //         previous.focus();
+    //       } else if (target === lastInput) {
+    //         target.value = "";
+    //         playerInput.pop();
+    //         target.focus();
+    //       }
+    //     }
+    //   };
+    // });
+  };
   //  if (e.key === 8) {
   //    console.log("Pressed Backspace");
   //  }
@@ -359,10 +283,7 @@ const StartGame = ({
             id="player-inputs"
             className="first-player-input player-input"
             value={playerInput.playerInput1}
-            onChange={(e) => {
-              handlePlayerInput(e);
-              // handleNumberButton(e);
-            }}
+            onChange={handlePlayerInput}
             autoComplete="off"
             autoFocus={true}
             // disabled={isDisabled}
@@ -375,10 +296,7 @@ const StartGame = ({
             id="player-inputs"
             className="second-player-input player-input"
             value={playerInput.playerInput2}
-            onChange={(e) => {
-              handlePlayerInput(e);
-              // handleNumberButton(e);
-            }}
+            onChange={handlePlayerInput}
             autoComplete="off"
             required={true}
             // disabled={!isDisabled}
@@ -391,10 +309,7 @@ const StartGame = ({
             id="player-inputs"
             className="third-player-input player-input"
             value={playerInput.playerInput3}
-            onChange={(e) => {
-              handlePlayerInput(e);
-              // handleNumberButton(e);
-            }}
+            onChange={handlePlayerInput}
             autoComplete="off"
             // disabled={!isDisabled}
           ></input>
@@ -406,10 +321,7 @@ const StartGame = ({
             id="player-inputs"
             className="fourth-player-input player-input"
             value={playerInput.playerInput4}
-            onChange={(e) => {
-              handlePlayerInput(e);
-              // handleNumberButton(e);
-            }}
+            onChange={handlePlayerInput}
             autoComplete="off"
             // disabled={!isDisabled}
           ></input>
@@ -497,7 +409,7 @@ const StartGame = ({
           </button>
         </div>
         <div className="clear-play-btns">
-          <button className="game-btn clear" onClick={""}>
+          <button className="game-btn clear" onClick={handleClear}>
             Clear
           </button>
           <button
