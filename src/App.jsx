@@ -132,6 +132,7 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
+    setLoadingSuccess(null);
     setLoader(true);
     getPlayerStatistics();
     let randomNumbers = []
