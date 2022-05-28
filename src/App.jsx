@@ -138,6 +138,7 @@ const App = () => {
     let randomNumbers = [];
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+
     if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
     }
@@ -184,7 +185,7 @@ const App = () => {
         networkCoinBalance: userAccount.formartedNetworkCoinBalance,
       });
       setConnected(true);
-      window.location.reload(false);
+      window.location.reload();
     } else {
       setConnected(false);
       setUserBalance({
@@ -220,7 +221,9 @@ const App = () => {
         gamesWon: 0,
       });
 
-      alert("Invalid network, please switch to a DOW supported network");
+      alert(
+        "You're currently connected to an unsupported network, please switch to Boba Testnet"
+      );
       window.location.reload();
       return;
     } else {

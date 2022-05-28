@@ -22,10 +22,8 @@ const StartGame = ({
   loader,
   isPlaying,
 }) => {
-  // Stores and handles the player's inputs
   let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
-  // Handles disabling/enabling input fields based on validity of input provided
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const randomNumbers = generatedValues[0];
@@ -33,10 +31,13 @@ const StartGame = ({
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
+  const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(null);
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-
+  //=======================//
+  //--Check Clear Clicked--//
+  //=======================//
   useEffect(() => {
     setTimeout(() => {
       if (document.readyState === "complete") {
@@ -49,26 +50,39 @@ const StartGame = ({
   const callStart = () => {
     startGame();
   };
-  // console.log(generatedValues[0]);
-
+  //=========================//
+  //--Handle Number Buttons--//
+  //=========================//
   const handleNumberButton = (e) => {
-    // const entries = document.querySelector(".entries");
     e.preventDefault();
+    const entries = document.querySelector(".entries");
     const target = e.target;
-    // console.log("target", target);
+    const maxLength = parseInt(entries[index].attributes["maxlength"].value);
+    const current = entries[index];
+    const next = entries[index].nextElementSibling;
+    current.value = parseInt(target.value);
+    // Stop pushing to array when all inputs are filled
     if (playerInput.length < 4) {
       setPlayerInput((playerInput) => [...playerInput, parseInt(target.value)]);
     }
-    // console.log("Player input: ", playerInput);
-  };
 
+    if (current.value.length >= maxLength && next !== null) {
+      setIndex(index + 1);
+      next.focus();
+    } else if (current.value.length >= maxLength && next === null) {
+      entries[index].value = playerInput[3];
+      setIndex(index);
+      current.focus();
+    }
+  };
+  //==========================//
+  //--Handle Keyboard Input--//
+  //========================//
   const handlePlayerInput = (e) => {
     const target = e.target;
-    // console.log("PI target before okU", target);
     const maxLength = parseInt(target.attributes["maxlength"].value);
     const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
-
     const inputs = document.querySelectorAll(".input");
     e.preventDefault();
 
@@ -91,16 +105,10 @@ const StartGame = ({
         regX.test(e.target.value) &&
         next !== null
       ) {
-        // console.log("Current target:", target);
-        // console.log("Next sibling:", next);
-        // next.attributes["disabled"] = setIsDisabled(true);
         next.focus();
       } else if (target === lastInput && next === null) {
-        // console.log("Current target:", target);
-        // console.log("Next sibling:", next);
         target.focus();
       }
-      // console.log("PI target after okU", target);
 
       // Move to previous field if empty (user pressed backspace)
       if (focusedInputLength < maxLength) {
@@ -125,21 +133,38 @@ const StartGame = ({
       }
     };
   };
+
   //=======================//
   //-Handles Clear Button--//
   //=======================//
   const handleClear = (e) => {
-    // const target = e.target;
-    // const maxLength = parseInt(target.attributes["maxlength"].value);
-    // const previous = target.previousElementSibling;
-    // const inputs = document.querySelectorAll(".input");
-    // const clearButton = document.querySelector(".clear");
     e.preventDefault();
-    // console.log("Clear button is currently inactive");
+    const entries = document.querySelector(".entries");
+    const maxLength = parseInt(entries[index].attributes["maxlength"].value);
+    const previous = entries[index].previousElementSibling;
+    const current = entries[index];
+    // let currentValue = entries[index].value;
+    const next = entries[index].nextElementSibling;
+    if (next === null && current.value.length >= maxLength) {
+      entries[index].value = "";
+      current.focus();
+      playerInput.pop();
+    } else if (
+      next === null ||
+      (previous !== null && current.value.length < maxLength)
+    ) {
+      setIndex(index - 1);
+      previous.value = "";
+      previous.focus();
+      playerInput.pop();
+    } else if (previous === null && current.value.length < maxLength) {
+      setIndex(index);
+      entries[index].value = "";
+      current.focus();
+      setPlayerInput([]);
+    }
   };
-  //  if (e.key === 8) {
-  //    console.log("Pressed Backspace");
-  //  }
+
   //=======================//
   //--Checks for Duplicate-//
   //=======================//
@@ -202,10 +227,11 @@ const StartGame = ({
           },
         ]);
         entries.reset();
+        setIndex(0);
         setPlayerInput([]);
         firstInput.attributes["autofocus"] = true;
-        // console.log("firstInput", firstInput);
-        // console.log("entries", entries);
+        console.log("firstInput", firstInput);
+        console.log("entries", entries[0]);
         firstInput.focus();
         entries[0].focus();
       }
@@ -226,14 +252,10 @@ const StartGame = ({
       setIsLoading(false);
       setIsOpen(true);
       entries.reset();
-      // firstInput.attributes["disabled"] = setIsDisabled(false);
       setTrials(0);
     }
   };
 
-  //  if (e.key === 13 && playerInput.length === 4) {
-  //    handlePlay();
-  //  }
   return (
     <section>
       <Sound isPlaying={isPlaying} />
@@ -248,52 +270,47 @@ const StartGame = ({
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput1"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput1"
             className="first-player-input player-input"
-            value={playerInput.playerInput1}
+            value={playerInput[0]}
             onChange={handlePlayerInput}
             autoComplete="off"
             autoFocus={true}
-            // disabled={isDisabled}
+            required={true}
           ></input>
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput2"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput2"
             className="second-player-input player-input"
-            value={playerInput.playerInput2}
+            value={playerInput[1]}
             onChange={handlePlayerInput}
             autoComplete="off"
             required={true}
-            // disabled={!isDisabled}
           ></input>
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput3"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput3"
             className="third-player-input player-input"
-            value={playerInput.playerInput3}
+            value={playerInput[2]}
             onChange={handlePlayerInput}
             autoComplete="off"
-            // disabled={!isDisabled}
+            required={true}
           ></input>
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput4"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput4"
             className="fourth-player-input player-input"
-            value={playerInput.playerInput4}
+            value={playerInput[3]}
             onChange={handlePlayerInput}
             autoComplete="off"
-            // disabled={!isDisabled}
+            required={true}
           ></input>
         </div>
         <div className="number-btns">
@@ -382,13 +399,7 @@ const StartGame = ({
           <button className="game-btn clear" onClick={handleClear}>
             Clear
           </button>
-          <button
-            className="game-btn play"
-            type="submit"
-            // disabled={isDisabled}
-            onSubmit={handlePlay}
-            onClick={handlePlay}
-          >
+          <button className="game-btn play" onClick={handlePlay}>
             Play
           </button>
         </div>
