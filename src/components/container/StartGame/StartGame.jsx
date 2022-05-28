@@ -230,9 +230,6 @@ const StartGame = ({
         setIndex(0);
         setPlayerInput([]);
         firstInput.attributes["autofocus"] = true;
-        console.log("firstInput", firstInput);
-        console.log("entries", entries[0]);
-        firstInput.focus();
         entries[0].focus();
       }
     }
