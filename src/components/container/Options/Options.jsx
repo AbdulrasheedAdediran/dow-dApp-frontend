@@ -6,12 +6,8 @@ import Sound from "../Sound/Sound";
 
 const Options = () => {
   const [secondValue, setSecondValue] = useState(false);
-  // let getIsPlaying = localStorage.getItem("isPlaying");
   const [isPlaying, setIsPlaying] = useState(false);
-  useEffect(() => {
-    // localStorage.setItem("isPlaying", isPlaying);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying]);
+  useEffect(() => {}, [isPlaying]);
   return (
     <div className="options">
       <h1>Options</h1>

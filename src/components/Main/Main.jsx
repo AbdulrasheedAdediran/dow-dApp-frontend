@@ -4,13 +4,7 @@ import Sound from "../container/Sound/Sound";
 import charshoeX from "../assets/Charshoe-X.mp3";
 import "./Main.css";
 
-const Main = ({
-  connected,
-  claimFreeTokens,
-  startGame,
-  userBalance,
-  isPlaying,
-}) => {
+const Main = ({ connected, claimFreeTokens, userBalance, isPlaying }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     if (!connected && parseInt(userBalance.DOWTokenBalance) < 5) {
@@ -22,7 +16,6 @@ const Main = ({
   }, [connected]);
 
   return (
-    // <Layout>
     <main>
       <div className="dow-text">
         <div className="dow-text-border" />
@@ -60,7 +53,6 @@ const Main = ({
         </Link>
       </div>
     </main>
-    // </Layout>
   );
 };
 
