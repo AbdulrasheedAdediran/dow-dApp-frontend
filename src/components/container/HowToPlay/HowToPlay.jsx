@@ -14,7 +14,7 @@ const HowToPlay = () => {
         </li>
         <li>
           Enter four unique numbers and click Play or hit Enter on your keyboard
-          to submit. Each attempt you make will be recored to inform your next
+          to submit. Each attempt you make will be recorded to inform your next
           trial.
         </li>
         <li></li>

@@ -1,17 +1,18 @@
 .dashboard {
   height: 23rem;
-  /* height: 100%; */
   width: 100%;
   background: var(--deeper-green);
   color: var(--antique-white);
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   display: block;
-  color: var(--light-green);
+  /* color: var(--light-green); */
+  border: 2px solid rgba(3, 48, 39, 0.43);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-@supports (backdrop-filter: blur(25px)) {
+@supports (backdrop-filter: blur(10px)) {
   .dashboard {
     background: var(--deeper-green);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
   }
 }
 .dashboard h2 {
@@ -67,9 +68,10 @@
   width: 100%;
   display: flex;
   align-items: stretch;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 1.5rem;
   margin-block: 0.25rem;
+  opacity: 0.85;
   /* border: 2px solid blue; */
 }
 .played,
@@ -87,6 +89,7 @@
   justify-content: center;
   text-align: center;
   gap: 2rem;
+  opacity: 0.85;
   /* background: rgba(255, 255, 255, 0.25); */
   /* border: 2px solid blue; */
 }

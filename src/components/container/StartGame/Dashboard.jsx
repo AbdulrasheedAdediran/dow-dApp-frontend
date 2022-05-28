@@ -2,7 +2,6 @@ import React from "react";
 import "./Dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-// import { easeQuadInOut } from "d3-ease";
 
 const Dashboard = (props) => {
   let percentage = (props.won / props.played) * 100;
@@ -45,21 +44,22 @@ const Dashboard = (props) => {
                 textColor: "hsl(35, 80%, 90%)",
                 trailColor: "hsl(35, 80%, 90%)",
                 backgroundColor: "#333",
+                opacity: "0.85",
               })}
             />
           </div>
           <div className="played-won-lost">
             <div className="game-stats played">
-              <p>{props.played}</p>
-              <p>Played</p>
+              <div>Played</div>
+              <div>{props.played}</div>
             </div>
             <div className="game-stats won">
-              <p>{props.won}</p>
-              <p>Won</p>
+              <div>Won</div>
+              <div>{props.won}</div>
             </div>
             <div className="game-stats lost">
-              <p>{props.lost}</p>
-              <p>Lost</p>
+              <div>Lost</div>
+              <div>{props.lost}</div>
             </div>
           </div>
         </div>

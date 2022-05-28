@@ -16,10 +16,17 @@ const App = () => {
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const [generatedValues, setGeneratedValues] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [loadingSuccess, setLoadingSuccess] = useState(null);
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
   });
+  // const [insufficientTokens, setInsufficientTokens] = useState(false)
+  // useEffect(() => {
+  //   setLoadingSuccess(null);
+  // }, []);
+
   // Handle player's statistics
   const [playerStatistics, setPlayerStatistics] = useState({
     gamesPlayed: 0,
@@ -37,9 +44,10 @@ const App = () => {
           method: "eth_requestAccounts",
         });
         setWalletAddress(accounts[0]);
-        setConnected(true);
+        eagerConnect();
         getUserBalance(accounts[0]);
-        getPlayerStatistics();
+        if (connected) getPlayerStatistics();
+        else alert("Not connected to a supported DOW Network");
       } catch (error) {
         console.error(error);
       }
@@ -54,7 +62,7 @@ const App = () => {
     });
     if (Number(networkID) !== 83) {
       setConnected(false);
-    }
+    } else setConnected(true);
     const accounts = await provider.listAccounts();
     const userAccount = await getUserBalance(accounts[0]);
 
@@ -124,21 +132,37 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
-    if (userBalance.DOWTokenBalance < 5) {
-      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
-      return;
-    } else {
-      console.log("This ought to run if they have more tha");
-    }
+    setLoadingSuccess(null);
+    setLoader(true);
+    getPlayerStatistics();
+    let randomNumbers = [];
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    const playGame = await DOWContractInstance.startGame();
-    const gameData = await playGame.wait();
-    const randomNumbers = gameData.events[1].args.compNum;
-    const convertedValues = randomNumbers.map((randomNumber) =>
-      Number(randomNumber)
-    );
-    setGeneratedValues([...generatedValues, convertedValues]);
+
+    if (userBalance.DOWTokenBalance < 5) {
+      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
+    }
+    try {
+      const playGame = await DOWContractInstance.startGame();
+      const gameData = await playGame.wait();
+      randomNumbers = gameData.events[1].args.compNum;
+      const convertedValues = randomNumbers.map((randomNumber) =>
+        Number(randomNumber)
+      );
+      setGeneratedValues([...generatedValues, convertedValues]);
+    } catch {
+      setLoader(false);
+      setLoadingSuccess(false);
+    }
+    setTimeout(() => {
+      if (randomNumbers.length === 4) {
+        setLoader(false);
+        setLoadingSuccess(true);
+      } else {
+        setLoader(false);
+        setLoadingSuccess(false);
+      }
+    }, 5000);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
@@ -161,7 +185,7 @@ const App = () => {
         networkCoinBalance: userAccount.formartedNetworkCoinBalance,
       });
       setConnected(true);
-      window.location.reload(false);
+      window.location.reload();
     } else {
       setConnected(false);
       setUserBalance({
@@ -197,20 +221,18 @@ const App = () => {
         gamesWon: 0,
       });
 
-      alert("Invalid network, please switch to a DOW supported network");
+      alert(
+        "You're currently connected to an unsupported network, please switch to Boba Testnet"
+      );
+      window.location.reload();
       return;
     } else {
-      const accounts = await provider.listAccounts();
-      if (!accounts.length) return;
-      const userAccount = await getUserBalance(accounts[0]);
-      setUserBalance({
-        DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-        networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-      });
+      connectWallet();
       setConnected(true);
-      getPlayerStatistics();
+      window.location.reload();
     }
   };
+
   const init = async () => {
     const accounts = await provider.listAccounts();
     if (!accounts.length) return;
@@ -230,11 +252,15 @@ const App = () => {
     window.ethereum.on("connect", getPlayerStatistics);
     window.ethereum.on("connect", getUserBalance);
     window.ethereum.on("accountsChanged", handleAccountChanged);
+    // window.ethereum.removeListener("chainChanged", handleChainChanged);
     window.ethereum.on("chainChanged", handleChainChanged);
-    window.ethereum.removeListener("chainChanged", handleChainChanged);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (loadingSuccess === false) alert("Connection Failed");
+  }, [loadingSuccess]);
+
   return (
     <>
       <Navbar
@@ -275,6 +301,8 @@ const App = () => {
                 claimFreeTokens={claimFreeTokens}
                 provider={provider}
                 DOWContract={DOWContract}
+                loader={loader}
+                loadingSuccess={loadingSuccess}
               />
             }
           />

@@ -2,24 +2,28 @@ import { React, useState, useEffect } from "react";
 import "./StartGame.css";
 import Attempts from "./Attempts";
 import Dashboard from "./Dashboard";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
+import Loader from "../../loader/Loader";
 import { Contract } from "ethers";
-
+import Sound from "../Sound/Sound";
 const StartGame = ({
   generatedValues,
   playerStatistics,
-
+  connected,
+  startGame,
+  userBalance,
   checkTrials,
   claimFreeTokens,
   DOWContract,
   provider,
+  loadingSuccess,
+  loader,
+  isPlaying,
 }) => {
-  // Stores and handles the player's inputs
+  let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
-  // Handles disabling/enabling input fields based on validity of input provided
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const randomNumbers = generatedValues[0];
@@ -27,27 +31,66 @@ const StartGame = ({
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
+  const [index, setIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(null);
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+  //=======================//
+  //--Check Clear Clicked--//
+  //=======================//
+  useEffect(() => {
+    setTimeout(() => {
+      if (document.readyState === "complete") {
+        callStart();
+      }
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // const clearBtn = document.querySelector(".clear");
-  // const playBtn = document.querySelector(".play");
-  // const numberBtn = document.querySelectorAll(".number-btn");
-
-  const handleNumberButton = (e) => {};
-  const handlePlayerInput = (e) => {
+  const callStart = () => {
+    startGame();
+  };
+  //=========================//
+  //--Handle Number Buttons--//
+  //=========================//
+  const handleNumberButton = (e) => {
     e.preventDefault();
+    const entries = document.querySelector(".entries");
     const target = e.target;
-    const maxLength = parseInt(target.attributes["maxlength"].value, 10);
+    const maxLength = parseInt(entries[index].attributes["maxlength"].value);
+    const current = entries[index];
+    const next = entries[index].nextElementSibling;
+    current.value = parseInt(target.value);
+    // Stop pushing to array when all inputs are filled
+    if (playerInput.length < 4) {
+      setPlayerInput((playerInput) => [...playerInput, parseInt(target.value)]);
+    }
+
+    if (current.value.length >= maxLength && next !== null) {
+      setIndex(index + 1);
+      next.focus();
+    } else if (current.value.length >= maxLength && next === null) {
+      entries[index].value = playerInput[3];
+      setIndex(index);
+      current.focus();
+    }
+  };
+  //==========================//
+  //--Handle Keyboard Input--//
+  //========================//
+  const handlePlayerInput = (e) => {
+    const target = e.target;
+    const maxLength = parseInt(target.attributes["maxlength"].value);
     const previous = target.previousElementSibling;
     const next = target.nextElementSibling;
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll(".input");
+    e.preventDefault();
 
     // Set valid inputs to be numbers 0 - 9
     const regX = /^[0-9]+$/;
     // Checks if inputs entered are valid and stores them in an array
     if (regX.test(target.value)) {
-      setPlayerInput([...playerInput, target.value]);
+      setPlayerInput((playerInput) => [...playerInput, parseInt(target.value)]);
     } else {
       target.value = "";
       target.focus();
@@ -55,10 +98,6 @@ const StartGame = ({
 
     let container = document.getElementsByClassName("input")[0];
     container.onkeyup = (e) => {
-      if (e.keycode === 8) {
-        console.log("delete");
-      }
-
       let focusedInputLength = target.value.length;
       let lastInput = inputs[inputs.length - 1];
       if (
@@ -66,18 +105,16 @@ const StartGame = ({
         regX.test(e.target.value) &&
         next !== null
       ) {
-        next.attributes["disabled"] = setIsDisabled(true);
         next.focus();
-      } else if (target !== lastInput) {
+      } else if (target === lastInput && next === null) {
         target.focus();
-      } else {
-        lastInput.focus();
       }
+
       // Move to previous field if empty (user pressed backspace)
       if (focusedInputLength < maxLength) {
         let firstInput = inputs[0];
         if (target === inputs[1]) {
-          previous.attributes["disabled"] = setIsDisabled(false);
+          // previous.attributes["disabled"] = setIsDisabled(false);
           firstInput.focus();
           playerInput.pop();
         }
@@ -86,7 +123,6 @@ const StartGame = ({
           playerInput.pop();
           setPlayerInput([]);
         } else if (previous !== firstInput) {
-          previous.attributes["disabled"] = setIsDisabled(true);
           playerInput.pop();
           previous.focus();
         } else if (target === lastInput) {
@@ -98,131 +134,186 @@ const StartGame = ({
     };
   };
 
+  //=======================//
+  //-Handles Clear Button--//
+  //=======================//
+  const handleClear = (e) => {
+    e.preventDefault();
+    const entries = document.querySelector(".entries");
+    const maxLength = parseInt(entries[index].attributes["maxlength"].value);
+    const previous = entries[index].previousElementSibling;
+    const current = entries[index];
+    // let currentValue = entries[index].value;
+    const next = entries[index].nextElementSibling;
+    if (next === null && current.value.length >= maxLength) {
+      entries[index].value = "";
+      current.focus();
+      playerInput.pop();
+    } else if (
+      next === null ||
+      (previous !== null && current.value.length < maxLength)
+    ) {
+      setIndex(index - 1);
+      previous.value = "";
+      previous.focus();
+      playerInput.pop();
+    } else if (previous === null && current.value.length < maxLength) {
+      setIndex(index);
+      entries[index].value = "";
+      current.focus();
+      setPlayerInput([]);
+    }
+  };
+
+  //=======================//
+  //--Checks for Duplicate-//
+  //=======================//
+  const containsDuplicate = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < i; j++) {
+        if (arr[i] === arr[j]) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  //=======================//
+  //----  Handles Play ----//
+  //=======================//
   const handlePlay = async (e) => {
     const entries = document.querySelector(".entries");
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll(".input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
-
     e.preventDefault();
-    if (trials <= 7 && dead !== 4) {
-      setDead((dead = 0));
-      setWounded((wounded = 0));
-      setTrials((trials) => (trials += 1));
-      // Check Player Input and Return Round Scores
-      for (let i = 0; i < 4; i++) {
-        // Check if player guess is in the correct index of random numbers
-        // eslint-disable-next-line
-        if (playerInput[i] == randomNumbers[i]) {
-          setDead((dead += 1));
-        }
-        // Check if player guess is in the sequence but not in the correct index of random numbers
-        for (let j = 0; j < 4; j++) {
-          if (
-            // eslint-disable-next-line
-            playerInput[i] != randomNumbers[i] &&
-            // eslint-disable-next-line
-            playerInput[i] == randomNumbers[j]
-          ) {
-            setWounded((wounded += 1));
+    if (playerInput.length < 4) {
+      alert("INCOMPLETE ENTRIES");
+      return;
+    }
+    if (containsDuplicate(playerInput)) {
+      alert("NUMBERS MUST BE UNIQUE");
+      return;
+    } else {
+      if (trials <= 7 && dead !== 4) {
+        setDead((dead = 0));
+        setWounded((wounded = 0));
+        setTrials((trials) => (trials += 1));
+        // Check player input and return round scores
+        for (let i = 0; i < 4; i++) {
+          // Check if player input is in the correct index of random numbers
+          if (playerInput[i] === randomNumbers[i]) {
+            setDead((dead += 1));
+          }
+          // Check if player guess is in the sequence but not in the correct index of random numbers
+          for (let j = 0; j < 4; j++) {
+            if (
+              playerInput[i] !== randomNumbers[i] &&
+              playerInput[i] === randomNumbers[j]
+            ) {
+              setWounded((wounded += 1));
+            }
           }
         }
-      }
 
-      setRoundScores([
-        ...roundScores,
-        {
-          trial: trials,
-          attempt: playerInput,
-          dead: dead,
-          wounded: wounded,
-        },
-      ]);
-      // entries.reset();
-      // firstInput.attributes["disabled"] = setIsDisabled(true);
-      // firstInput.attributes["autofocus"] = true;
-      setPlayerInput([]);
+        setRoundScores([
+          ...roundScores,
+          {
+            trial: trials,
+            attempt: playerInput,
+            dead: dead,
+            wounded: wounded,
+          },
+        ]);
+        entries.reset();
+        setIndex(0);
+        setPlayerInput([]);
+        firstInput.attributes["autofocus"] = true;
+        entries[0].focus();
+      }
     }
 
     if (trials <= 7 && dead === 4) {
       setMessage(winMessage);
+      setIsLoading(true);
+      const res = await DOWContractInstance.checkTrials(trials);
+      res.wait();
+      setIsLoading(false);
       setIsOpen(true);
-      await DOWContractInstance.checkTrials(trials);
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
+      setIsLoading(true);
+      const res = await DOWContractInstance.checkTrials(8);
+      res.wait();
+      setIsLoading(false);
       setIsOpen(true);
-      await DOWContractInstance.checkTrials(8);
       entries.reset();
-      firstInput.attributes["disabled"] = setIsDisabled(false);
-      firstInput.attributes["autofocus"] = true;
-      firstInput.focus();
       setTrials(0);
     }
   };
+
   return (
     <section>
+      <Sound isPlaying={isPlaying} />
+      {loader && <Loader />}
+      {isLoading && <Loader />}
+      {loadingSuccess === false && navigate("/")}
       <form className="entries" action="#" onSubmit={handlePlay}>
         <label htmlFor="player-inputs">
-          {" "}
-          Enter four unique numbers from 0 - 9{" "}
+          Enter four unique numbers from 0 - 9
         </label>
         <div className="input">
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput1"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput1"
             className="first-player-input player-input"
-            value={playerInput.playerInput1}
+            value={playerInput[0]}
             onChange={handlePlayerInput}
             autoComplete="off"
             autoFocus={true}
-            disabled={isDisabled}
+            required={true}
           ></input>
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput2"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput2"
             className="second-player-input player-input"
-            value={playerInput.playerInput2}
+            value={playerInput[1]}
             onChange={handlePlayerInput}
             autoComplete="off"
             required={true}
-            disabled={!isDisabled}
           ></input>
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput3"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput3"
             className="third-player-input player-input"
-            value={playerInput.playerInput3}
+            value={playerInput[2]}
             onChange={handlePlayerInput}
             autoComplete="off"
-            disabled={!isDisabled}
+            required={true}
           ></input>
           <input
             type="text"
             maxLength={1}
-            minLength={1}
-            name="playerInput4"
-            id="player-inputs"
+            name="player-inputs"
+            id="playerInput4"
             className="fourth-player-input player-input"
-            value={playerInput.playerInput4}
+            value={playerInput[3]}
             onChange={handlePlayerInput}
             autoComplete="off"
-            disabled={!isDisabled}
+            required={true}
           ></input>
         </div>
         <div className="number-btns">
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="0"
             onClick={handleNumberButton}
           >
@@ -230,7 +321,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="1"
             onClick={handleNumberButton}
           >
@@ -238,7 +329,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="2"
             onClick={handleNumberButton}
           >
@@ -246,7 +337,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="3"
             onClick={handleNumberButton}
           >
@@ -254,7 +345,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="4"
             onClick={handleNumberButton}
           >
@@ -262,7 +353,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="5"
             onClick={handleNumberButton}
           >
@@ -270,7 +361,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="6"
             onClick={handleNumberButton}
           >
@@ -278,7 +369,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="7"
             onClick={handleNumberButton}
           >
@@ -286,7 +377,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="8"
             onClick={handleNumberButton}
           >
@@ -294,7 +385,7 @@ const StartGame = ({
           </button>
           <button
             className="number-btn"
-            disabled={!isDisabled}
+            // disabled={!isDisabled}
             value="9"
             onClick={handleNumberButton}
           >
@@ -302,14 +393,10 @@ const StartGame = ({
           </button>
         </div>
         <div className="clear-play-btns">
-          <button className="game-btn clear">Clear</button>
-          <button
-            className="game-btn play"
-            // type="submit"
-            disabled={true}
-            // onSubmit={handlePlay}
-            onClick={handlePlay}
-          >
+          <button className="game-btn clear" onClick={handleClear}>
+            Clear
+          </button>
+          <button className="game-btn play" onClick={handlePlay}>
             Play
           </button>
         </div>
@@ -331,7 +418,23 @@ const StartGame = ({
           highestStreak={playerStatistics.highestWinStreak}
         />
       </div>
-      {isOpen && <Modal setIsOpen={setIsOpen} message={message} />}
+      {isOpen && (
+        <Modal
+          DOWContract={DOWContract}
+          signer={signer}
+          generatedValues={generatedValues}
+          playerStatistics={playerStatistics}
+          connected={connected}
+          userBalance={userBalance}
+          checkTrials={checkTrials}
+          claimFreeTokens={claimFreeTokens}
+          provider={provider}
+          startGame={startGame}
+          setIsOpen={setIsOpen}
+          message={message}
+          numbers={generatedValues[0]}
+        />
+      )}
       {/* <Link to="/">
         <button>Back</button>
       </Link> */}

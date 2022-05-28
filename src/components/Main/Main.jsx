@@ -1,22 +1,21 @@
 import { React, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import Sound from "../container/Sound/Sound";
+import charshoeX from "../assets/Charshoe-X.mp3";
 import "./Main.css";
 
-const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
-  const location = useLocation();
+const Main = ({ connected, claimFreeTokens, userBalance, isPlaying }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     if (!connected && parseInt(userBalance.DOWTokenBalance) < 5) {
-      setIsDisabled(false);
-    } else {
       setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [connected]);
 
   return (
-    // <Layout>
     <main>
       <div className="dow-text">
         <div className="dow-text-border" />
@@ -25,7 +24,11 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
         <h1>Wounded</h1>
         <div className="dow-text-border" />
       </div>
-      <button className="claim-dow-button" onClick={claimFreeTokens}>
+      <button
+        className="claim-dow-button"
+        onClick={claimFreeTokens}
+        disabled={isDisabled}
+      >
         Claim DOW Tokens
       </button>
       <div className="main-menu-links">
@@ -33,8 +36,9 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
           <button
             className="menu-button start-game"
             disabled={isDisabled}
-            onClick={startGame}
+            // onClick={startGame}
           >
+            <Sound isPlaying={isPlaying} url={charshoeX} />
             Start Game
           </button>
         </Link>
@@ -49,7 +53,6 @@ const Main = ({ connected, claimFreeTokens, startGame, userBalance }) => {
         </Link>
       </div>
     </main>
-    // </Layout>
   );
 };
 

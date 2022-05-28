@@ -1,15 +1,17 @@
 import React from "react";
 import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
-const Modal = ({ setIsOpen, message, actionOnYes }) => {
+const Modal = ({ setIsOpen, message, numbers, startGame }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="darkBG" onClick={() => setIsOpen(false)} />
       <div className="centered">
         <div className="modal">
           <div className="modalHeader">
-            <h5 className="heading"></h5>
+            <h5 className="heading">{numbers}</h5>
           </div>
           <button className="closeBtn" onClick={() => setIsOpen(false)}>
             <RiCloseLine style={{ marginBottom: "-3px" }} />
@@ -26,19 +28,13 @@ const Modal = ({ setIsOpen, message, actionOnYes }) => {
               <button
                 className="deleteBtn"
                 onClick={() => {
-                  window.open("https://dow.netlify.app", "_self");
+                  startGame();
                   setIsOpen(false);
                 }}
               >
                 Yes
               </button>
-              <button
-                className="cancelBtn"
-                onClick={() => {
-                  setIsOpen(false);
-                  window.location.replace("https://dow.netlify.app", "_self");
-                }}
-              >
+              <button className="cancelBtn" onClick={() => navigate("/")}>
                 Cancel
               </button>
             </div>
