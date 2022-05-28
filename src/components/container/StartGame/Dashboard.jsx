@@ -2,7 +2,6 @@ import React from "react";
 import "./Dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-// import { easeQuadInOut } from "d3-ease";
 
 const Dashboard = (props) => {
   let percentage = (props.won / props.played) * 100;
