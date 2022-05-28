@@ -222,7 +222,7 @@ const App = () => {
       });
 
       alert(
-        "You're currently connected to an unsupported network, please switch to Boba Testnet"
+        "You're currently connected to an unsupported network, please switch to Meter Testnet"
       );
       window.location.reload();
       return;
