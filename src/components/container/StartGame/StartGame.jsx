@@ -33,6 +33,7 @@ const StartGame = ({
   const [trials, setTrials] = useState(1);
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(null);
+  const entries = document.querySelector(".entries");
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
   //===========================//
@@ -50,6 +51,7 @@ const StartGame = ({
   const callStart = () => {
     startGame();
   };
+  console.log(generatedValues[0]);
   useEffect(() => {
     //=================================//
     //-Handles Backspace & Enter Keys--//
@@ -222,7 +224,6 @@ const StartGame = ({
   //=======================//
   const handlePlay = async (e) => {
     e.preventDefault();
-    const entries = document.querySelector(".entries");
     const inputs = document.querySelectorAll(".input");
     const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
@@ -472,6 +473,9 @@ const StartGame = ({
           setIsOpen={setIsOpen}
           message={message}
           numbers={generatedValues[0]}
+          setRoundScores={setRoundScores}
+          entries={entries}
+          setPlayerInput={setPlayerInput}
         />
       )}
       {/* <Link to="/">

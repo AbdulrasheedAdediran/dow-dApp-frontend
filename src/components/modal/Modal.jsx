@@ -3,7 +3,15 @@ import "./modal.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 
-const Modal = ({ setIsOpen, message, numbers, startGame }) => {
+const Modal = ({
+  setIsOpen,
+  message,
+  numbers,
+  startGame,
+  setRoundScores,
+  entries,
+  setPlayerInput,
+}) => {
   const navigate = useNavigate();
   return (
     <>
@@ -28,6 +36,9 @@ const Modal = ({ setIsOpen, message, numbers, startGame }) => {
               <button
                 className="deleteBtn"
                 onClick={() => {
+                  entries.reset();
+                  setPlayerInput([]);
+                  setRoundScores([]);
                   startGame();
                   setIsOpen(false);
                 }}
