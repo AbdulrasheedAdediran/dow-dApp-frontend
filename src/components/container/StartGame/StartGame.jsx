@@ -51,7 +51,6 @@ const StartGame = ({
   const callStart = () => {
     startGame();
   };
-  console.log(generatedValues[0]);
   useEffect(() => {
     //=================================//
     //-Handles Backspace & Enter Keys--//
