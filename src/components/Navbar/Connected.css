@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--dark-blue-black-gradient);
   gap: 1rem;
   width: 100%;
   color: var(--deep-red-orange-gradient);
@@ -10,6 +9,9 @@
   font-family: var(--font-rubik-wet-paint);
   font-size: 1rem;
   outline: 2px groove var(--light-green);
+}
+.connected ul li {
+  background: var(--dark-blue-black-gradient);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
 }
