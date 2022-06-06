@@ -142,14 +142,7 @@ input {
 /*
 ======= MEDIA QUERIES ======= 
 */
-@media (min-width: 600px) {
-  body {
-  }
-}
-@media (max-width: 600px) {
-  body {
-  }
-}
+
 @media (max-width: 600px) {
   body {
     background: var(--deep-green-red-gradient),
