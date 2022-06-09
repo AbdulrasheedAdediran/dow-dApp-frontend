@@ -7,7 +7,6 @@ import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
 import Loader from "../../loader/Loader";
 import { Contract } from "ethers";
-import Sound from "../Sound/Sound";
 const StartGame = ({
   generatedValues,
   playerStatistics,
@@ -20,7 +19,6 @@ const StartGame = ({
   provider,
   loadingSuccess,
   loader,
-  isPlaying,
 }) => {
   let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
@@ -294,7 +292,6 @@ const StartGame = ({
 
   return (
     <section>
-      <Sound isPlaying={isPlaying} />
       {loader && <Loader />}
       {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
