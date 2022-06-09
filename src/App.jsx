@@ -145,6 +145,7 @@ const App = () => {
 
     if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
+      return;
     }
     try {
       const playGame = await DOWContractInstance.startGame();
@@ -311,3 +312,16 @@ const App = () => {
 };
 
 export default App;
+
+// handleSignMessage = ({ publicAddress, nonce }) => {
+//   return new Promise((resolve, reject) =>
+//     web3.personal.sign(
+//       web3.fromUtf8(`I am signing my one-time nonce: ${nonce}`),
+//       publicAddress,
+//       (err, signature) => {
+//         if (err) return reject(err);
+//         return resolve({ publicAddress, signature });
+//       }
+//     )
+//   );
+// };
