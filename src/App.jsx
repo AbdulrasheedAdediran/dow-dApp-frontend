@@ -10,7 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
 import Footer from "./components/Footer/Footer";
-const DOWContract = "0x5032bD700701310d8571C109704e243B0842c891";
+const DOWContract = "0x73fdb6c756fef146972eeb277373b1638cc6d215";
 const App = () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const [connected, setConnected] = useState(false);
@@ -61,7 +61,7 @@ const App = () => {
     const networkID = await window.ethereum.request({
       method: "eth_chainId",
     });
-    if (Number(networkID) !== 28) {
+    if (Number(networkID) !== 80001) {
       setConnected(false);
     } else setConnected(true);
     const accounts = await provider.listAccounts();
@@ -181,7 +181,7 @@ const App = () => {
       const networkID = await window.ethereum.request({
         method: "eth_chainId",
       });
-      if (Number(networkID) !== 28) return;
+      if (Number(networkID) !== 80001) return;
       const userAccount = await getUserBalance(accounts[0]);
       setWalletAddress(accounts[0]);
       getPlayerStatistics();
@@ -212,11 +212,11 @@ const App = () => {
     const networkID = await window.ethereum.request({
       method: "eth_chainId",
     });
-    if (Number(networkID) !== 28) {
+    if (Number(networkID) !== 80001) {
       setConnected(false);
 
       alert(
-        "You're currently connected to an unsupported network, please switch to Boba Testnet"
+        "You're currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
       );
       window.location.reload();
       return;
