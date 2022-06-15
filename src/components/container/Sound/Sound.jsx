@@ -1,4 +1,3 @@
-import React from "react";
 import Sound from "react-sound";
 import aSpiritOfBushi from "../../assets/A-Spirit-of-Bushi.mp3";
 

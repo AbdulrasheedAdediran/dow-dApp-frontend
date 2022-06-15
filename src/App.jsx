@@ -1,15 +1,15 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { ethers, utils, Contract } from "ethers";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
+import Main from "./components/Main/Main";
 import StartGame from "./components/container/StartGame/StartGame";
 import HowToPlay from "./components/container/HowToPlay/HowToPlay";
 import Options from "./components/container/Options/Options";
 import About from "./components/container/About/About";
-import Navbar from "./components/Navbar/Navbar";
-import Main from "./components/Main/Main";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ethers, utils, Contract } from "ethers";
-import DOW_ABI from "./util/DOW_ABI.json";
 import Footer from "./components/Footer/Footer";
+import DOW_ABI from "./util/DOW_ABI.json";
 const DOWContract = "0x73fdb6c756fef146972eeb277373b1638cc6d215";
 const App = () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -22,10 +22,6 @@ const App = () => {
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
   });
-  // const [insufficientTokens, setInsufficientTokens] = useState(false)
-  // useEffect(() => {
-  //   setLoadingSuccess(null);
-  // }, []);
 
   // Handle player's statistics
   const [playerStatistics, setPlayerStatistics] = useState({

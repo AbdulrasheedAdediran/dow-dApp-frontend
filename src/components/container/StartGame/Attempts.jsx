@@ -1,4 +1,3 @@
-import { React } from "react";
 import "./Attempts.css";
 
 const Attempts = (props) => {

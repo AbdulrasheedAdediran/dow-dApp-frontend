@@ -1,7 +1,5 @@
-import React from "react";
 import "./About.css";
 import { Link } from "react-router-dom";
-// import Layout from "../../Layout";
 
 const About = () => {
   return (
