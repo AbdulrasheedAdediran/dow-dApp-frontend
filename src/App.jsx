@@ -268,6 +268,7 @@ const App = () => {
             element={
               <Main
                 claimFreeTokens={claimFreeTokens}
+                connectWallet={connectWallet}
                 connected={connected}
                 startGame={startGame}
                 userBalance={userBalance}
