@@ -49,11 +49,7 @@ const StartGame = ({
   const callStart = () => {
     startGame();
   };
-  useEffect(() => {
-    //=================================//
-    //-Handles Backspace & Enter Keys--//
-    //=================================//
-  });
+
   //==========================//
   //--Handles Number Buttons--//
   //==========================//
@@ -129,27 +125,6 @@ const StartGame = ({
       else if (target === lastInput && next === null) {
         target.focus();
       }
-
-      // Move to previous field if empty (user pressed backspace)
-      // if (focusedInputLength < maxLength) {
-      //   let firstInput = inputs[0];
-      //   if (target === inputs[1]) {
-      //     firstInput.focus();
-      //     playerInput.pop();
-      //   }
-      //   if (previous === null && target === firstInput) {
-      //     target.focus();
-      //     playerInput.pop();
-      //     setPlayerInput([]);
-      //   } else if (previous !== firstInput) {
-      //     playerInput.pop();
-      //     previous.focus();
-      //   } else if (target === lastInput) {
-      //     target.value = "";
-      //     playerInput.pop();
-      //     target.focus();
-      //   }
-      // }
     };
   };
 
