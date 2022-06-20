@@ -53,25 +53,6 @@ const StartGame = ({
     //=================================//
     //-Handles Backspace & Enter Keys--//
     //=================================//
-    // document.addEventListener(
-    //   "keyup",
-    //   (e) => {
-    //     let pressedKey = String(e.key);
-    //     console.log("You pressed", pressedKey, "on the keyboard");
-    //     if (pressedKey === "Backspace") {
-    //       // console.log("You clicked Backspace");
-    //       handleClear(e);
-    //       // return;
-    //     }
-    //     if (pressedKey === "Enter") {
-    //       // console.log("You clicked Enter");
-    //       handlePlay(e);
-    //       // return;
-    //     }
-    //   },
-    //   []
-    // );
-    // console.log("Player Input: ", playerInput);
   });
   //==========================//
   //--Handles Number Buttons--//
